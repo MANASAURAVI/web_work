@@ -10,11 +10,11 @@ import { ShieldAlert, Lock, AlertTriangle } from 'lucide-react';
 
 export const SecurityGuard: React.FC = () => {
   const [config, setConfig] = useState<SecurityConfig>(getLocalSecurityConfig());
-  const [securityToast, setSecurityToast] = useState<{ message: string; icon?: string } | null>(null);
+  const [securityToast, setSecurityToast] = useState<{ message: string } | null>(null);
   const [isDevToolsDetected, setIsDevToolsDetected] = useState(false);
   const location = useLocation();
 
-  // Subscribe to config updates
+  // Subscribe to live config updates (instant same-tab & cross-tab & Firestore updates)
   useEffect(() => {
     const unsubscribe = subscribeSecurityConfig((newConfig) => {
       setConfig(newConfig);
@@ -22,11 +22,11 @@ export const SecurityGuard: React.FC = () => {
     return () => unsubscribe();
   }, []);
 
-  // Helper to check if current user is bypassed (e.g. logged in Admin)
+  // Check if Admin Bypass is allowed AND user is Admin
   const isAdmin = !!auth?.currentUser || location.pathname.startsWith('/admin');
   const isBypassed = config.allowAdminBypass && isAdmin;
 
-  // Show temporary toast on blocked action
+  // Trigger non-intrusive floating toast notification
   const triggerToast = (msg: string) => {
     setSecurityToast({ message: msg });
     setTimeout(() => {
@@ -64,7 +64,7 @@ export const SecurityGuard: React.FC = () => {
       const isCtrlOrCmd = e.ctrlKey || e.metaKey;
       const isShift = e.shiftKey;
       const isAlt = e.altKey;
-      const key = e.key.toLowerCase();
+      const key = e.key ? e.key.toLowerCase() : '';
       const code = e.code;
 
       // DevTools Shortcuts: F12, Ctrl+Shift+I/J/C/K, Cmd+Opt+I/J/C/K
@@ -77,6 +77,7 @@ export const SecurityGuard: React.FC = () => {
       if (config.disableDevTools && isDevToolsKey) {
         e.preventDefault();
         e.stopPropagation();
+        e.stopImmediatePropagation();
         triggerToast(config.customWarningMessage || 'Developer Tools shortcut disabled by Admin Power!');
         return false;
       }
@@ -85,6 +86,7 @@ export const SecurityGuard: React.FC = () => {
       if ((config.disableViewSource || config.disableDevTools) && isCtrlOrCmd && (key === 'u' || (isAlt && key === 'u'))) {
         e.preventDefault();
         e.stopPropagation();
+        e.stopImmediatePropagation();
         triggerToast('View Source (Ctrl+U) disabled by Admin Power!');
         return false;
       }
@@ -93,13 +95,18 @@ export const SecurityGuard: React.FC = () => {
       if (config.disablePrintSave && isCtrlOrCmd && (key === 'p' || key === 's')) {
         e.preventDefault();
         e.stopPropagation();
+        e.stopImmediatePropagation();
         triggerToast(`Page ${key === 'p' ? 'Printing' : 'Saving'} is restricted!`);
         return false;
       }
     };
 
     window.addEventListener('keydown', handleKeyDown, true);
-    return () => window.removeEventListener('keydown', handleKeyDown, true);
+    document.addEventListener('keydown', handleKeyDown, true);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown, true);
+      document.removeEventListener('keydown', handleKeyDown, true);
+    };
   }, [config, isBypassed]);
 
   // 3. Right Click (Context Menu) Interceptor
@@ -110,13 +117,18 @@ export const SecurityGuard: React.FC = () => {
       if (config.disableRightClick || config.disableDevTools) {
         e.preventDefault();
         e.stopPropagation();
+        e.stopImmediatePropagation();
         triggerToast('Right-click context menu is disabled by Admin Power!');
         return false;
       }
     };
 
     window.addEventListener('contextmenu', handleContextMenu, true);
-    return () => window.removeEventListener('contextmenu', handleContextMenu, true);
+    document.addEventListener('contextmenu', handleContextMenu, true);
+    return () => {
+      window.removeEventListener('contextmenu', handleContextMenu, true);
+      document.removeEventListener('contextmenu', handleContextMenu, true);
+    };
   }, [config.disableRightClick, config.disableDevTools, isBypassed]);
 
   // 4. Copy, Cut, Paste Interceptor
@@ -127,6 +139,7 @@ export const SecurityGuard: React.FC = () => {
       if (config.disableCopyPaste) {
         e.preventDefault();
         e.stopPropagation();
+        e.stopImmediatePropagation();
         const action = e.type.toUpperCase();
         triggerToast(`${action} action is disabled on this website!`);
         return false;
@@ -136,11 +149,17 @@ export const SecurityGuard: React.FC = () => {
     window.addEventListener('copy', handleCopyCutPaste, true);
     window.addEventListener('cut', handleCopyCutPaste, true);
     window.addEventListener('paste', handleCopyCutPaste, true);
+    document.addEventListener('copy', handleCopyCutPaste, true);
+    document.addEventListener('cut', handleCopyCutPaste, true);
+    document.addEventListener('paste', handleCopyCutPaste, true);
 
     return () => {
       window.removeEventListener('copy', handleCopyCutPaste, true);
       window.removeEventListener('cut', handleCopyCutPaste, true);
       window.removeEventListener('paste', handleCopyCutPaste, true);
+      document.removeEventListener('copy', handleCopyCutPaste, true);
+      document.removeEventListener('cut', handleCopyCutPaste, true);
+      document.removeEventListener('paste', handleCopyCutPaste, true);
     };
   }, [config.disableCopyPaste, isBypassed]);
 
@@ -151,12 +170,17 @@ export const SecurityGuard: React.FC = () => {
     const handleDragStart = (e: DragEvent) => {
       e.preventDefault();
       e.stopPropagation();
+      e.stopImmediatePropagation();
       triggerToast('Drag and drop is disabled for asset protection!');
       return false;
     };
 
     window.addEventListener('dragstart', handleDragStart, true);
-    return () => window.removeEventListener('dragstart', handleDragStart, true);
+    document.addEventListener('dragstart', handleDragStart, true);
+    return () => {
+      window.removeEventListener('dragstart', handleDragStart, true);
+      document.removeEventListener('dragstart', handleDragStart, true);
+    };
   }, [config.disableDragDrop, isBypassed]);
 
   // 6. Anti-Iframe Framebusting
@@ -204,7 +228,7 @@ export const SecurityGuard: React.FC = () => {
     };
   }, [config.suppressConsoleLogs, config.clearConsolePeriodically, isBypassed]);
 
-  // 8. DevTools Open Detection Loop & Reaction (Threshold & Debugger checks)
+  // 8. DevTools Open Detection Loop & Reaction
   useEffect(() => {
     if (isBypassed || !config.disableDevTools) {
       setIsDevToolsDetected(false);
@@ -250,7 +274,7 @@ export const SecurityGuard: React.FC = () => {
 
   return (
     <>
-      {/* DevTools Detected Warning Overlay (when action is alert or debugger_trap) */}
+      {/* DevTools Detected Warning Overlay */}
       {isDevToolsDetected && !isBypassed && (config.devToolsAction === 'alert' || config.devToolsAction === 'debugger_trap') && (
         <div className="fixed inset-0 z-[99999] bg-slate-950/95 backdrop-blur-xl flex flex-col items-center justify-center p-6 text-center animate-in fade-in duration-300">
           <div className="w-20 h-20 rounded-full bg-rose-500/10 border border-rose-500/30 flex items-center justify-center mb-6 shadow-2xl shadow-rose-500/20">

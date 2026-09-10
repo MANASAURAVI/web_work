@@ -29,15 +29,11 @@ import {
   Sliders,
   Layers,
   Save,
-  Radio,
-  Slash,
 } from 'lucide-react';
 
 export const AdminPowerHub: React.FC = () => {
   const [config, setConfig] = useState<SecurityConfig>(getLocalSecurityConfig());
-  const [saving, setSaving] = useState(false);
   const [saveSuccess, setSaveSuccess] = useState(false);
-  const [testLog, setTestLog] = useState<string | null>(null);
 
   useEffect(() => {
     const unsubscribe = subscribeSecurityConfig((newConfig) => {
@@ -46,36 +42,39 @@ export const AdminPowerHub: React.FC = () => {
     return () => unsubscribe();
   }, []);
 
+  // Helper to instantly save and apply changes live
+  const updateAndSaveConfig = (newConfig: SecurityConfig) => {
+    setConfig(newConfig);
+    saveSecurityConfig(newConfig);
+    setSaveSuccess(true);
+    setTimeout(() => setSaveSuccess(false), 2500);
+  };
+
   const handleToggle = (key: keyof SecurityConfig) => {
-    setConfig((prev) => ({
-      ...prev,
-      [key]: !prev[key],
-    }));
-    setSaveSuccess(false);
+    const updated = {
+      ...config,
+      [key]: !config[key],
+    };
+    updateAndSaveConfig(updated);
   };
 
   const handleActionChange = (action: SecurityConfig['devToolsAction']) => {
-    setConfig((prev) => ({
-      ...prev,
+    const updated = {
+      ...config,
       devToolsAction: action,
-    }));
-    setSaveSuccess(false);
+    };
+    updateAndSaveConfig(updated);
   };
 
-  const handleSave = async () => {
-    setSaving(true);
-    try {
-      await saveSecurityConfig(config);
-      setSaveSuccess(true);
-      setTimeout(() => setSaveSuccess(false), 3500);
-    } catch (e) {
-      console.error('Failed to save security power settings:', e);
-    } finally {
-      setSaving(false);
-    }
+  const handleMessageChange = (msg: string) => {
+    const updated = {
+      ...config,
+      customWarningMessage: msg,
+    };
+    updateAndSaveConfig(updated);
   };
 
-  // Presets
+  // Presets with instant save
   const applyPreset = (preset: 'max' | 'balanced' | 'unlocked') => {
     let newConfig: SecurityConfig;
     if (preset === 'max') {
@@ -124,10 +123,7 @@ export const AdminPowerHub: React.FC = () => {
         suppressConsoleLogs: false,
       };
     }
-    setConfig(newConfig);
-    saveSecurityConfig(newConfig);
-    setSaveSuccess(true);
-    setTimeout(() => setSaveSuccess(false), 3000);
+    updateAndSaveConfig(newConfig);
   };
 
   // Active count calculation
@@ -168,7 +164,7 @@ export const AdminPowerHub: React.FC = () => {
               )}
             </h2>
             <p className="text-slate-400 text-sm mt-2 max-w-2xl font-mono leading-relaxed">
-              Take full control over website security. Completely disable developer tools, right-click inspect, copy-paste, view source, keyboard shortcuts, and anti-hacking protections in real-time.
+              Every toggle auto-saves and applies instantly across your live site. Disable developer tools, right-click, copy-paste, view source, and hacking shortcuts in real-time.
             </p>
           </div>
 
@@ -511,7 +507,7 @@ export const AdminPowerHub: React.FC = () => {
                   <span>Allow Logged-In Admin Bypass</span>
                 </label>
                 <p className="text-xs text-slate-300 font-mono mt-0.5">
-                  When enabled, you as Admin can use DevTools & Copy while normal site visitors are completely blocked! Turn off to test restrictions live on yourself.
+                  When enabled, Admin can use DevTools. When OFF, protections apply to EVERYONE (including Admin on this page!).
                 </p>
               </div>
               <button
@@ -532,7 +528,7 @@ export const AdminPowerHub: React.FC = () => {
 
       </div>
 
-      {/* Warning Message Customizer & Save Controls */}
+      {/* Warning Message Customizer */}
       <div className="relative glass-card rounded-2xl p-6 sm:p-8 border border-slate-800 space-y-6">
         <CornerBorder />
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
@@ -545,44 +541,35 @@ export const AdminPowerHub: React.FC = () => {
               This message will be shown to users who try to open DevTools or perform blocked actions.
             </p>
           </div>
+          {saveSuccess && (
+            <span className="inline-flex items-center gap-1.5 text-xs font-mono text-emerald-400 font-bold bg-emerald-500/10 border border-emerald-500/30 px-3 py-1.5 rounded-xl animate-in fade-in">
+              <CheckCircle2 className="w-4 h-4" />
+              Auto-Saved & Applied Instantly!
+            </span>
+          )}
         </div>
 
         <div className="space-y-4">
           <input
             type="text"
             value={config.customWarningMessage}
-            onChange={(e) => setConfig({ ...config, customWarningMessage: e.target.value })}
+            onChange={(e) => handleMessageChange(e.target.value)}
             placeholder="e.g. Developer tools and content copying have been disabled for security."
             className="w-full px-4 py-3 rounded-xl bg-slate-900 border border-slate-800 text-white font-mono text-sm focus:outline-none focus:border-cyan-500 transition-colors"
           />
 
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-2">
-            <div className="flex items-center gap-2 text-xs font-mono text-slate-400">
+          <div className="flex items-center justify-between text-xs font-mono text-slate-400 pt-2 border-t border-slate-800/80">
+            <div className="flex items-center gap-2">
               <RefreshCw className="w-3.5 h-3.5 text-cyan-400" />
               <span>
                 {config.lastUpdated
                   ? `Last updated: ${new Date(config.lastUpdated).toLocaleTimeString()}`
-                  : 'Changes synced to localStorage and Firestore'}
+                  : 'Live reactive auto-save active'}
               </span>
             </div>
-
-            <div className="flex items-center gap-3 w-full sm:w-auto">
-              {saveSuccess && (
-                <span className="inline-flex items-center gap-1.5 text-xs font-mono text-emerald-400 font-bold animate-in fade-in">
-                  <CheckCircle2 className="w-4 h-4" />
-                  Security Power Saved & Applied Live!
-                </span>
-              )}
-              <button
-                onClick={handleSave}
-                disabled={saving}
-                className="w-full sm:w-auto relative group overflow-hidden px-8 py-3 rounded-xl font-mono text-xs font-bold uppercase tracking-wider bg-rose-500 text-white hover:bg-rose-600 transition-all flex items-center justify-center gap-2 shadow-xl shadow-rose-500/20 cursor-pointer disabled:opacity-50"
-              >
-                <CornerBorder />
-                <Save className="w-4 h-4" />
-                <span>{saving ? 'Applying...' : 'Save & Apply Security Power'}</span>
-              </button>
-            </div>
+            <span className="text-emerald-400 font-medium">
+              ✓ All changes auto-saved to localStorage & Firestore
+            </span>
           </div>
         </div>
       </div>
