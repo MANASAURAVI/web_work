@@ -56,7 +56,39 @@ export const SecurityGuard: React.FC = () => {
     };
   }, [config.disableTextSelection, isBypassed]);
 
-  // 2. Keyboard Shortcuts Interceptor (DevTools, View Source, Print, Save)
+  // 2. Anti-Print @media CSS Rule Injection (Makes print preview 100% BLANK if print is triggered)
+  useEffect(() => {
+    if (isBypassed || !config.disablePrintSave) {
+      const existing = document.getElementById('security-anti-print-style');
+      if (existing) existing.remove();
+      return;
+    }
+
+    const style = document.createElement('style');
+    style.id = 'security-anti-print-style';
+    style.innerHTML = `@media print { body { display: none !important; visibility: hidden !important; } html { display: none !important; visibility: hidden !important; } }`;
+    document.head.appendChild(style);
+
+    return () => {
+      const existing = document.getElementById('security-anti-print-style');
+      if (existing) existing.remove();
+    };
+  }, [config.disablePrintSave, isBypassed]);
+
+  // 3. BeforePrint Event Listener (Intercepts browser menu print commands)
+  useEffect(() => {
+    if (isBypassed || !config.disablePrintSave) return;
+
+    const handleBeforePrint = (e: Event) => {
+      e.preventDefault();
+      triggerToast('Printing is restricted by Security Admin Power!');
+    };
+
+    window.addEventListener('beforeprint', handleBeforePrint, true);
+    return () => window.removeEventListener('beforeprint', handleBeforePrint, true);
+  }, [config.disablePrintSave, isBypassed]);
+
+  // 4. Keyboard Shortcuts Interceptor (DevTools, View Source, Print, Save)
   useEffect(() => {
     if (isBypassed) return;
 
@@ -65,14 +97,14 @@ export const SecurityGuard: React.FC = () => {
       const isShift = e.shiftKey;
       const isAlt = e.altKey;
       const key = e.key ? e.key.toLowerCase() : '';
-      const code = e.code;
+      const code = e.code ? e.code : '';
 
-      // DevTools Shortcuts: F12, Ctrl+Shift+I/J/C/K, Cmd+Opt+I/J/C/K
+      // DevTools Shortcuts: F12, KeyF12, Ctrl+Shift+I/J/C/K, Cmd+Opt+I/J/C/K
       const isDevToolsKey =
         code === 'F12' ||
         key === 'f12' ||
-        (isCtrlOrCmd && isShift && (key === 'i' || key === 'j' || key === 'c' || key === 'k')) ||
-        (isCtrlOrCmd && isAlt && (key === 'i' || key === 'j' || key === 'c' || key === 'k'));
+        (isCtrlOrCmd && isShift && (key === 'i' || key === 'j' || key === 'c' || key === 'k' || code === 'KeyI' || code === 'KeyJ' || code === 'KeyC' || code === 'KeyK')) ||
+        (isCtrlOrCmd && isAlt && (key === 'i' || key === 'j' || key === 'c' || key === 'k' || code === 'KeyI' || code === 'KeyJ' || code === 'KeyC' || code === 'KeyK'));
 
       if (config.disableDevTools && isDevToolsKey) {
         e.preventDefault();
@@ -83,7 +115,7 @@ export const SecurityGuard: React.FC = () => {
       }
 
       // View Source: Ctrl+U / Cmd+Opt+U / Cmd+U
-      if ((config.disableViewSource || config.disableDevTools) && isCtrlOrCmd && (key === 'u' || (isAlt && key === 'u'))) {
+      if ((config.disableViewSource || config.disableDevTools) && isCtrlOrCmd && (key === 'u' || code === 'KeyU' || (isAlt && (key === 'u' || code === 'KeyU')))) {
         e.preventDefault();
         e.stopPropagation();
         e.stopImmediatePropagation();
@@ -92,11 +124,11 @@ export const SecurityGuard: React.FC = () => {
       }
 
       // Print & Save: Ctrl+P, Ctrl+S
-      if (config.disablePrintSave && isCtrlOrCmd && (key === 'p' || key === 's')) {
+      if (config.disablePrintSave && isCtrlOrCmd && (key === 'p' || code === 'KeyP' || key === 's' || code === 'KeyS')) {
         e.preventDefault();
         e.stopPropagation();
         e.stopImmediatePropagation();
-        triggerToast(`Page ${key === 'p' ? 'Printing' : 'Saving'} is restricted!`);
+        triggerToast(`Page ${key === 'p' || code === 'KeyP' ? 'Printing' : 'Saving'} is restricted!`);
         return false;
       }
     };
@@ -109,7 +141,7 @@ export const SecurityGuard: React.FC = () => {
     };
   }, [config, isBypassed]);
 
-  // 3. Right Click (Context Menu) Interceptor
+  // 5. Right Click (Context Menu) Interceptor
   useEffect(() => {
     if (isBypassed) return;
 
@@ -131,7 +163,7 @@ export const SecurityGuard: React.FC = () => {
     };
   }, [config.disableRightClick, config.disableDevTools, isBypassed]);
 
-  // 4. Copy, Cut, Paste Interceptor
+  // 6. Copy, Cut, Paste Interceptor
   useEffect(() => {
     if (isBypassed) return;
 
@@ -163,7 +195,7 @@ export const SecurityGuard: React.FC = () => {
     };
   }, [config.disableCopyPaste, isBypassed]);
 
-  // 5. Drag & Drop Interceptor
+  // 7. Drag & Drop Interceptor
   useEffect(() => {
     if (isBypassed || !config.disableDragDrop) return;
 
@@ -183,7 +215,7 @@ export const SecurityGuard: React.FC = () => {
     };
   }, [config.disableDragDrop, isBypassed]);
 
-  // 6. Anti-Iframe Framebusting
+  // 8. Anti-Iframe Framebusting
   useEffect(() => {
     if (config.disableFrameEmbedding && window.self !== window.top) {
       try {
@@ -196,7 +228,7 @@ export const SecurityGuard: React.FC = () => {
     }
   }, [config.disableFrameEmbedding]);
 
-  // 7. Console Protection (Suppress logs / Clear console)
+  // 9. Console Protection (Suppress logs / Clear console)
   useEffect(() => {
     if (isBypassed) return;
 
@@ -228,7 +260,7 @@ export const SecurityGuard: React.FC = () => {
     };
   }, [config.suppressConsoleLogs, config.clearConsolePeriodically, isBypassed]);
 
-  // 8. DevTools Open Detection Loop & Reaction
+  // 10. DevTools Open Detection Loop & Reaction
   useEffect(() => {
     if (isBypassed || !config.disableDevTools) {
       setIsDevToolsDetected(false);
