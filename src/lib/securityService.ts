@@ -19,17 +19,17 @@ export interface SecurityConfig {
 }
 
 export const DEFAULT_SECURITY_CONFIG: SecurityConfig = {
-  disableDevTools: false,
-  disableRightClick: false,
-  disableCopyPaste: false,
-  disableTextSelection: false,
-  disableViewSource: false,
-  disablePrintSave: false,
-  disableDragDrop: false,
-  disableFrameEmbedding: false,
+  disableDevTools: true,
+  disableRightClick: true,
+  disableCopyPaste: true,
+  disableTextSelection: true,
+  disableViewSource: true,
+  disablePrintSave: true,
+  disableDragDrop: true,
+  disableFrameEmbedding: true,
   devToolsAction: 'alert',
-  clearConsolePeriodically: false,
-  suppressConsoleLogs: false,
+  clearConsolePeriodically: true,
+  suppressConsoleLogs: true,
   customWarningMessage: 'Developer tools and content copying have been disabled for security.',
   allowAdminBypass: true,
 };
