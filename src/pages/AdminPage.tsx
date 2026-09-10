@@ -46,6 +46,8 @@ import { CornerBorder } from '@/components/CornerBorder';
 import { ColdOutreachHub } from '@/components/ColdOutreachHub';
 import { CustomEmailComposer } from '@/components/CustomEmailComposer';
 import { StorageManager } from '@/components/StorageManager';
+import { AdminPowerHub } from '@/components/AdminPowerHub';
+import { Zap } from 'lucide-react';
 
 export const AdminPage: React.FC = () => {
   const [queries, setQueries] = useState<ContactQuery[]>([]);
@@ -54,11 +56,11 @@ export const AdminPage: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'all' | 'new' | 'in-review' | 'replied' | 'archived'>('all');
   
   // Main Navigation & View Mode State with LocalStorage Persistence across page refresh
-  const [mainTabState, setMainTabState] = useState<'inquiries' | 'outreach' | 'composer' | 'storage'>(() => {
+  const [mainTabState, setMainTabState] = useState<'inquiries' | 'outreach' | 'composer' | 'storage' | 'admin_power'>(() => {
     try {
       const savedTab = localStorage.getItem('admin_active_main_tab');
-      if (savedTab && ['inquiries', 'outreach', 'composer', 'storage'].includes(savedTab)) {
-        return savedTab as 'inquiries' | 'outreach' | 'composer' | 'storage';
+      if (savedTab && ['inquiries', 'outreach', 'composer', 'storage', 'admin_power'].includes(savedTab)) {
+        return savedTab as 'inquiries' | 'outreach' | 'composer' | 'storage' | 'admin_power';
       }
     } catch (e) {
       console.warn('Failed to load saved admin tab:', e);
@@ -68,7 +70,7 @@ export const AdminPage: React.FC = () => {
 
   const mainTab = mainTabState;
 
-  const setMainTab = (tab: 'inquiries' | 'outreach' | 'composer' | 'storage') => {
+  const setMainTab = (tab: 'inquiries' | 'outreach' | 'composer' | 'storage' | 'admin_power') => {
     setMainTabState(tab);
     try {
       localStorage.setItem('admin_active_main_tab', tab);
@@ -473,6 +475,19 @@ Saurav Studio Admin`,
           <HardDrive className="w-4 h-4 text-purple-400" />
           <span>Storage & Documents</span>
         </button>
+
+        <button
+          onClick={() => setMainTab('admin_power')}
+          className={`relative group overflow-hidden px-5 py-3 rounded-xl font-mono text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-2.5 cursor-pointer ${
+            mainTab === 'admin_power'
+              ? 'bg-rose-500 text-white shadow-lg shadow-rose-500/20'
+              : 'bg-slate-900 text-slate-400 border border-slate-800 hover:text-white hover:border-slate-700'
+          }`}
+        >
+          <CornerBorder />
+          <Zap className="w-4 h-4 text-rose-400" />
+          <span>admin_power</span>
+        </button>
       </div>
 
       {mainTab === 'outreach' ? (
@@ -481,6 +496,8 @@ Saurav Studio Admin`,
         <CustomEmailComposer />
       ) : mainTab === 'storage' ? (
         <StorageManager />
+      ) : mainTab === 'admin_power' ? (
+        <AdminPowerHub />
       ) : (
         <div className="space-y-8 animate-in fade-in duration-200">
           {/* Demo Warning if Firebase key not added */}

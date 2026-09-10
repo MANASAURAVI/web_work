@@ -13,6 +13,7 @@ const ContactPage = lazy(() => import('@/pages/ContactPage').then(m => ({ defaul
 const LoginPage = lazy(() => import('@/pages/LoginPage').then(m => ({ default: m.LoginPage })));
 const AdminPage = lazy(() => import('@/pages/AdminPage').then(m => ({ default: m.AdminPage })));
 import { ProtectedRoute } from '@/components/ProtectedRoute';
+import { SecurityGuard } from '@/components/SecurityGuard';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -28,6 +29,9 @@ export function App() {
 
   return (
     <div className="bg-[#07090E] text-slate-100 antialiased selection:bg-cyan-500 selection:text-slate-950 flex flex-col min-h-screen relative overflow-x-hidden w-full max-w-full">
+      {/* Global Admin Power Security Protection */}
+      <SecurityGuard />
+
       {/* Anime.js Interactive Studio Background */}
       <AnimatedBackground />
       
