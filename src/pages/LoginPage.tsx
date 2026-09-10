@@ -63,7 +63,12 @@ export const LoginPage: React.FC = () => {
       }
     } catch (err: any) {
       console.error('Google Sign-in error:', err);
-      if (err.code !== 'auth/popup-closed-by-user') {
+      if (err.code === 'auth/unauthorized-domain') {
+        const domain = window.location.hostname;
+        setError(
+          `Unauthorized Domain ("${domain}"): Please add "${domain}" in Firebase Console -> Authentication -> Settings -> Authorized Domains.`
+        );
+      } else if (err.code !== 'auth/popup-closed-by-user') {
         setError(err.message || 'Failed to sign in with Google.');
       }
     } finally {
