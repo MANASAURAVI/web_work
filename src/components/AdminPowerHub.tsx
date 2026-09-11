@@ -149,46 +149,46 @@ export const AdminPowerHub: React.FC = () => {
               <Zap className="w-3.5 h-3.5 text-rose-400 animate-pulse" />
               <span>Admin Power • Website Security Command Center</span>
             </div>
-            <h2 className="text-2xl sm:text-4xl font-extrabold font-mono text-white tracking-tight flex items-center gap-3">
+            <h2 className="text-xl sm:text-4xl font-extrabold font-mono text-white tracking-tight flex flex-wrap items-center gap-2 sm:gap-3">
               <span>admin_power</span>
               {activeProtectionsCount > 0 ? (
-                <span className="inline-flex items-center gap-1.5 text-xs px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-mono">
-                  <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
+                <span className="inline-flex items-center gap-1.5 text-[11px] sm:text-xs px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-mono">
+                  <ShieldCheck className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
                   Protection Active ({activeProtectionsCount}/8)
                 </span>
               ) : (
-                <span className="inline-flex items-center gap-1.5 text-xs px-2.5 py-1 rounded-full bg-slate-800 border border-slate-700 text-slate-400 font-mono">
-                  <Unlock className="w-3.5 h-3.5 text-slate-400" />
+                <span className="inline-flex items-center gap-1.5 text-[11px] sm:text-xs px-2.5 py-1 rounded-full bg-slate-800 border border-slate-700 text-slate-400 font-mono">
+                  <Unlock className="w-3.5 h-3.5 text-slate-400 shrink-0" />
                   Protection Unlocked
                 </span>
               )}
             </h2>
-            <p className="text-slate-400 text-sm mt-2 max-w-2xl font-mono leading-relaxed">
+            <p className="text-slate-400 text-xs sm:text-sm mt-2 max-w-2xl font-mono leading-relaxed">
               Every toggle auto-saves and applies instantly across your live site. Disable developer tools, right-click, copy-paste, view source, and hacking shortcuts in real-time.
             </p>
           </div>
 
           {/* Quick Presets */}
-          <div className="flex flex-wrap items-center gap-2.5 w-full lg:w-auto">
+          <div className="grid grid-cols-3 sm:flex sm:flex-wrap items-center gap-2 sm:gap-2.5 w-full lg:w-auto">
             <button
               onClick={() => applyPreset('max')}
-              className="px-4 py-2.5 rounded-xl font-mono text-xs font-bold bg-rose-500/15 border border-rose-500/40 text-rose-300 hover:bg-rose-500/25 hover:border-rose-500 transition-all flex items-center gap-2 shadow-lg shadow-rose-500/10 cursor-pointer"
+              className="px-2.5 sm:px-4 py-2 sm:py-2.5 rounded-xl font-mono text-[10px] sm:text-xs font-bold bg-rose-500/15 border border-rose-500/40 text-rose-300 hover:bg-rose-500/25 hover:border-rose-500 transition-all flex items-center justify-center gap-1.5 shadow-lg shadow-rose-500/10 cursor-pointer text-center"
             >
-              <ShieldAlert className="w-4 h-4 text-rose-400" />
-              <span>MAX LOCKDOWN</span>
+              <ShieldAlert className="w-3.5 h-3.5 text-rose-400 shrink-0 hidden sm:block" />
+              <span>MAX LOCK</span>
             </button>
             <button
               onClick={() => applyPreset('balanced')}
-              className="px-4 py-2.5 rounded-xl font-mono text-xs font-bold bg-cyan-500/15 border border-cyan-500/40 text-cyan-300 hover:bg-cyan-500/25 hover:border-cyan-500 transition-all flex items-center gap-2 shadow-lg shadow-cyan-500/10 cursor-pointer"
+              className="px-2.5 sm:px-4 py-2 sm:py-2.5 rounded-xl font-mono text-[10px] sm:text-xs font-bold bg-cyan-500/15 border border-cyan-500/40 text-cyan-300 hover:bg-cyan-500/25 hover:border-cyan-500 transition-all flex items-center justify-center gap-1.5 shadow-lg shadow-cyan-500/10 cursor-pointer text-center"
             >
-              <ShieldCheck className="w-4 h-4 text-cyan-400" />
+              <ShieldCheck className="w-3.5 h-3.5 text-cyan-400 shrink-0 hidden sm:block" />
               <span>BALANCED</span>
             </button>
             <button
               onClick={() => applyPreset('unlocked')}
-              className="px-4 py-2.5 rounded-xl font-mono text-xs font-bold bg-slate-800 border border-slate-700 text-slate-300 hover:bg-slate-700 transition-all flex items-center gap-2 cursor-pointer"
+              className="px-2.5 sm:px-4 py-2 sm:py-2.5 rounded-xl font-mono text-[10px] sm:text-xs font-bold bg-slate-800 border border-slate-700 text-slate-300 hover:bg-slate-700 transition-all flex items-center justify-center gap-1.5 cursor-pointer text-center"
             >
-              <Unlock className="w-4 h-4 text-slate-400" />
+              <Unlock className="w-3.5 h-3.5 text-slate-400 shrink-0 hidden sm:block" />
               <span>UNLOCKED</span>
             </button>
           </div>

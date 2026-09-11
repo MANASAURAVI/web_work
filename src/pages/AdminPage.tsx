@@ -423,69 +423,69 @@ Saurav Studio Admin`,
       </div>
 
       {/* Primary Module Switcher Tabs (Inquiries vs Cold Outreach) */}
-      <div className="flex items-center gap-3 border-b border-slate-800 pb-4">
+      <div className="flex items-center gap-2.5 sm:gap-3 border-b border-slate-800 pb-4 overflow-x-auto no-scrollbar whitespace-nowrap scroll-smooth -mx-4 px-4 sm:mx-0 sm:px-0">
         <button
           onClick={() => setMainTab('inquiries')}
-          className={`relative group overflow-hidden px-5 py-3 rounded-xl font-mono text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-2.5 cursor-pointer ${
+          className={`shrink-0 relative group overflow-hidden px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl font-mono text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-2 sm:gap-2.5 cursor-pointer whitespace-nowrap ${
             mainTab === 'inquiries'
               ? 'bg-cyan-500 text-slate-950 shadow-lg shadow-cyan-500/20'
               : 'bg-slate-900 text-slate-400 border border-slate-800 hover:text-white hover:border-slate-700'
           }`}
         >
           <CornerBorder />
-          <Inbox className="w-4 h-4" />
-          <span>Inquiries & Leads ({queries.length})</span>
+          <Inbox className="w-4 h-4 shrink-0" />
+          <span>Inquiries ({queries.length})</span>
         </button>
 
         <button
           onClick={() => setMainTab('outreach')}
-          className={`relative group overflow-hidden px-5 py-3 rounded-xl font-mono text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-2.5 cursor-pointer ${
+          className={`shrink-0 relative group overflow-hidden px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl font-mono text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-2 sm:gap-2.5 cursor-pointer whitespace-nowrap ${
             mainTab === 'outreach'
               ? 'bg-cyan-500 text-slate-950 shadow-lg shadow-cyan-500/20'
               : 'bg-slate-900 text-slate-400 border border-slate-800 hover:text-white hover:border-slate-700'
           }`}
         >
           <CornerBorder />
-          <Target className="w-4 h-4 text-emerald-400" />
-          <span>Cold Outreach Hub</span>
+          <Target className="w-4 h-4 text-emerald-400 shrink-0" />
+          <span>Cold Outreach</span>
         </button>
 
         <button
           onClick={() => setMainTab('composer')}
-          className={`relative group overflow-hidden px-5 py-3 rounded-xl font-mono text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-2.5 cursor-pointer ${
+          className={`shrink-0 relative group overflow-hidden px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl font-mono text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-2 sm:gap-2.5 cursor-pointer whitespace-nowrap ${
             mainTab === 'composer'
               ? 'bg-cyan-500 text-slate-950 shadow-lg shadow-cyan-500/20'
               : 'bg-slate-900 text-slate-400 border border-slate-800 hover:text-white hover:border-slate-700'
           }`}
         >
           <CornerBorder />
-          <Mail className="w-4 h-4 text-cyan-400" />
+          <Mail className="w-4 h-4 text-cyan-400 shrink-0" />
           <span>Custom Mail</span>
         </button>
 
         <button
           onClick={() => setMainTab('storage')}
-          className={`relative group overflow-hidden px-5 py-3 rounded-xl font-mono text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-2.5 cursor-pointer ${
+          className={`shrink-0 relative group overflow-hidden px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl font-mono text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-2 sm:gap-2.5 cursor-pointer whitespace-nowrap ${
             mainTab === 'storage'
               ? 'bg-cyan-500 text-slate-950 shadow-lg shadow-cyan-500/20'
               : 'bg-slate-900 text-slate-400 border border-slate-800 hover:text-white hover:border-slate-700'
           }`}
         >
           <CornerBorder />
-          <HardDrive className="w-4 h-4 text-purple-400" />
-          <span>Storage & Documents</span>
+          <HardDrive className="w-4 h-4 text-purple-400 shrink-0" />
+          <span>Storage</span>
         </button>
 
         <button
           onClick={() => setMainTab('admin_power')}
-          className={`relative group overflow-hidden px-5 py-3 rounded-xl font-mono text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-2.5 cursor-pointer ${
+          className={`shrink-0 relative group overflow-hidden px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl font-mono text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-2 sm:gap-2.5 cursor-pointer whitespace-nowrap ${
             mainTab === 'admin_power'
               ? 'bg-rose-500 text-white shadow-lg shadow-rose-500/20'
               : 'bg-slate-900 text-slate-400 border border-slate-800 hover:text-white hover:border-slate-700'
           }`}
         >
           <CornerBorder />
-          <Zap className="w-4 h-4 text-rose-400" />
+          <Zap className="w-4 h-4 text-rose-400 shrink-0" />
           <span>admin_power</span>
         </button>
       </div>
