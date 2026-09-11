@@ -32,7 +32,19 @@
 
   img {
     content-visibility: auto;
+    decoding: async;
   }
+
+  section {
+    content-visibility: auto;
+    contain-intrinsic-size: 1px 400px;
+  }
+}
+
+.transform-gpu {
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  will-change: transform, opacity;
 }
 
 .font-handwriting {

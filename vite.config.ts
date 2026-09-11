@@ -17,9 +17,24 @@ export default defineConfig({
     chunkSizeWarningLimit: 600,
     rollupOptions: {
       output: {
-        manualChunks: {
-          vendor: ['react', 'react-dom', 'react-router-dom'],
-          icons: ['lucide-react'],
+        manualChunks(id) {
+          if (id.includes('node_modules')) {
+            if (id.includes('react-dom') || id.includes('react-router-dom') || id.includes('/react/')) {
+              return 'vendor-core';
+            }
+            if (id.includes('lucide-react')) {
+              return 'vendor-icons';
+            }
+            if (id.includes('framer-motion')) {
+              return 'vendor-motion';
+            }
+            if (id.includes('firebase')) {
+              return 'vendor-firebase';
+            }
+            if (id.includes('xlsx')) {
+              return 'vendor-xlsx';
+            }
+          }
         },
       },
     },
