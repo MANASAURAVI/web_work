@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
@@ -20,11 +20,14 @@ import {
   Cpu
 } from 'lucide-react';
 import { PROJECTS } from '@/data/projects';
-import { SERVICES, WHY_WORK_WITH_ME, PROCESS_STEPS, WHO_I_WORK_WITH, CREDIBILITY_HIGHLIGHTS } from '@/data/services';
+import { SERVICES, WHY_WORK_WITH_ME, PROCESS_STEPS, WHO_I_WORK_WITH, CREDIBILITY_HIGHLIGHTS, Service } from '@/data/services';
 import { ProjectCard } from '@/components/ProjectCard';
 import { CornerBorder } from '@/components/CornerBorder';
+import { ServiceDetailModal } from '@/components/ServiceDetailModal';
 
 export const HomePage = () => {
+  const [selectedService, setSelectedService] = useState<Service | null>(null);
+
   // Show 4 strongest completed real projects
   const selectedWork = PROJECTS.slice(0, 4);
 
@@ -267,7 +270,8 @@ export const HomePage = () => {
           {SERVICES.map((service) => (
             <div
               key={service.id}
-              className="relative group overflow-hidden glass-card rounded-2xl border border-slate-800/80 hover:border-cyan-500/50 transition-all duration-300 hover:-translate-y-2 hover:scale-[1.015] hover:shadow-2xl hover:shadow-cyan-500/20 transform-gpu"
+              onClick={() => setSelectedService(service)}
+              className="relative group overflow-hidden glass-card rounded-2xl border border-slate-800/80 hover:border-cyan-500/50 transition-all duration-300 hover:-translate-y-2 hover:scale-[1.015] hover:shadow-2xl hover:shadow-cyan-500/20 transform-gpu cursor-pointer flex flex-col justify-between"
             >
               <CornerBorder />
               <div className="p-8 flex flex-col justify-between h-full gap-6 relative z-30">
@@ -286,14 +290,18 @@ export const HomePage = () => {
                   </p>
                 </div>
 
-                <div className="pt-4 border-t border-slate-900">
-                  <Link
-                    to={`/services#${service.id}`}
-                    className="text-xs font-mono font-semibold uppercase tracking-wider text-slate-400 group-hover:text-cyan-400 inline-flex items-center gap-1.5 transition-colors"
+                <div className="pt-4 border-t border-slate-900 flex items-center justify-between">
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setSelectedService(service);
+                    }}
+                    className="text-xs font-mono font-semibold uppercase tracking-wider text-cyan-400 group-hover:text-cyan-300 inline-flex items-center gap-1.5 transition-colors cursor-pointer bg-cyan-950/60 px-3.5 py-1.5 rounded-lg border border-cyan-800/50 hover:bg-cyan-900/60"
                   >
-                    <span>View deliverables</span>
+                    <span>View Full Details</span>
                     <ArrowRight className="w-3.5 h-3.5" />
-                  </Link>
+                  </button>
                 </div>
               </div>
             </div>
@@ -498,6 +506,12 @@ export const HomePage = () => {
           </div>
         </div>
       </section>
+
+      {/* Service Detail Modal Popup */}
+      <ServiceDetailModal
+        service={selectedService}
+        onClose={() => setSelectedService(null)}
+      />
     </div>
   );
 };

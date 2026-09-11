@@ -1,21 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { SERVICES, PROCESS_STEPS, WHO_I_WORK_WITH } from '@/data/services';
-import { CheckCircle2, ArrowRight, Layout, Code2, Sparkles, Rocket, Zap, Target, BrainCircuit, ShieldCheck, Terminal } from 'lucide-react';
+import { SERVICES, PROCESS_STEPS, WHO_I_WORK_WITH, Service } from '@/data/services';
+import { ArrowRight, Layout, Code2, Sparkles, Rocket, Zap, Target, BrainCircuit, ShieldCheck, Terminal } from 'lucide-react';
 import { CornerBorder } from '@/components/CornerBorder';
+import { ServiceDetailModal } from '@/components/ServiceDetailModal';
 
 export const ServicesPage = () => {
-  const getServiceIcon = (iconName: string) => {
-    switch (iconName) {
-      case 'Layout': return <Layout className="w-6 h-6 text-cyan-400" />;
-      case 'Rocket': return <Rocket className="w-6 h-6 text-emerald-400" />;
-      case 'Target': return <Target className="w-6 h-6 text-amber-400" />;
-      case 'Code2': return <Code2 className="w-6 h-6 text-indigo-400" />;
-      case 'Zap': return <Zap className="w-6 h-6 text-cyan-400" />;
-      case 'Sparkles': return <Sparkles className="w-6 h-6 text-emerald-400" />;
-      default: return <Layout className="w-6 h-6 text-cyan-400" />;
-    }
-  };
+  const [selectedService, setSelectedService] = useState<Service | null>(null);
 
   const getIndustryIcon = (iconName: string) => {
     switch (iconName) {
@@ -45,7 +36,7 @@ export const ServicesPage = () => {
         </p>
       </div>
 
-      {/* 02 — QUICK OVERVIEW GRID (6 CORE SERVICES) */}
+      {/* 02 — QUICK OVERVIEW GRID (6 CORE SERVICES) WITH MODAL POPUP */}
       <section className="space-y-8">
         <div className="border-b border-slate-800 pb-4">
           <h2 className="text-xs font-mono uppercase tracking-widest text-slate-400 font-semibold">
@@ -55,10 +46,10 @@ export const ServicesPage = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {SERVICES.map((s) => (
-            <a
+            <div
               key={s.id}
-              href={`#${s.id}`}
-              className="relative group overflow-hidden glass-card rounded-2xl border border-slate-800/80 hover:border-cyan-500/50 hover:-translate-y-2 hover:scale-[1.015] hover:shadow-xl hover:shadow-cyan-500/10 transform-gpu transition-all duration-300 block h-full"
+              onClick={() => setSelectedService(s)}
+              className="relative group overflow-hidden glass-card rounded-2xl border border-slate-800/80 hover:border-cyan-500/50 hover:-translate-y-2 hover:scale-[1.015] hover:shadow-xl hover:shadow-cyan-500/10 transform-gpu transition-all duration-300 cursor-pointer flex flex-col justify-between h-full"
             >
               <CornerBorder />
               <div className="p-6 flex flex-col justify-between h-full gap-4 relative z-30">
@@ -77,77 +68,18 @@ export const ServicesPage = () => {
                   </p>
                 </div>
 
-                <div className="pt-3 border-t border-slate-900 flex items-center gap-1 text-xs font-mono font-semibold uppercase text-slate-400 group-hover:text-cyan-400 transition-colors">
-                  <span>View deliverables</span>
-                  <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-                </div>
-              </div>
-            </a>
-          ))}
-        </div>
-      </section>
-
-      {/* 03 — DEEP SERVICE BREAKDOWN */}
-      <section className="space-y-16">
-        <div className="space-y-2">
-          <span className="text-xs font-mono uppercase tracking-widest text-emerald-400 font-semibold font-mono">Service Details</span>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-white">Full Scope & Deliverables</h2>
-        </div>
-
-        <div className="space-y-12">
-          {SERVICES.map((service) => (
-            <div
-              key={service.id}
-              id={service.id}
-              className="relative group overflow-hidden glass-card rounded-3xl border border-slate-800 hover:border-cyan-500/40 hover:-translate-y-1.5 hover:scale-[1.008] transform-gpu transition-all duration-300 shadow-xl scroll-mt-24"
-            >
-              <CornerBorder />
-              <div className="p-8 sm:p-12 flex flex-col gap-8 relative z-30">
-                {/* Header block */}
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-                  <div className="lg:col-span-5 space-y-4">
-                    <div className="flex items-center gap-3">
-                      <span className="text-2xl font-mono font-black text-cyan-400">{service.number}</span>
-                      <div className="w-10 h-10 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center">
-                        {getServiceIcon(service.iconName)}
-                      </div>
-                    </div>
-                    <h3 className="text-2xl sm:text-3xl font-extrabold text-white">
-                      {service.title}
-                    </h3>
-                    <p className="text-cyan-300 text-sm font-semibold">
-                      {service.tagline}
-                    </p>
-                    <p className="text-slate-300 text-sm leading-relaxed font-normal pt-2 border-t border-slate-900">
-                      {service.description}
-                    </p>
-                  </div>
-
-                  {/* Deliverables List */}
-                  <div className="lg:col-span-7 bg-slate-950/80 p-6 sm:p-8 rounded-2xl border border-slate-800 space-y-4">
-                    <h4 className="text-xs font-mono uppercase tracking-widest text-slate-400 font-semibold">
-                      Key Deliverables Included:
-                    </h4>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                      {service.deliverables.map((item) => (
-                        <div key={item} className="flex items-start gap-2.5">
-                          <CheckCircle2 className="w-4 h-4 text-cyan-400 shrink-0 mt-0.5" />
-                          <span className="text-xs text-slate-300 font-normal leading-normal">{item}</span>
-                        </div>
-                      ))}
-                    </div>
-
-                    <div className="pt-4 border-t border-slate-900/80 flex items-center justify-between">
-                      <span className="text-xs font-mono text-slate-400">Suitable for: {service.suitableFor.join(', ')}</span>
-                      <Link
-                        to="/contact"
-                        className="inline-flex items-center gap-1.5 text-xs font-mono font-semibold uppercase text-cyan-400 hover:text-cyan-300 transition-colors shrink-0"
-                      >
-                        <span>Start a Project</span>
-                        <ArrowRight className="w-3.5 h-3.5" />
-                      </Link>
-                    </div>
-                  </div>
+                <div className="pt-3 border-t border-slate-900 flex items-center justify-between">
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setSelectedService(s);
+                    }}
+                    className="text-xs font-mono font-semibold uppercase tracking-wider text-cyan-400 group-hover:text-cyan-300 inline-flex items-center gap-1.5 transition-colors cursor-pointer bg-cyan-950/60 px-3.5 py-1.5 rounded-lg border border-cyan-800/50 hover:bg-cyan-900/60"
+                  >
+                    <span>View Full Details</span>
+                    <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                  </button>
                 </div>
               </div>
             </div>
@@ -251,6 +183,13 @@ export const ServicesPage = () => {
           </div>
         </div>
       </section>
+
+      {/* Service Detail Modal Popup */}
+      <ServiceDetailModal
+        service={selectedService}
+        onClose={() => setSelectedService(null)}
+      />
     </div>
   );
 };
+
