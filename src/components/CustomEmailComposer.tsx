@@ -1,9 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import {
   Send,
-  Paperclip,
-  File,
-  Trash2,
   CheckCircle2,
   AlertCircle,
   Sparkles,
@@ -12,7 +9,6 @@ import {
   Eye,
   User,
   Mail,
-  FileText,
   Bold,
   Italic,
   Underline,
@@ -22,10 +18,7 @@ import {
   Heading2,
 } from 'lucide-react';
 import { CornerBorder } from '@/components/CornerBorder';
-import { sendEmailReply, EmailAttachment } from '@/lib/emailService';
-import { storage, db } from '@/lib/firebase';
-import { ref, uploadString, getDownloadURL } from 'firebase/storage';
-import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { sendEmailReply } from '@/lib/emailService';
 
 const PRESET_COLORS = [
   { name: 'Cyan', hex: '#38bdf8', bgClass: 'bg-cyan-400' },
@@ -58,7 +51,6 @@ export const CustomEmailComposer: React.FC = () => {
   const [message, setMessage] = useState<string>(initialDraft?.message || '');
   const [fontFamily, setFontFamily] = useState<'sans' | 'serif' | 'mono'>(initialDraft?.fontFamily || 'sans');
   const [selectedColor, setSelectedColor] = useState<string>(initialDraft?.selectedColor || '#38bdf8');
-  const [attachments, setAttachments] = useState<EmailAttachment[]>(initialDraft?.attachments || []);
   const [isSending, setIsSending] = useState(false);
   const [statusToast, setStatusToast] = useState<{ type: 'success' | 'error'; msg: string } | null>(null);
   const [webmailUrl, setWebmailUrl] = useState<string | null>(null);
@@ -77,10 +69,9 @@ export const CustomEmailComposer: React.FC = () => {
       message,
       fontFamily,
       selectedColor,
-      attachments,
     };
 
-    if (recipientName || recipientEmail || subject || message || attachments.length > 0) {
+    if (recipientName || recipientEmail || subject || message) {
       try {
         localStorage.setItem(DRAFT_KEY, JSON.stringify(draftData));
         const nowStr = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
@@ -89,7 +80,7 @@ export const CustomEmailComposer: React.FC = () => {
         console.warn('Failed to auto-save email draft:', e);
       }
     }
-  }, [recipientName, recipientEmail, subject, message, fontFamily, selectedColor, attachments]);
+  }, [recipientName, recipientEmail, subject, message, fontFamily, selectedColor]);
 
   // Formatting helper
   const insertFormatting = (tagStart: string, tagEnd: string = '') => {
@@ -123,7 +114,6 @@ export const CustomEmailComposer: React.FC = () => {
       setRecipientEmail('');
       setSubject('');
       setMessage('');
-      setAttachments([]);
       localStorage.removeItem(DRAFT_KEY);
       setLastSavedTime(null);
       return;
@@ -134,14 +124,14 @@ export const CustomEmailComposer: React.FC = () => {
 
 Thank you for our recent discussion! 
 
-Attached to this email, you will find our comprehensive <u>Project Proposal</u> and Scope breakdown tailored to your deliverables, timeline, and goals.
+Below, you will find our comprehensive <u>Project Proposal</u> and Scope breakdown tailored to your deliverables, timeline, and goals.
 
 <h3 style="color: #38bdf8; font-size: 16px; font-weight: 700; margin-top: 16px; margin-bottom: 8px;">Key Deliverables Covered:</h3>
 • <b>Complete Custom UI/UX Design Mockups</b>
 • <i>High-Performance Fullstack Architecture</i>
 • <span style="color: #34d399; font-weight: bold;">Sub-second Speed Optimization & SEO Setup</span>
 
-Please review the attached document and let me know if you have any questions. I look forward to collaborating!
+Please review these details and let me know if you have any questions. I look forward to collaborating!
 
 Best regards,
 <b>Saurav Kumar</b>
@@ -165,7 +155,7 @@ Founder & Digital Architect • Saurav Studio`);
 
 Thank you for a great phase of work!
 
-Attached is the <u>invoice and milestone breakdown</u> for our recent project phase.
+Below is the <u>invoice and milestone breakdown</u> for our recent project phase.
 
 If you need any additional documentation, please let me know.
 
@@ -173,161 +163,6 @@ Best regards,
 <b>Saurav Kumar</b>
 Founder & Digital Architect • Saurav Studio`);
     }
-  };
-
-const compressImageFile = (file: File): Promise<{ base64: string; size: number }> => {
-  return new Promise((resolve) => {
-    if (!file.type.startsWith('image/')) {
-      const reader = new FileReader();
-      reader.onload = () => resolve({ base64: reader.result as string, size: file.size });
-      reader.readAsDataURL(file);
-      return;
-    }
-
-    const img = new Image();
-    const reader = new FileReader();
-
-    reader.onload = (e) => {
-      img.src = e.target?.result as string;
-    };
-
-    img.onload = () => {
-      const canvas = document.createElement('canvas');
-      const maxDim = 800;
-      let width = img.width;
-      let height = img.height;
-
-      if (width > height && width > maxDim) {
-        height = Math.round((height * maxDim) / width);
-        width = maxDim;
-      } else if (height > maxDim) {
-        width = Math.round((width * maxDim) / height);
-        height = maxDim;
-      }
-
-      canvas.width = width;
-      canvas.height = height;
-
-      const ctx = canvas.getContext('2d');
-      if (ctx) {
-        ctx.drawImage(img, 0, 0, width, height);
-        const compressedBase64 = canvas.toDataURL('image/jpeg', 0.6);
-        resolve({ base64: compressedBase64, size: Math.round((compressedBase64.length * 3) / 4) });
-      } else {
-        resolve({ base64: (reader.result as string) || '', size: file.size });
-      }
-    };
-
-    reader.onerror = () => resolve({ base64: '', size: file.size });
-    reader.readAsDataURL(file);
-  });
-};
-
-  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
-    if (!files || files.length === 0) return;
-
-    for (const file of Array.from(files)) {
-      const { base64, size } = await compressImageFile(file);
-      if (!base64) continue;
-
-      const attachmentEntry: EmailAttachment = {
-        name: file.name,
-        type: file.type || 'application/octet-stream',
-        size: size,
-        data: base64,
-        isUploading: true,
-      };
-
-      setAttachments((prev) => [...prev, attachmentEntry]);
-
-      // Immediate Upload to Firebase Storage with automatic Firestore Fallback if CORS blocks
-      if (storage || db) {
-        let url = '';
-
-        if (storage) {
-          try {
-            const cleanFileName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
-            const fileRef = ref(storage, `attachments/${Date.now()}_${cleanFileName}`);
-
-            const uploadPromise = uploadString(fileRef, base64, 'data_url').then(() => getDownloadURL(fileRef));
-            const timeoutPromise = new Promise<string>((_, reject) =>
-              setTimeout(() => reject(new Error('Firebase Storage timeout/CORS')), 2500)
-            );
-
-            url = await Promise.race([uploadPromise, timeoutPromise]);
-            if (url && db) {
-              try {
-                await addDoc(collection(db, 'storage_attachments'), {
-                  fileName: file.name,
-                  fileSize: size,
-                  fileType: file.type || 'application/octet-stream',
-                  storagePath: fileRef.fullPath,
-                  downloadUrl: url,
-                  sentTo: 'Composer Upload',
-                  uploadedAt: serverTimestamp(),
-                });
-              } catch (metaErr) {
-                console.warn('Firestore attachment record error:', metaErr);
-              }
-            }
-          } catch (uploadErr: any) {
-            console.warn('Firebase Storage CORS blocked on localhost. Switching to Firestore fallback...');
-          }
-        }
-
-        // Firestore Fallback if Storage CORS blocked or unconfigured
-        if (!url && db && base64.length < 950000) {
-          try {
-            await addDoc(collection(db, 'storage_attachments'), {
-              fileName: file.name,
-              fileSize: size,
-              fileType: file.type || 'application/octet-stream',
-              fileData: base64,
-              sentTo: 'Composer Upload (Firestore)',
-              uploadedAt: serverTimestamp(),
-            });
-            url = base64; // Data URL for view & send
-          } catch (fsErr) {
-            console.warn('Firestore fallback error:', fsErr);
-          }
-        }
-
-        if (url) {
-          setAttachments((prev) =>
-            prev.map((item) =>
-              item.name === file.name && item.data === base64
-                ? { ...item, downloadUrl: url, isUploading: false, uploadError: undefined }
-                : item
-            )
-          );
-        } else {
-          setAttachments((prev) =>
-            prev.map((item) =>
-              item.name === file.name && item.data === base64
-                ? { ...item, isUploading: false, uploadError: 'Localhost CORS blocked' }
-                : item
-            )
-          );
-        }
-      } else {
-        setAttachments((prev) =>
-          prev.map((item) => (item.name === file.name && item.data === base64 ? { ...item, isUploading: false } : item))
-        );
-      }
-    }
-
-    e.target.value = '';
-  };
-
-  const handleRemoveAttachment = (index: number) => {
-    setAttachments((prev) => prev.filter((_, i) => i !== index));
-  };
-
-  const formatFileSize = (bytes: number): string => {
-    if (bytes < 1024) return `${bytes} B`;
-    if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
-    return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
   };
 
   const handleSendCustomEmail = async (e: React.FormEvent) => {
@@ -358,7 +193,6 @@ const compressImageFile = (file: File): Promise<{ base64: string; size: number }
         to_name: recipientName || 'Client',
         subject: subject || 'Direct Email from Saurav Studio',
         message: finalMessage,
-        attachments: attachments,
       });
 
       if (res.webmailUrl) {
@@ -375,7 +209,6 @@ const compressImageFile = (file: File): Promise<{ base64: string; size: number }
         setRecipientEmail('');
         setSubject('');
         setMessage('');
-        setAttachments([]);
         localStorage.removeItem(DRAFT_KEY);
         setLastSavedTime(null);
       } else {
@@ -416,7 +249,7 @@ const compressImageFile = (file: File): Promise<{ base64: string; size: number }
             Custom Email & Rich Document Composer
           </h2>
           <p className="text-slate-400 text-xs sm:text-sm max-w-2xl leading-relaxed">
-            Compose rich HTML emails with bolding, italics, underlines, multi-color highlights, font families, and attached documents for instant executive delivery.
+            Compose rich HTML emails with bolding, italics, underlines, multi-color highlights, and custom typography for instant executive delivery.
           </p>
         </div>
       </div>
@@ -674,95 +507,6 @@ const compressImageFile = (file: File): Promise<{ base64: string; size: number }
               />
             </div>
 
-            {/* File Attachment Dropzone & List */}
-            <div className="space-y-3 pt-2 border-t border-slate-800">
-              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
-                <label className="block text-xs font-mono uppercase text-slate-400 font-medium flex items-center gap-1.5">
-                  <Paperclip className="w-4 h-4 text-cyan-400" />
-                  <span>Attach Documents ({attachments.length})</span>
-                </label>
-
-                <label className="relative group overflow-hidden px-3 py-1.5 rounded-lg text-xs font-mono text-cyan-400 bg-cyan-950/60 border border-cyan-800/60 hover:bg-cyan-900/60 transition-all flex items-center gap-1.5 cursor-pointer">
-                  <CornerBorder />
-                  <Paperclip className="w-3.5 h-3.5" />
-                  <span>Browse & Upload File</span>
-                  <input
-                    type="file"
-                    multiple
-                    onChange={handleFileUpload}
-                    className="hidden"
-                  />
-                </label>
-              </div>
-
-              {/* Attached Files Grid */}
-              {attachments.length > 0 ? (
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                  {attachments.map((att, idx) => (
-                    <div
-                      key={idx}
-                      className="p-3 rounded-xl bg-slate-950 border border-slate-800 text-xs font-mono space-y-2"
-                    >
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-2 min-w-0">
-                          <File className="w-4 h-4 text-cyan-400 shrink-0" />
-                          <div className="min-w-0">
-                            <p className="text-white truncate font-medium">{att.name}</p>
-                            <p className="text-[10px] text-slate-500">{formatFileSize(att.size)}</p>
-                          </div>
-                        </div>
-                        <button
-                          type="button"
-                          onClick={() => handleRemoveAttachment(idx)}
-                          className="text-slate-500 hover:text-rose-400 p-1 shrink-0 transition-colors"
-                          title="Remove Attachment"
-                        >
-                          <Trash2 className="w-3.5 h-3.5" />
-                        </button>
-                      </div>
-
-                      {/* Upload Status Badge / Link */}
-                      <div className="pt-1.5 border-t border-slate-900/80 flex items-center justify-between text-[10px]">
-                        {att.isUploading ? (
-                          <span className="text-cyan-400 font-mono flex items-center gap-1 animate-pulse font-semibold">
-                            <RefreshCw className="w-3 h-3 animate-spin text-cyan-400" />
-                            <span>Uploading to Firebase Storage...</span>
-                          </span>
-                        ) : att.downloadUrl ? (
-                          <div className="flex items-center justify-between w-full gap-2">
-                            <span className="text-emerald-400 font-medium flex items-center gap-1">
-                              <CheckCircle2 className="w-3 h-3 text-emerald-400 shrink-0" />
-                              <span>Uploaded to Firebase ✓</span>
-                            </span>
-                            <a
-                              href={att.downloadUrl}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="text-cyan-400 hover:text-cyan-300 font-semibold flex items-center gap-1 underline shrink-0"
-                            >
-                              <span>View File</span>
-                              <ExternalLink className="w-2.5 h-2.5" />
-                            </a>
-                          </div>
-                        ) : att.uploadError ? (
-                          <span className="text-amber-400 font-medium flex items-center gap-1 truncate" title="Localhost CORS blocked upload to Storage. Will fallback to Gmail Web.">
-                            <AlertCircle className="w-3 h-3 text-amber-400 shrink-0" />
-                            <span className="truncate">Localhost CORS Blocked (Gmail Web Fallback)</span>
-                          </span>
-                        ) : (
-                          <span className="text-slate-500 font-medium">Ready</span>
-                        )}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              ) : (
-                <p className="text-[11px] font-mono text-slate-500 italic">
-                  No files attached yet. Click "Browse & Upload File" to upload to Firebase Storage & attach documents.
-                </p>
-              )}
-            </div>
-
             {/* Submit Button */}
             <button
               type="submit"
@@ -810,12 +554,6 @@ const compressImageFile = (file: File): Promise<{ base64: string; size: number }
                 <span className="text-slate-500">Font:</span>
                 <span className="text-purple-400 font-bold capitalize">{fontFamily}</span>
               </div>
-              {attachments.length > 0 && (
-                <div className="flex justify-between pt-1 border-t border-slate-800 text-[11px]">
-                  <span className="text-slate-500">Attachments:</span>
-                  <span className="text-emerald-400 font-bold">{attachments.length} file(s) attached</span>
-                </div>
-              )}
             </div>
 
             {/* Simulated HTML Email Output Box */}
@@ -838,22 +576,6 @@ const compressImageFile = (file: File): Promise<{ base64: string; size: number }
                 }`}
                 dangerouslySetInnerHTML={{ __html: message || '[Your message text will render here with live HTML formatting...]' }}
               />
-
-              {/* Attachments Section in Email Preview */}
-              {attachments.length > 0 && (
-                <div className="p-4 bg-slate-950/80 border-t border-slate-800 space-y-2">
-                  <p className="text-[10px] font-mono uppercase text-slate-500 font-bold">Attached Documents:</p>
-                  <div className="space-y-1.5">
-                    {attachments.map((att, idx) => (
-                      <div key={idx} className="flex items-center gap-2 text-[11px] font-mono text-cyan-300">
-                        <File className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
-                        <span className="truncate">{att.name}</span>
-                        <span className="text-slate-500">({formatFileSize(att.size)})</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
 
               {/* Fake Email Footer Signature */}
               <div className="bg-[#0b0f17] p-4 border-t border-slate-800/80 text-[11px] space-y-1">
