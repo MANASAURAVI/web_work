@@ -26,132 +26,131 @@ export const SERVICES: Service[] = [
     id: "website-design-development",
     number: "01",
     title: "Website Design & Development",
-    tagline: "Complete websites from concept to production launch.",
-    positioning: "Your website is often the first interaction someone has with your company. We design and build websites that make your product easy to understand and your company easy to trust.",
-    description: "End-to-end website creation that combines strategic UI/UX design with clean frontend engineering. I handle everything from initial sitemaps and wireframes to responsive coding and deployment.",
+    tagline: "Complete custom websites built from concept to production launch.",
+    positioning: "Your website is the primary growth engine for your company. I design and engineer websites that make your product effortless to understand and your company easy to trust.",
+    description: "End-to-end website creation that combines strategic UI/UX design with high-performance frontend engineering. I handle everything from sitemaps and Figma wireframes to responsive React coding and cloud deployment.",
     category: "Website",
     iconName: "Layout",
     deliverables: [
-      "Website structure & sitemap planning",
-      "UX wireframes & interactive Figma prototype",
-      "Custom visual direction, typography & color system",
-      "Responsive desktop, tablet & mobile layouts",
-      "Conversion-focused page architecture",
-      "Pixel-perfect React & Tailwind development",
-      "Animations, micro-interactions & form setups",
-      "SEO fundamentals & production deployment"
+      "Website architecture & conversion sitemap planning",
+      "UX wireframes & interactive Figma prototypes",
+      "Custom visual design system, typography & color palette",
+      "Responsive desktop, tablet & mobile viewports",
+      "Conversion-focused page structure & CTA placement",
+      "Pixel-perfect React, Next.js & Tailwind CSS development",
+      "Smooth micro-interactions & animated scroll reveals",
+      "SEO markup, open-graph metadata & production deployment"
     ],
     suitableFor: [
-      "Startups & SaaS companies",
-      "AI & Fintech platforms",
-      "Cybersecurity & Tech agencies",
-      "Growing B2B businesses",
-      "Executive personal brands"
+      "SaaS companies & AI startups",
+      "Cybersecurity & Fintech platforms",
+      "Developer tool & B2B technology providers",
+      "Growing tech agencies & product companies"
     ]
   },
   {
     id: "saas-startup-websites",
     number: "02",
     title: "SaaS & Startup Websites",
-    tagline: "Product-focused websites for technology companies.",
-    positioning: "Launch your product with a website that explains what you built and why customers should care.",
-    description: "Tailored specifically for software and technology startups launching new products. I translate complex technical capabilities into scannable, persuasive product pages that convert visitors into active users.",
+    tagline: "Product-focused websites designed to convert visitors into active users.",
+    positioning: "Launch your SaaS product with a website that translates complex technical features into intuitive, high-converting product showcases.",
+    description: "Tailored specifically for software companies launching new products or scaling existing platforms. I translate technical capabilities into scannable visual narratives that drive signups and demo requests.",
     category: "SaaS",
     iconName: "Rocket",
     deliverables: [
-      "Product showcase homepage",
-      "Feature & capability breakdown pages",
-      "Transparent pricing page architecture",
-      "Use cases & target industry pages",
-      "Integration & partner showcase pages",
-      "Documentation landing page design",
-      "Waitlist & demo booking funnels",
-      "Interactive product preview widgets"
+      "Product showcase homepage with hero visual stack",
+      "Feature breakdown & capability deep-dive pages",
+      "Transparent pricing page architecture & tier toggles",
+      "Use cases & target industry landing pages",
+      "Integration ecosystem & API partner showcase pages",
+      "Interactive product preview widgets & interactive demos",
+      "Waitlist & demo booking funnel integrations",
+      "Documentation & resource hub templates"
     ],
     suitableFor: [
       "Early-stage & Series A SaaS startups",
-      "AI tools & developer platforms",
-      "Fintech & Web3 applications",
-      "Product-led growth (PLG) companies"
+      "AI tools & developer infrastructure platforms",
+      "Fintech & Web3 SaaS applications",
+      "Product-led growth (PLG) technology companies"
     ],
     exampleStructure: [
-      "Homepage",
-      "Product Features",
-      "Use Cases",
-      "Integrations",
-      "Pricing Tier Grid",
-      "About / Team",
-      "Contact / Demo Request"
+      "Hero Product Showcase",
+      "Core Feature Breakdown",
+      "Use Cases by Industry",
+      "Integrations & API Ecosystem",
+      "Pricing Tiers & Plan Calculator",
+      "Customer Success & Case Studies",
+      "Demo Booking / Start Free Trial Funnel"
     ]
   },
   {
     id: "landing-pages",
     number: "03",
     title: "Landing Pages",
-    tagline: "Focused landing pages for launches, campaigns, and products.",
-    positioning: "One focused page built around one goal. The fastest way to validate demand, capture leads, or launch a product.",
-    description: "High-converting single-page websites designed for specific campaigns, product launches, or lead generation. Built to maximize conversion momentum without rebuilding your entire web presence.",
+    tagline: "High-impact single pages for launches, campaigns, and key features.",
+    positioning: "One focused landing page engineered around a single conversion goal. The fastest way to validate market demand, capture leads, or launch a product.",
+    description: "High-converting standalone landing pages engineered for specific marketing campaigns, stealth launches, or product feature releases. Built to maximize conversion momentum with sub-second load speeds.",
     category: "Landing",
     iconName: "Target",
     deliverables: [
       "High-converting Hero & value proposition section",
       "Problem-solution narrative breakdown",
       "Interactive feature cards & ROI calculators",
-      "Social proof, logo wall & testimonial blocks",
-      "Form integration (HubSpot, Mailchimp, Typeform, etc.)",
-      "A/B testing-ready layout structure",
-      "Sub-second page load speed",
+      "Social proof, logo wall & technical highlight blocks",
+      "Lead capture form & CRM integrations (HubSpot, Typeform, etc.)",
+      "A/B testing-ready modular layout structure",
+      "Sub-second page load speed & Core Web Vitals compliance",
       "Rapid 1 to 2-week execution timeline"
     ],
     suitableFor: [
       "Product launches & feature drops",
       "Waitlist & stealth mode announcements",
-      "Ad campaign landing destinations",
-      "Virtual events & web conferences"
+      "Paid ad campaign landing destinations",
+      "Virtual events & product announcements"
     ]
   },
   {
     id: "product-ui-frontend",
     number: "04",
-    title: "Product UI & Frontend Development",
-    tagline: "SaaS dashboards, applications, and interactive interfaces.",
-    positioning: "Have Figma designs for your software platform? I turn complex UI mockups into clean, production-ready frontend code.",
-    description: "Dedicated frontend development for Web applications, SaaS platforms, and internal tools. I take your Figma design files and engineer clean, modular component architectures ready for backend API integration.",
+    title: "Product UI / Frontend",
+    tagline: "SaaS dashboards, web applications, and modular UI component systems.",
+    positioning: "Have Figma mockups for your software product? I turn design files into clean, production-ready frontend code ready for backend API integration.",
+    description: "Dedicated frontend engineering for SaaS applications, admin dashboards, and customer portals. I take your Figma designs and build modular, type-safe React/TypeScript component systems.",
     category: "Product UI",
     iconName: "Code2",
     deliverables: [
-      "Production-ready React & TypeScript code",
-      "Modular design system & UI component library",
-      "SaaS dashboard & admin panel interfaces",
+      "Production-ready React 19 & TypeScript codebase",
+      "Modular design system & reusable UI component library",
+      "SaaS dashboard, analytics & admin panel interfaces",
       "Interactive data visualization & chart widgets",
-      "User settings, profile & onboarding screens",
+      "User settings, profile management & onboarding flows",
       "API data fetching & state management hooks",
       "Responsive mobile & tablet viewport adaptation",
-      "Clean handoff & version-controlled Git codebase"
+      "Clean Git handoff with version control & docs"
     ],
     suitableFor: [
-      "SaaS founders with Figma designs",
+      "SaaS founders with Figma designs ready for code",
       "Engineering teams needing extra frontend bandwidth",
       "Companies building web apps & customer portals"
     ]
   },
   {
-    id: "performance-optimization",
+    id: "performance-ux",
     number: "05",
-    title: "Performance & UX Optimization",
-    tagline: "Improve speed, usability, responsiveness, and conversion experience.",
-    positioning: "Is your website slow or losing visitors? I audit your site, pinpoint bottlenecks, and implement speed and UX fixes.",
-    description: "Technical auditing and code refinement to improve your website's Core Web Vitals, mobile user experience, and conversion pathway. You get immediate page speed improvements without an expensive complete rebuild.",
+    title: "Performance & UX",
+    tagline: "Optimize speed, responsiveness, Core Web Vitals, and conversion pathways.",
+    positioning: "Is your website slow or losing potential customers? I audit your code, eliminate bottlenecks, and upgrade user experience for maximum retention.",
+    description: "Technical auditing and code refinement to improve your website's Core Web Vitals, mobile user experience, and conversion pathway. Achieve immediate page speed gains without an expensive complete rebuild.",
     category: "Optimization",
     iconName: "Zap",
     deliverables: [
       "Comprehensive Core Web Vitals & speed audit",
-      "Image, asset & font loading optimization",
+      "Image, media & font loading optimization",
       "JavaScript bundle reduction & code splitting",
       "Layout shift (CLS) & responsiveness fixes",
       "Conversion pathway & CTA placement audit",
       "Mobile UX & tap-target refinement",
-      "SEO markup & meta tag audit",
+      "SEO markup & open-graph meta tag audit",
       "Before & after performance metric report"
     ],
     suitableFor: [
@@ -161,22 +160,22 @@ export const SERVICES: Service[] = [
     ]
   },
   {
-    id: "ongoing-development",
+    id: "ongoing-website-development",
     number: "06",
-    title: "Ongoing Website Development & Support",
-    tagline: "Continuous improvements and technical support after launch.",
-    positioning: "Your website shouldn't be finished after launch. We continuously improve it as your company grows.",
+    title: "Ongoing Website Development",
+    tagline: "Continuous improvements, new landing pages, and technical support after launch.",
+    positioning: "Your website shouldn't stay static after launch. I provide continuous engineering support as your product and market grow.",
     description: "Ongoing monthly support for tech companies that need continuous website updates, new landing pages, UI tweaks, and performance monitoring without hiring a full-time developer.",
     category: "Ongoing",
     iconName: "Sparkles",
     deliverables: [
       "Monthly landing page & new section creation",
-      "Content updates & blog template refinements",
+      "Content updates & feature showcase refinements",
       "UI enhancements & conversion tweaks",
       "Performance monitoring & speed maintenance",
-      "Security updates & dependency upkeep",
+      "Security updates & dependency maintenance",
       "Third-party tool & analytics integrations",
-      "Priority bug fixing & direct developer slack access"
+      "Priority bug fixing & direct developer slack/email access"
     ],
     suitableFor: [
       "Growing tech startups post-launch",
@@ -186,71 +185,62 @@ export const SERVICES: Service[] = [
   }
 ];
 
-export const PACKAGES: Package[] = [
+export const WHO_I_WORK_WITH = [
   {
-    name: "STARTER",
-    badge: "Landing Page",
-    target: "For startups launching a product or validating an idea.",
-    pricingText: "Projects start from $500",
-    features: [
-      "1 High-converting landing page",
-      "Custom responsive UI design",
-      "React / Tailwind development",
-      "Micro-animations & interactions",
-      "Form & CTA integration",
-      "Production deployment"
-    ]
+    title: "SaaS",
+    description: "Subscription software platforms needing clear product communication, feature breakdowns, and conversion-focused pricing pages.",
+    iconName: "Rocket"
   },
   {
-    name: "GROWTH",
-    badge: "Startup Website",
-    target: "For companies needing a complete, multi-page marketing website.",
-    pricingText: "Projects start from $1,200",
-    highlighted: true,
-    features: [
-      "4–6 Page custom website",
-      "Product & feature breakdowns",
-      "Pricing tier grid layout",
-      "Custom responsive design system",
-      "SEO fundamentals & metadata",
-      "Fast production deployment",
-      "30 Days post-launch support"
-    ]
+    title: "AI & Automation",
+    description: "Artificial intelligence and automation tools turning complex machine learning capabilities into intuitive user experiences.",
+    iconName: "BrainCircuit"
   },
   {
-    name: "CUSTOM",
-    badge: "Product & SaaS",
-    target: "For companies needing complex web applications or custom UI systems.",
-    pricingText: "Custom USD estimate based on scope",
-    features: [
-      "Tailored page count & scope",
-      "SaaS product dashboard UI",
-      "Advanced animations & widgets",
-      "API & data integration",
-      "Performance optimization",
-      "Dedicated ongoing support"
-    ]
+    title: "Cybersecurity",
+    description: "Security companies and threat intel platforms requiring high-trust technical design, authority branding, and zero-trust aesthetics.",
+    iconName: "ShieldCheck"
+  },
+  {
+    title: "Fintech",
+    description: "Financial technology services demanding high-performance interfaces, rigorous security compliance, and clear financial workflows.",
+    iconName: "Zap"
+  },
+  {
+    title: "Developer Tools",
+    description: "Infrastructure platforms, APIs, and dev tools needing technical documentation landing pages, code previews, and API showcases.",
+    iconName: "Terminal"
+  },
+  {
+    title: "B2B Technology",
+    description: "Enterprise software and B2B technology providers focused on high-ticket lead generation, trust building, and demo booking.",
+    iconName: "Layout"
   }
 ];
 
 export const WHY_WORK_WITH_ME = {
-  headline: "Design thinking + development",
-  lead: "I don't just turn designs into code. I think about how the website communicates the product, guides visitors, and creates a clear path toward conversion.",
+  headline: "Why Work With Me",
+  lead: "A product-focused web studio experience built for speed, quality, and seamless execution without agency overhead.",
   points: [
     {
-      title: "Product-focused",
-      description: "I design around what your company actually sells, translating technical software capabilities into scannable, high-converting visual narratives.",
+      title: "Design + development by one person",
+      description: "No handoff gaps or lost in translation between designer and developer. You get pixel-perfect design translated directly into clean production code.",
       icon: "Target"
     },
     {
-      title: "Fast execution",
-      description: "Direct design and engineering without agency overhead, endless middleman meetings, or bloated project management layers.",
+      title: "Fast communication",
+      description: "Direct founder-to-developer collaboration over Slack/Email. Rapid response times, zero account manager delays, and clear daily updates.",
+      icon: "MessageSquare"
+    },
+    {
+      title: "Product-focused approach",
+      description: "I build around what your company actually sells — translating complex technical features into intuitive, high-converting user journeys.",
       icon: "Zap"
     },
     {
-      title: "Direct collaboration",
-      description: "You work directly with the person designing and building the website — ensuring total alignment and instant feedback loops.",
-      icon: "MessageSquare"
+      title: "Design → Development → Deployment",
+      description: "Complete end-to-end execution. From sitemaps and Figma wireframes to React coding, Core Web Vitals optimization, and Vercel/VPS production deployment.",
+      icon: "CheckCircle2"
     }
   ]
 };
@@ -260,34 +250,58 @@ export const PROCESS_STEPS = [
     step: "01",
     name: "Discover",
     description: "Understand your product, target audience, competitive positioning, and core conversion goals.",
-    detail: "We align on message hierarchy, layout inspiration, and target deliverables."
+    detail: "We align on message hierarchy, sitemap structure, and project requirements."
   },
   {
     step: "02",
     name: "Design",
     description: "Create visual directions, wireframes, and responsive Figma prototypes.",
-    detail: "You get interactive desktop and mobile preview files to refine layout and typography."
+    detail: "You get interactive desktop and mobile preview files to refine layout, typography, and UX."
   },
   {
     step: "03",
     name: "Build",
     description: "Develop the responsive frontend with clean component architecture and sub-second speed.",
-    detail: "Pixel-perfect React code with micro-interactions and Core Web Vitals optimization."
+    detail: "Pixel-perfect React code with micro-interactions, accessibility, and Core Web Vitals optimization."
   },
   {
     step: "04",
     name: "Launch",
     description: "Deploy to production, test across real devices, and verify search indexability.",
-    detail: "Full domain configuration, SSL verification, and post-launch support."
+    detail: "Full domain setup, SSL verification, open-graph metadata, and post-launch support."
+  }
+];
+
+export const CREDIBILITY_HIGHLIGHTS = [
+  {
+    title: "OWASP Leadership",
+    detail: "OWASP Delhi Chapter Lead, coordinating application security initiatives and technical community projects.",
+    badge: "OWASP Delhi Lead"
+  },
+  {
+    title: "Cybersecurity Background",
+    detail: "VAPT, application security auditing, CTF competition engineering, and secure SDLC practices.",
+    badge: "VAPT & AppSec"
+  },
+  {
+    title: "Unreal Engine Contribution",
+    detail: "Source developer contributor to Epic Games' Unreal Engine GitHub codebase and community.",
+    badge: "Epic Games Contributor"
+  },
+  {
+    title: "IEEE Publication",
+    detail: "Published research paper on 'AI-Driven Techniques for Web Search Vulnerability Identification' indexed on IEEE Xplore.",
+    badge: "IEEE Xplore Author"
   }
 ];
 
 export const TECHNOLOGIES = [
-  { name: "React", category: "Library" },
+  { name: "React 19", category: "Frontend" },
   { name: "TypeScript", category: "Language" },
+  { name: "Next.js 15", category: "Framework" },
   { name: "Tailwind CSS", category: "Styling" },
-  { name: "Figma", category: "Design System" },
-  { name: "Next.js / Vite", category: "Tooling" },
-  { name: "Git", category: "Version Control" },
-  { name: "Vercel", category: "Deployment" }
+  { name: "Node.js / Express", category: "Backend" },
+  { name: "Figma", category: "UI/UX Design" },
+  { name: "Framer Motion", category: "Animations" },
+  { name: "Vercel / VPS", category: "Deployment" }
 ];

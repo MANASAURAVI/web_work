@@ -1,7 +1,7 @@
 import React from 'react';
 import { useParams, Link, Navigate } from 'react-router-dom';
 import { PROJECTS } from '@/data/projects';
-import { ArrowLeft, CheckCircle2, Cpu, ArrowUpRight } from 'lucide-react';
+import { ArrowLeft, CheckCircle2, Cpu, ArrowUpRight, ArrowRight } from 'lucide-react';
 import { CornerBorder } from '@/components/CornerBorder';
 
 export const CaseStudyPage = () => {
@@ -14,7 +14,7 @@ export const CaseStudyPage = () => {
 
   return (
     <article className="max-w-5xl mx-auto px-6 py-12 md:py-20 flex flex-col gap-16">
-      {/* Navigation Back Link */}
+      {/* Back Button Link */}
       <div>
         <Link
           to="/work"
@@ -26,7 +26,7 @@ export const CaseStudyPage = () => {
         </Link>
       </div>
 
-      {/* 01 — HERO */}
+      {/* 01 — OVERVIEW & HERO */}
       <section className="flex flex-col gap-8">
         <div className="flex flex-col gap-4">
           <div className="flex flex-wrap items-center gap-3">
@@ -67,7 +67,7 @@ export const CaseStudyPage = () => {
           )}
         </div>
 
-        {/* Large Screenshot Container */}
+        {/* Large Screenshot Preview */}
         <div className="relative group overflow-hidden aspect-[16/9] w-full rounded-2xl border border-slate-800 hover:border-cyan-500/40 shadow-2xl bg-slate-950 hover:-translate-y-1.5 hover:scale-[1.008] transform-gpu transition-all duration-300">
           <CornerBorder />
           <img
@@ -80,29 +80,29 @@ export const CaseStudyPage = () => {
         </div>
       </section>
 
-      {/* 02 — THE CHALLENGE */}
-      <section className="relative group overflow-hidden glass-card rounded-2xl p-8 sm:p-12 border border-slate-800 hover:border-cyan-500/40 hover:-translate-y-2 hover:scale-[1.015] transform-gpu transition-all duration-300 shadow-xl">
+      {/* 02 — PROBLEM */}
+      <section className="relative group overflow-hidden glass-card rounded-2xl p-8 sm:p-12 border border-slate-800 hover:border-amber-500/40 hover:-translate-y-1.5 hover:scale-[1.008] transform-gpu transition-all duration-300 shadow-xl">
         <CornerBorder />
         <div className="relative z-30 flex flex-col gap-4">
           <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-amber-400 font-semibold">
             <span className="w-2 h-2 rounded-full bg-amber-400" />
-            <span>02 — The Challenge</span>
+            <span>02 — Problem</span>
           </div>
-          <h2 className="text-2xl sm:text-3xl font-bold text-white">What needed improvement</h2>
+          <h2 className="text-2xl sm:text-3xl font-bold text-white">What Needed Improvement</h2>
           <p className="text-slate-300 text-base leading-relaxed font-normal">
             {project.challenge}
           </p>
         </div>
       </section>
 
-      {/* 03 — DESIGN DIRECTION */}
+      {/* 03 — APPROACH (DESIGN & ARCHITECTURE) */}
       <section className="flex flex-col gap-8">
         <div className="flex flex-col gap-2">
           <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-indigo-400 font-semibold">
             <span className="w-2 h-2 rounded-full bg-indigo-400" />
-            <span>03 — Design Direction</span>
+            <span>03 — Approach</span>
           </div>
-          <h2 className="text-2xl sm:text-3xl font-bold text-white">Visual Language & Hierarchy</h2>
+          <h2 className="text-2xl sm:text-3xl font-bold text-white">Design Direction & Architecture</h2>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -132,25 +132,25 @@ export const CaseStudyPage = () => {
           </div>
         </div>
 
-        {/* Layout & Language */}
+        {/* Layout & Philosophy */}
         <div className="relative group overflow-hidden glass-card p-8 rounded-xl border border-slate-800 hover:border-cyan-500/40 hover:-translate-y-1.5 hover:scale-[1.008] transform-gpu transition-all duration-300 shadow-lg">
           <CornerBorder />
           <div className="relative z-30 flex flex-col gap-4">
-            <h3 className="text-sm font-mono uppercase text-slate-400">Layout & Visual Philosophy</h3>
+            <h3 className="text-sm font-mono uppercase text-slate-400">Layout & System Philosophy</h3>
             <p className="text-slate-300 text-sm leading-relaxed">{project.designDirection.layoutDescription}</p>
             <p className="text-slate-400 text-xs font-mono pt-2 border-t border-slate-900">{project.designDirection.visualLanguage}</p>
           </div>
         </div>
       </section>
 
-      {/* 04 — KEY SECTIONS */}
+      {/* 04 — WHAT YOU BUILT */}
       <section className="flex flex-col gap-8">
         <div className="flex flex-col gap-2">
           <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-cyan-400 font-semibold">
             <span className="w-2 h-2 rounded-full bg-cyan-400" />
-            <span>04 — Key Sections</span>
+            <span>04 — What Was Built</span>
           </div>
-          <h2 className="text-2xl sm:text-3xl font-bold text-white">Anatomy of the Experience</h2>
+          <h2 className="text-2xl sm:text-3xl font-bold text-white">Anatomy & Key Features</h2>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -176,16 +176,38 @@ export const CaseStudyPage = () => {
         </div>
       </section>
 
-      {/* 05 — FINAL RESULT */}
-      <section className="relative group overflow-hidden glass-card rounded-2xl p-8 sm:p-12 border border-slate-800 hover:border-cyan-500/40 hover:-translate-y-1.5 hover:scale-[1.008] transform-gpu transition-all duration-300 shadow-xl">
+      {/* 05 — TECH STACK */}
+      <section className="relative group overflow-hidden glass-card rounded-2xl p-8 border border-slate-800 hover:border-cyan-500/40 hover:-translate-y-1.5 hover:scale-[1.008] transform-gpu transition-all duration-300 shadow-lg">
+        <CornerBorder />
+        <div className="relative z-30 flex flex-col gap-4">
+          <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-slate-400 font-semibold">
+            <Cpu className="w-4 h-4 text-cyan-400" />
+            <span>05 — Tech Stack</span>
+          </div>
+          <div className="flex flex-wrap gap-2.5">
+            {project.technologies.map((t) => (
+              <span
+                key={t}
+                className="relative group/pill overflow-hidden px-4 py-2 rounded-xl text-xs font-mono text-slate-200 bg-slate-950/90 border border-slate-800 hover:border-cyan-400/60 hover:text-cyan-300 hover:shadow-[0_0_15px_rgba(56,189,248,0.25)] hover:-translate-y-0.5 hover:scale-[1.03] transform-gpu transition-all duration-300 cursor-pointer"
+              >
+                <CornerBorder />
+                <span className="relative z-30">{t}</span>
+              </span>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 06 — RESULT */}
+      <section className="relative group overflow-hidden glass-card rounded-2xl p-8 sm:p-12 border border-slate-800 hover:border-emerald-500/40 hover:-translate-y-1.5 hover:scale-[1.008] transform-gpu transition-all duration-300 shadow-xl">
         <CornerBorder />
         <div className="relative z-30 flex flex-col gap-8">
           <div className="flex flex-col gap-2">
             <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-emerald-400 font-semibold">
               <span className="w-2 h-2 rounded-full bg-emerald-400" />
-              <span>05 — Final Result</span>
+              <span>06 — Result</span>
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-white">Impact & Desktop Visuals</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-white">Impact & Production Visuals</h2>
             <p className="text-slate-300 text-sm leading-relaxed">{project.finalResult.summary}</p>
           </div>
 
@@ -212,42 +234,21 @@ export const CaseStudyPage = () => {
         </div>
       </section>
 
-      {/* 06 — TECHNOLOGY */}
-      <section className="relative group overflow-hidden glass-card rounded-2xl p-8 border border-slate-800 hover:border-cyan-500/40 hover:-translate-y-2 hover:scale-[1.015] transform-gpu transition-all duration-300 shadow-lg">
-        <CornerBorder />
-        <div className="relative z-30 flex flex-col gap-4">
-          <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-slate-400 font-semibold">
-            <Cpu className="w-4 h-4 text-cyan-400" />
-            <span>06 — Technology Stack</span>
-          </div>
-          <div className="flex flex-wrap gap-2.5">
-            {project.technologies.map((t) => (
-              <span
-                key={t}
-                className="relative group/pill overflow-hidden px-4 py-2 rounded-xl text-xs font-mono text-slate-200 bg-slate-950/90 border border-slate-800 hover:border-cyan-400/60 hover:text-cyan-300 hover:shadow-[0_0_15px_rgba(56,189,248,0.25)] hover:-translate-y-0.5 hover:scale-[1.03] transform-gpu transition-all duration-300 cursor-pointer"
-              >
-                <CornerBorder />
-                <span className="relative z-30">{t}</span>
-              </span>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* 07 — CTA */}
+      {/* 07 — NEXT STEP CTA */}
       <section className="relative group overflow-hidden glass-card rounded-3xl p-10 sm:p-14 border border-slate-800 hover:border-cyan-500/40 text-center hover:-translate-y-2 hover:scale-[1.015] transform-gpu transition-all duration-300 shadow-xl">
         <CornerBorder />
         <div className="relative z-30 flex flex-col items-center gap-6">
           <span className="text-xs font-mono uppercase tracking-widest text-cyan-400 font-semibold">07 — Next Step</span>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-white">
-            Have a website that needs the same treatment?
+            Have a product that needs the same level of design & engineering?
           </h2>
           <div className="pt-2">
             <Link
               to="/contact"
               className="inline-flex items-center gap-2 px-8 py-4 rounded-xl text-sm font-semibold uppercase tracking-wider text-slate-950 bg-cyan-400 hover:bg-cyan-300 transition-all duration-300 shadow-lg shadow-cyan-400/20 hover:-translate-y-1 hover:scale-[1.02] transform-gpu"
             >
-              Let's talk →
+              <span>Start a Project</span>
+              <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
         </div>

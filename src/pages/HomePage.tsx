@@ -1,14 +1,31 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowUpRight, CheckCircle2, ArrowRight, Zap, Target, MessageSquare, Code2, Layout, Sparkles, Rocket, Mail } from 'lucide-react';
+import {
+  ArrowUpRight,
+  CheckCircle2,
+  ArrowRight,
+  Zap,
+  Target,
+  MessageSquare,
+  Code2,
+  Layout,
+  Sparkles,
+  Rocket,
+  Mail,
+  ShieldCheck,
+  BrainCircuit,
+  Terminal,
+  BookOpen,
+  Cpu
+} from 'lucide-react';
 import { PROJECTS } from '@/data/projects';
-import { SERVICES, WHY_WORK_WITH_ME, PROCESS_STEPS, TECHNOLOGIES } from '@/data/services';
+import { SERVICES, WHY_WORK_WITH_ME, PROCESS_STEPS, WHO_I_WORK_WITH, CREDIBILITY_HIGHLIGHTS } from '@/data/services';
 import { ProjectCard } from '@/components/ProjectCard';
-import { MorphLineText } from '@/components/MorphLineText';
 import { CornerBorder } from '@/components/CornerBorder';
 
 export const HomePage = () => {
+  // Show 4 strongest completed real projects
   const selectedWork = PROJECTS.slice(0, 4);
 
   const getServiceIcon = (iconName: string) => {
@@ -23,82 +40,71 @@ export const HomePage = () => {
     }
   };
 
+  const getIndustryIcon = (iconName: string) => {
+    switch (iconName) {
+      case 'Rocket': return <Rocket className="w-5 h-5 text-cyan-400" />;
+      case 'BrainCircuit': return <BrainCircuit className="w-5 h-5 text-indigo-400" />;
+      case 'ShieldCheck': return <ShieldCheck className="w-5 h-5 text-emerald-400" />;
+      case 'Zap': return <Zap className="w-5 h-5 text-amber-400" />;
+      case 'Terminal': return <Terminal className="w-5 h-5 text-sky-400" />;
+      case 'Layout': return <Layout className="w-5 h-5 text-purple-400" />;
+      default: return <Rocket className="w-5 h-5 text-cyan-400" />;
+    }
+  };
+
   const getWhyIcon = (iconName: string) => {
     switch (iconName) {
       case 'Target': return <Target className="w-5 h-5 text-cyan-400" />;
-      case 'Zap': return <Zap className="w-5 h-5 text-emerald-400" />;
-      case 'MessageSquare': return <MessageSquare className="w-5 h-5 text-indigo-400" />;
+      case 'MessageSquare': return <MessageSquare className="w-5 h-5 text-emerald-400" />;
+      case 'Zap': return <Zap className="w-5 h-5 text-indigo-400" />;
+      case 'CheckCircle2': return <CheckCircle2 className="w-5 h-5 text-amber-400" />;
       default: return <Target className="w-5 h-5 text-cyan-400" />;
     }
   };
 
   return (
     <div className="space-y-24 md:space-y-36 pb-24">
-      {/* SECTION 1 — HERO */}
-      <section className="relative pt-12 md:pt-20 lg:pt-24 px-4 sm:px-6 lg:px-8 max-w-[1600px] mx-auto translate-y-[5%]">
+      {/* 01 — HERO SECTION */}
+      <section className="relative pt-12 md:pt-20 lg:pt-24 px-4 sm:px-6 lg:px-8 max-w-[1600px] mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 xl:gap-12 items-start">
           
           {/* LEFT COLUMN — Main Hero Copy */}
-          <div className="lg:col-span-6 xl:col-span-6 space-y-7 lg:-translate-y-[10%]">
-            {/* Status Badge */}
+          <div className="lg:col-span-6 xl:col-span-6 space-y-7">
+            {/* Status Badge: Positioning as SaaS / Product Web Developer */}
             <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-white/[0.05] border border-white/15 text-xs font-mono text-slate-200 backdrop-blur-xl shadow-lg">
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_#10b981]" />
-              <span>Freelance Web Developer & UI Engineer</span>
+              <span>SaaS / Product Web Developer</span>
             </div>
 
-            {/* Main Hero Headline with Line Morph Animation */}
-            <MorphLineText />
+            {/* Main Hero Headline */}
+            <h1 className="text-4xl sm:text-6xl xl:text-7xl font-extrabold text-white tracking-tight leading-[1.08]">
+              I design & build <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-sky-300 to-indigo-400">websites for SaaS & tech products</span>.
+            </h1>
 
-            {/* Supporting Text with Bouncy Period Style */}
+            {/* Clear Statement of What I Do */}
             <p className="text-base sm:text-lg text-slate-300 max-w-xl leading-relaxed font-normal">
-              Freelance web developer focused on modern SaaS, startup and product websites
-              <motion.span
-                className="inline-block text-cyan-400 font-bold ml-0.5"
-                animate={{ y: [0, -7, 0] }}
-                transition={{
-                  duration: 1.4,
-                  repeat: Infinity,
-                  repeatType: "mirror",
-                  ease: "easeInOut",
-                }}
-              >
-                .
-              </motion.span>
-              {" "}From UI design to frontend development and deployment
-              <motion.span
-                className="inline-block text-cyan-400 font-bold ml-0.5"
-                animate={{ y: [0, -7, 0] }}
-                transition={{
-                  duration: 1.4,
-                  delay: 0.35,
-                  repeat: Infinity,
-                  repeatType: "mirror",
-                  ease: "easeInOut",
-                }}
-              >
-                .
-              </motion.span>
+              High-converting website design, product UI, and frontend engineering for software startups, AI tools, and tech companies. I take your project from initial design to live production deployment.
             </p>
 
             {/* Action Buttons */}
             <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4">
-              <a
-                href="#selected-work"
-                className="relative group overflow-hidden px-6 py-3.5 rounded-lg text-sm font-semibold text-slate-950 bg-white hover:bg-slate-100 transition-all duration-300 shadow-md hover:-translate-y-1.5 hover:scale-[1.02] transform-gpu active:scale-95 inline-flex items-center justify-center gap-2"
-              >
-                <CornerBorder />
-                <span className="relative z-30">View my work</span>
-                <ArrowRight className="w-4 h-4 relative z-30 group-hover:translate-x-1 transition-transform" />
-              </a>
-
               <Link
                 to="/contact"
-                className="relative group overflow-hidden px-6 py-3.5 rounded-lg text-sm font-semibold text-slate-200 bg-white/[0.06] border border-white/15 backdrop-blur-xl hover:text-white hover:border-white/30 hover:bg-white/[0.12] transition-all duration-300 active:scale-95 inline-flex items-center justify-center gap-2 shadow-lg hover:-translate-y-1.5 hover:scale-[1.02] transform-gpu"
+                className="relative group overflow-hidden px-8 py-4 rounded-xl text-sm font-semibold uppercase tracking-wider text-slate-950 bg-cyan-400 hover:bg-cyan-300 transition-all duration-300 shadow-xl shadow-cyan-400/20 hover:-translate-y-1.5 hover:scale-[1.02] transform-gpu active:scale-95 inline-flex items-center justify-center gap-2"
               >
                 <CornerBorder />
-                <span className="relative z-30">Start a project</span>
-                <ArrowUpRight className="w-4 h-4 text-slate-400 relative z-30 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                <span className="relative z-30">Start a Project</span>
+                <ArrowRight className="w-4 h-4 relative z-30 group-hover:translate-x-1 transition-transform" />
               </Link>
+
+              <a
+                href="#selected-work"
+                className="relative group overflow-hidden px-6 py-4 rounded-xl text-sm font-semibold text-slate-200 bg-white/[0.06] border border-white/15 backdrop-blur-xl hover:text-white hover:border-white/30 hover:bg-white/[0.12] transition-all duration-300 active:scale-95 inline-flex items-center justify-center gap-2 shadow-lg hover:-translate-y-1.5 hover:scale-[1.02] transform-gpu"
+              >
+                <CornerBorder />
+                <span className="relative z-30">Selected Work</span>
+                <ArrowUpRight className="w-4 h-4 text-slate-400 relative z-30 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+              </a>
             </div>
 
             {/* Quick Metrics Bar with Glassmorphism */}
@@ -110,7 +116,7 @@ export const HomePage = () => {
               </div>
               <div className="border-l border-white/15 pl-4 sm:pl-6">
                 <p className="text-xl sm:text-2xl font-bold font-mono text-white tracking-tight">Sub-1s</p>
-                <p className="text-[10px] text-slate-300 uppercase tracking-widest font-mono mt-1 font-medium">PAGE LOAD SPEEDS</p>
+                <p className="text-[10px] text-slate-300 uppercase tracking-widest font-mono mt-1 font-medium">LOAD SPEEDS</p>
               </div>
               <div className="border-t sm:border-t-0 sm:border-l border-white/15 pt-3 sm:pt-0 sm:pl-6">
                 <p className="text-xl sm:text-2xl font-bold font-mono text-white tracking-tight">Direct</p>
@@ -124,12 +130,12 @@ export const HomePage = () => {
 
           </div>
 
-          {/* RIGHT COLUMN — Code Window & 3 Cards Stack */}
-          <div className="lg:col-span-6 xl:col-span-6 relative space-y-6 pt-4 lg:pt-0 lg:translate-y-[35%] scale-100 sm:scale-105 lg:scale-110 origin-top-left">
+          {/* RIGHT COLUMN — Code Window & 3 Feature Cards Stack */}
+          <div className="lg:col-span-6 xl:col-span-6 relative space-y-6 pt-4 lg:pt-0">
             <div className="grid grid-cols-1 sm:grid-cols-12 gap-4 items-stretch">
               
               {/* Code Editor Card (sm:col-span-7) with Glassmorphism */}
-              <div className="relative group overflow-hidden sm:col-span-7 rounded-xl bg-slate-950/40 border border-white/15 shadow-[0_16px_36px_rgba(0,0,0,0.5)] p-4 font-mono text-xs backdrop-blur-2xl flex flex-col justify-between hover:-translate-y-2 hover:scale-[1.015] transform-gpu transition-all duration-300">
+              <div className="relative group overflow-hidden sm:col-span-7 rounded-xl bg-slate-950/60 border border-white/15 shadow-[0_16px_36px_rgba(0,0,0,0.5)] p-4 font-mono text-xs backdrop-blur-2xl flex flex-col justify-between hover:-translate-y-2 hover:scale-[1.015] transform-gpu transition-all duration-300">
                 <CornerBorder />
                 <div>
                   {/* Title bar */}
@@ -139,12 +145,11 @@ export const HomePage = () => {
                       <span className="w-2.5 h-2.5 rounded-full bg-[#f59e0b]" />
                       <span className="w-2.5 h-2.5 rounded-full bg-[#10b981]" />
                     </div>
-                    <span className="text-[11px] text-slate-300 font-mono">portfolio.jsx</span>
+                    <span className="text-[11px] text-slate-300 font-mono">web-studio.config.ts</span>
                   </div>
 
-                  {/* Code snippet with Line Numbers 1 to 10 */}
-                  <div className="flex gap-3.5 font-mono text-[11px] leading-relaxed">
-                    {/* Line Numbers Column */}
+                  {/* Code snippet */}
+                  <div className="flex gap-3 font-mono text-[11px] leading-relaxed">
                     <div className="flex flex-col text-slate-500 select-none text-right w-4 space-y-1 font-mono">
                       <span>1</span>
                       <span>2</span>
@@ -154,78 +159,66 @@ export const HomePage = () => {
                       <span>6</span>
                       <span>7</span>
                       <span>8</span>
-                      <span>9</span>
-                      <span>10</span>
                     </div>
 
-                    {/* Code Syntax Highlighting */}
                     <div className="space-y-1 text-slate-200 font-mono">
-                      <p><span className="text-purple-400">const</span> <span className="text-blue-400">developer</span> = &#123;</p>
-                      <p className="pl-3"><span className="text-sky-400">name</span>: <span className="text-emerald-400">"Saurav"</span>,</p>
-                      <p className="pl-3"><span className="text-sky-400">role</span>: <span className="text-emerald-400">"Frontend Developer"</span>,</p>
-                      <p className="pl-3"><span className="text-sky-400">focus</span>: [<span className="text-emerald-400">"Web"</span>, <span className="text-emerald-400">"UI/UX"</span>, <span className="text-emerald-400">"Performance"</span>],</p>
-                      <p className="pl-3"><span className="text-sky-400">currently</span>: <span className="text-emerald-400">"Building awesome things"</span>,</p>
-                      <p className="pl-3"><span className="text-sky-400">location</span>: <span className="text-emerald-400">"India"</span>,</p>
-                      <p className="pl-3"><span className="text-sky-400">status</span>: <span className="text-emerald-400">"Available for projects"</span>,</p>
+                      <p><span className="text-purple-400">export const</span> <span className="text-blue-400">studio</span> = &#123;</p>
+                      <p className="pl-3"><span className="text-sky-400">role</span>: <span className="text-emerald-400">"SaaS / Product Web Developer"</span>,</p>
+                      <p className="pl-3"><span className="text-sky-400">focus</span>: <span className="text-emerald-400">"High-Converting Websites"</span>,</p>
+                      <p className="pl-3"><span className="text-sky-400">pipeline</span>: [<span className="text-emerald-400">"Design"</span>, <span className="text-emerald-400">"Build"</span>, <span className="text-emerald-400">"Launch"</span>],</p>
+                      <p className="pl-3"><span className="text-sky-400">stack</span>: [<span className="text-emerald-400">"React"</span>, <span className="text-emerald-400">"Next.js"</span>, <span className="text-emerald-400">"Tailwind"</span>],</p>
+                      <p className="pl-3"><span className="text-sky-400">status</span>: <span className="text-emerald-400">"Available for Projects"</span>,</p>
                       <p>&#125;</p>
-                      <p className="h-3"></p>
-                      <p><span className="text-purple-400">return</span> &lt;<span className="text-blue-400">YourNextProject</span> /&gt;</p>
+                      <p className="pt-1"><span className="text-purple-400">return</span> &lt;<span className="text-cyan-400">HighImpactWebsite</span> /&gt;</p>
                     </div>
                   </div>
                 </div>
               </div>
 
-              {/* 3 Feature Cards Stack (sm:col-span-5) with Glassmorphism & 3D Pop Up */}
-              <div className="sm:col-span-5 flex flex-col justify-start gap-2.5 translate-y-[10%]">
+              {/* 3 Feature Cards Stack (sm:col-span-5) */}
+              <div className="sm:col-span-5 flex flex-col justify-start gap-2.5">
                 {/* Card 1 */}
-                <div className="relative group overflow-hidden p-3.5 rounded-xl bg-slate-950/40 border border-white/15 backdrop-blur-2xl shadow-lg flex items-start gap-3 hover:bg-white/[0.08] hover:border-blue-500/50 hover:-translate-y-1.5 hover:scale-[1.02] hover:shadow-cyan-500/20 transition-all duration-300 transform-gpu cursor-pointer">
+                <div className="relative group overflow-hidden p-3.5 rounded-xl bg-slate-950/60 border border-white/15 backdrop-blur-2xl shadow-lg flex items-start gap-3 hover:bg-white/[0.08] hover:border-cyan-500/50 hover:-translate-y-1.5 hover:scale-[1.02] transform-gpu transition-all duration-300 cursor-pointer">
                   <CornerBorder />
-                  <div className="w-8 h-8 rounded-lg bg-blue-500/20 border border-blue-400/30 flex items-center justify-center text-blue-400 shrink-0 group-hover:scale-110 transition-transform">
-                    <Zap className="w-4 h-4" />
+                  <div className="w-8 h-8 rounded-lg bg-cyan-500/20 border border-cyan-400/30 flex items-center justify-center text-cyan-400 shrink-0 group-hover:scale-110 transition-transform">
+                    <Layout className="w-4 h-4" />
                   </div>
                   <div>
-                    <h4 className="text-xs font-semibold text-white">Modern Design</h4>
-                    <p className="text-[11px] text-slate-300 mt-0.5">Clean. Minimal. Impactful.</p>
+                    <h4 className="text-xs font-semibold text-white">Conversion UI Design</h4>
+                    <p className="text-[11px] text-slate-300 mt-0.5">Sitemaps & Figma prototypes</p>
                   </div>
                 </div>
 
                 {/* Card 2 */}
-                <div className="relative group overflow-hidden p-3.5 rounded-xl bg-slate-950/40 border border-white/15 backdrop-blur-2xl shadow-lg flex items-start gap-3 hover:bg-white/[0.08] hover:border-blue-500/50 hover:-translate-y-1.5 hover:scale-[1.02] hover:shadow-cyan-500/20 transition-all duration-300 transform-gpu cursor-pointer">
+                <div className="relative group overflow-hidden p-3.5 rounded-xl bg-slate-950/60 border border-white/15 backdrop-blur-2xl shadow-lg flex items-start gap-3 hover:bg-white/[0.08] hover:border-cyan-500/50 hover:-translate-y-1.5 hover:scale-[1.02] transform-gpu transition-all duration-300 cursor-pointer">
                   <CornerBorder />
-                  <div className="w-8 h-8 rounded-lg bg-blue-500/20 border border-blue-400/30 flex items-center justify-center text-blue-400 shrink-0 group-hover:scale-110 transition-transform">
+                  <div className="w-8 h-8 rounded-lg bg-emerald-500/20 border border-emerald-400/30 flex items-center justify-center text-emerald-400 shrink-0 group-hover:scale-110 transition-transform">
                     <Code2 className="w-4 h-4" />
                   </div>
                   <div>
-                    <h4 className="text-xs font-semibold text-white">Frontend Development</h4>
-                    <p className="text-[11px] text-slate-300 mt-0.5">Fast. Scalable. Optimized.</p>
+                    <h4 className="text-xs font-semibold text-white">Frontend Engineering</h4>
+                    <p className="text-[11px] text-slate-300 mt-0.5">React, Next.js & Tailwind</p>
                   </div>
                 </div>
 
                 {/* Card 3 */}
-                <div className="relative group overflow-hidden p-3.5 rounded-xl bg-slate-950/40 border border-white/15 backdrop-blur-2xl shadow-lg flex items-start gap-3 hover:bg-white/[0.08] hover:border-blue-500/50 hover:-translate-y-1.5 hover:scale-[1.02] hover:shadow-cyan-500/20 transition-all duration-300 transform-gpu cursor-pointer">
+                <div className="relative group overflow-hidden p-3.5 rounded-xl bg-slate-950/60 border border-white/15 backdrop-blur-2xl shadow-lg flex items-start gap-3 hover:bg-white/[0.08] hover:border-cyan-500/50 hover:-translate-y-1.5 hover:scale-[1.02] transform-gpu transition-all duration-300 cursor-pointer">
                   <CornerBorder />
-                  <div className="w-8 h-8 rounded-lg bg-blue-500/20 border border-blue-400/30 flex items-center justify-center text-blue-400 shrink-0 group-hover:scale-110 transition-transform">
-                    <Target className="w-4 h-4" />
+                  <div className="w-8 h-8 rounded-lg bg-indigo-500/20 border border-indigo-400/30 flex items-center justify-center text-indigo-400 shrink-0 group-hover:scale-110 transition-transform">
+                    <Rocket className="w-4 h-4" />
                   </div>
                   <div>
-                    <h4 className="text-xs font-semibold text-white">Real Results</h4>
-                    <p className="text-[11px] text-slate-300 mt-0.5">Ideas to production.</p>
+                    <h4 className="text-xs font-semibold text-white">Production Launch</h4>
+                    <p className="text-[11px] text-slate-300 mt-0.5">Vercel, SSL & optimization</p>
                   </div>
                 </div>
               </div>
 
             </div>
 
-            {/* Handwritten Note Annotation */}
-            <div className="pt-3 text-right pr-2">
-              <span className="font-handwriting text-slate-300 text-2xl tracking-wide inline-block -rotate-6 select-none opacity-90">
-                Turning ideas into real products.
-              </span>
-            </div>
-
             {/* Bottom Right Label */}
             <div className="flex items-center justify-end gap-2 text-[10px] font-mono text-slate-400 uppercase tracking-widest pt-2">
-              <span>DESIGN / DEVELOP / DEPLOY</span>
+              <span>DESIGN / BUILD / LAUNCH</span>
               <span className="w-8 h-px bg-white/20" />
             </div>
           </div>
@@ -233,12 +226,15 @@ export const HomePage = () => {
         </div>
       </section>
 
-      {/* SECTION 2 — SELECTED WORK */}
-      <section id="selected-work" className="px-6 sm:px-10 lg:px-12 max-w-[1536px] mx-auto space-y-12">
+      {/* 02 — SELECTED WORK */}
+      <section id="selected-work" className="px-6 sm:px-10 lg:px-12 max-w-[1536px] mx-auto space-y-12 scroll-mt-24">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-slate-800 pb-6">
           <div>
-            <span className="text-xs font-mono uppercase tracking-widest text-cyan-400 font-semibold">Featured Work</span>
+            <span className="text-xs font-mono uppercase tracking-widest text-cyan-400 font-semibold">Featured Projects</span>
             <h2 className="text-3xl sm:text-4xl font-extrabold text-white mt-1">Selected Work</h2>
+            <p className="text-slate-400 text-sm mt-1">
+              Top completed real web applications and product platforms.
+            </p>
           </div>
           <Link
             to="/work"
@@ -249,7 +245,7 @@ export const HomePage = () => {
           </Link>
         </div>
 
-        {/* 4 Strongest Projects Grid */}
+        {/* 4 Strongest Completed Real Projects Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {selectedWork.map((project, index) => (
             <ProjectCard key={project.slug} project={project} priority={index === 0} />
@@ -257,13 +253,13 @@ export const HomePage = () => {
         </div>
       </section>
 
-      {/* SECTION 3 — WHAT I DO (6 CORE SERVICES) */}
+      {/* 03 — SERVICES */}
       <section className="px-6 sm:px-10 lg:px-12 max-w-[1536px] mx-auto space-y-12">
         <div className="max-w-2xl space-y-2">
-          <span className="text-xs font-mono uppercase tracking-widest text-indigo-400 font-semibold">What I can help you build</span>
+          <span className="text-xs font-mono uppercase tracking-widest text-indigo-400 font-semibold">What I Build</span>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-white">Services</h2>
           <p className="text-slate-400 text-sm">
-            Targeted web solutions built to solve business problems and drive conversion for startups.
+            Product-focused web offerings engineered to communicate your value proposition and drive conversion.
           </p>
         </div>
 
@@ -295,7 +291,7 @@ export const HomePage = () => {
                     to={`/services#${service.id}`}
                     className="text-xs font-mono font-semibold uppercase tracking-wider text-slate-400 group-hover:text-cyan-400 inline-flex items-center gap-1.5 transition-colors"
                   >
-                    <span>Explore deliverables</span>
+                    <span>View deliverables</span>
                     <ArrowRight className="w-3.5 h-3.5" />
                   </Link>
                 </div>
@@ -305,17 +301,49 @@ export const HomePage = () => {
         </div>
       </section>
 
-      {/* SECTION 4 — WHY WORK WITH ME */}
+      {/* 04 — WHO I WORK WITH */}
+      <section className="px-6 sm:px-10 lg:px-12 max-w-[1536px] mx-auto space-y-12">
+        <div className="max-w-2xl space-y-2">
+          <span className="text-xs font-mono uppercase tracking-widest text-cyan-400 font-semibold">Target Industries</span>
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-white">Who I Work With</h2>
+          <p className="text-slate-400 text-sm">
+            I partner with technology companies, startups, and founders in high-growth industries.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {WHO_I_WORK_WITH.map((item) => (
+            <div
+              key={item.title}
+              className="relative group overflow-hidden glass-card rounded-2xl p-7 border border-slate-800/80 hover:border-cyan-500/50 hover:-translate-y-1.5 hover:scale-[1.015] transform-gpu transition-all duration-300 shadow-lg"
+            >
+              <CornerBorder />
+              <div className="relative z-30 space-y-3">
+                <div className="w-10 h-10 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center group-hover:scale-110 transition-transform">
+                  {getIndustryIcon(item.iconName)}
+                </div>
+                <h3 className="text-lg font-bold text-white group-hover:text-cyan-400 transition-colors">
+                  {item.title}
+                </h3>
+                <p className="text-xs text-slate-300 leading-relaxed">
+                  {item.description}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* 05 — WHY WORK WITH ME (4 PILLARS) */}
       <section className="px-6 sm:px-10 lg:px-12 max-w-[1536px] mx-auto">
         <div className="relative group overflow-hidden glass-card rounded-3xl border border-slate-800 hover:border-cyan-500/40 hover:-translate-y-1.5 hover:scale-[1.008] transform-gpu transition-all duration-300 shadow-xl">
           <CornerBorder />
-          {/* Subtle background gradient glow */}
           <div className="absolute top-0 right-0 w-96 h-96 bg-cyan-500/5 blur-3xl pointer-events-none" />
 
           <div className="p-8 sm:p-14 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            {/* Left Headline & Lead */}
+            {/* Left Headline */}
             <div className="lg:col-span-5 space-y-6">
-              <span className="text-xs font-mono uppercase tracking-widest text-cyan-400 font-semibold">The Freelancer Advantage</span>
+              <span className="text-xs font-mono uppercase tracking-widest text-cyan-400 font-semibold">Studio Advantage</span>
               <h2 className="text-3xl sm:text-5xl font-extrabold text-white leading-tight">
                 {WHY_WORK_WITH_ME.headline}
               </h2>
@@ -325,30 +353,30 @@ export const HomePage = () => {
 
               <div className="pt-2">
                 <Link
-                  to="/about"
-                  className="relative group overflow-hidden inline-flex items-center gap-2 text-sm font-semibold text-white bg-slate-900 border border-slate-800 hover:bg-slate-800 hover:border-slate-700 px-5 py-2.5 rounded-xl transition-all hover:-translate-y-1 hover:scale-[1.02] transform-gpu duration-300"
+                  to="/contact"
+                  className="relative group overflow-hidden inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-wider text-slate-950 bg-cyan-400 hover:bg-cyan-300 px-6 py-3.5 rounded-xl transition-all hover:-translate-y-1 hover:scale-[1.02] transform-gpu duration-300 shadow-lg shadow-cyan-400/20"
                 >
                   <CornerBorder />
-                  <span>More about my studio</span>
-                  <ArrowUpRight className="w-4 h-4 text-cyan-400" />
+                  <span>Start a Project</span>
+                  <ArrowRight className="w-4 h-4" />
                 </Link>
               </div>
             </div>
 
-            {/* Right 3 Points Grid */}
-            <div className="lg:col-span-7 space-y-6">
+            {/* Right 4 Pillars Grid */}
+            <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4">
               {WHY_WORK_WITH_ME.points.map((point) => (
                 <div
                   key={point.title}
-                  className="relative group overflow-hidden p-6 rounded-2xl bg-slate-950/70 border border-slate-800/80 flex items-start gap-4 hover:border-cyan-500/50 hover:-translate-y-1.5 hover:scale-[1.015] transform-gpu transition-all duration-300"
+                  className="relative group overflow-hidden p-6 rounded-2xl bg-slate-950/70 border border-slate-800/80 flex flex-col gap-3 hover:border-cyan-500/50 hover:-translate-y-1.5 hover:scale-[1.015] transform-gpu transition-all duration-300"
                 >
                   <CornerBorder />
                   <div className="w-10 h-10 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-center shrink-0">
                     {getWhyIcon(point.icon)}
                   </div>
                   <div className="space-y-1">
-                    <h3 className="text-lg font-bold text-white">{point.title}</h3>
-                    <p className="text-sm text-slate-300 leading-relaxed font-normal">
+                    <h3 className="text-base font-bold text-white">{point.title}</h3>
+                    <p className="text-xs text-slate-300 leading-relaxed font-normal">
                       {point.description}
                     </p>
                   </div>
@@ -359,13 +387,13 @@ export const HomePage = () => {
         </div>
       </section>
 
-      {/* SECTION 5 — PROCESS */}
+      {/* 06 — PROCESS (DISCOVER → DESIGN → BUILD → LAUNCH) */}
       <section className="px-6 sm:px-10 lg:px-12 max-w-[1536px] mx-auto space-y-12">
         <div className="text-center max-w-2xl mx-auto space-y-2">
           <span className="text-xs font-mono uppercase tracking-widest text-emerald-400 font-semibold">How We Work</span>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-white">4-Step Execution Process</h2>
           <p className="text-slate-400 text-sm">
-            Streamlined timeline designed to take your project from concept to live production seamlessly.
+            Discover → Design → Build → Launch. Streamlined pipeline from initial concept to live product.
           </p>
         </div>
 
@@ -403,7 +431,38 @@ export const HomePage = () => {
         </div>
       </section>
 
-      {/* SECTION 6 — FINAL CTA */}
+      {/* 07 — CONCISE CREDIBILITY */}
+      <section className="px-6 sm:px-10 lg:px-12 max-w-[1536px] mx-auto space-y-8">
+        <div className="max-w-2xl space-y-2">
+          <span className="text-xs font-mono uppercase tracking-widest text-amber-400 font-semibold">Technical Background</span>
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-white">Credibility & Authority</h2>
+          <p className="text-slate-400 text-sm">
+            Proven application security, open-source engineering, and published research.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {CREDIBILITY_HIGHLIGHTS.map((cred) => (
+            <div
+              key={cred.title}
+              className="relative group overflow-hidden glass-card rounded-2xl p-6 border border-slate-800 hover:border-amber-500/40 hover:-translate-y-1.5 transform-gpu transition-all duration-300 flex flex-col justify-between"
+            >
+              <CornerBorder />
+              <div className="relative z-30 space-y-3">
+                <span className="text-[10px] font-mono uppercase tracking-wider text-amber-400 bg-amber-950/60 px-2.5 py-1 rounded border border-amber-800/40 inline-block font-semibold">
+                  {cred.badge}
+                </span>
+                <h3 className="text-lg font-bold text-white">{cred.title}</h3>
+                <p className="text-xs text-slate-300 leading-relaxed font-normal">
+                  {cred.detail}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* 08 — FINAL CTA SECTION */}
       <section className="px-6 sm:px-10 lg:px-12 max-w-[1536px] mx-auto text-center">
         <div className="relative group overflow-hidden glass-card rounded-3xl p-10 sm:p-14 border border-slate-800 hover:border-cyan-500/40 flex flex-col items-center gap-8 max-w-4xl mx-auto hover:-translate-y-1.5 hover:scale-[1.008] transform-gpu transition-all duration-300 shadow-2xl">
           <CornerBorder />
@@ -414,17 +473,17 @@ export const HomePage = () => {
               Have a product that deserves a better website?
             </h2>
             <p className="text-xl text-cyan-400 font-semibold">
-              Let's build it.
+              Let's build it together.
             </p>
           </div>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 relative z-10 pt-4">
             <Link
               to="/contact"
-              className="relative group overflow-hidden w-full sm:w-auto px-8 py-4 rounded-xl text-sm font-semibold uppercase tracking-wider text-slate-950 bg-white hover:bg-cyan-400 transition-all duration-300 shadow-xl shadow-white/10 hover:shadow-cyan-400/25 hover:-translate-y-1 hover:scale-[1.02] transform-gpu active:scale-95 inline-flex items-center justify-center gap-2"
+              className="relative group overflow-hidden w-full sm:w-auto px-8 py-4 rounded-xl text-sm font-semibold uppercase tracking-wider text-slate-950 bg-cyan-400 hover:bg-cyan-300 transition-all duration-300 shadow-xl shadow-cyan-400/20 hover:-translate-y-1 hover:scale-[1.02] transform-gpu active:scale-95 inline-flex items-center justify-center gap-2"
             >
               <CornerBorder />
-              <span className="relative z-30">Start a project</span>
+              <span className="relative z-30">Start a Project</span>
               <ArrowRight className="w-4 h-4 relative z-30 group-hover:translate-x-1 transition-transform" />
             </Link>
 

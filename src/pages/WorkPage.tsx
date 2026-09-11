@@ -42,7 +42,7 @@ export const WorkPage = () => {
             className="relative group/btn overflow-hidden inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-sm font-semibold uppercase tracking-wider text-slate-950 bg-cyan-400 hover:bg-cyan-300 transition-all duration-300 shadow-lg shadow-cyan-400/20 hover:-translate-y-1 hover:scale-[1.02] transform-gpu"
           >
             <CornerBorder />
-            <span className="relative z-30">Let's talk about your project</span>
+            <span className="relative z-30">Start a Project</span>
             <ArrowRight className="w-4 h-4 relative z-30 group-hover/btn:translate-x-1 transition-transform" />
           </Link>
         </div>

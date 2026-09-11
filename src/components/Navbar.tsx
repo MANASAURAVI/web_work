@@ -103,7 +103,7 @@ export const Navbar: React.FC = () => {
             to="/contact"
             className="hidden sm:inline-flex items-center gap-2 px-4.5 py-2 rounded-full text-xs font-bold font-mono text-slate-950 bg-white hover:bg-cyan-400 transition-all shadow-md active:scale-95 group"
           >
-            <span>Let's talk</span>
+            <span>Start a Project</span>
             <ArrowUpRight className="w-3.5 h-3.5 text-slate-950 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
           </Link>
 

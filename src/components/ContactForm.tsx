@@ -12,7 +12,7 @@ export const ContactForm = () => {
     company: '',
     email: '',
     website: '',
-    projectType: 'Website Design',
+    projectType: 'Website Design & Development',
     budget: '$5,000 - $10,000',
     message: ''
   });
@@ -32,10 +32,12 @@ export const ContactForm = () => {
   ];
 
   const projectTypes = [
-    'Website Design',
-    'Frontend Development',
-    'Website Redesign',
-    'Landing Page'
+    'Website Design & Development',
+    'SaaS & Startup Websites',
+    'Landing Pages',
+    'Product UI / Frontend',
+    'Performance & UX',
+    'Ongoing Website Development'
   ];
 
   // Helper for input sanitization (strips HTML tags and script injections)
@@ -320,7 +322,7 @@ export const ContactForm = () => {
               <span>Verifying & Sending...</span>
             ) : (
               <>
-                <span>Send Inquiry</span>
+                <span>Start a Project</span>
                 <Send className="w-4 h-4" />
               </>
             )}
