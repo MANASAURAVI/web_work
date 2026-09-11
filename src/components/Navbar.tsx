@@ -32,9 +32,11 @@ export const Navbar: React.FC = () => {
           to="/" 
           className="group flex items-center gap-2.5 font-bold tracking-tight text-white hover:opacity-90 transition-opacity shrink-0"
         >
-          <span className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white text-xs font-black shadow-md shadow-blue-500/30 group-hover:scale-105 transition-transform">
-            S
-          </span>
+          <img
+            src="https://avatars.githubusercontent.com/u/172996345?v=4&size=64"
+            alt="Saurav Avatar"
+            className="w-8 h-8 rounded-full object-cover border border-cyan-400/40 shadow-md shadow-blue-500/30 group-hover:scale-105 transition-transform"
+          />
           <span className="font-mono text-base font-bold tracking-tight">
             SAURAV<span className="text-blue-500">.</span>
           </span>
@@ -145,9 +147,11 @@ export const Navbar: React.FC = () => {
                   onClick={() => setMobileMenuOpen(false)}
                   className="flex items-center gap-2 font-bold tracking-tight text-white"
                 >
-                  <span className="w-7 h-7 rounded-full bg-blue-600 flex items-center justify-center text-white text-xs font-black">
-                    S
-                  </span>
+                  <img
+                    src="https://avatars.githubusercontent.com/u/172996345?v=4&size=64"
+                    alt="Saurav Avatar"
+                    className="w-7 h-7 rounded-full object-cover border border-cyan-400/40"
+                  />
                   <span className="font-mono text-sm font-bold tracking-tight">
                     SAURAV<span className="text-blue-500">.</span>
                   </span>

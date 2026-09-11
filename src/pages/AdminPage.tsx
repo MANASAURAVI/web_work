@@ -449,9 +449,11 @@ Saurav Studio Admin`,
         <div className="relative rounded-full bg-[#070b15]/95 border border-white/20 backdrop-blur-2xl shadow-[0_12px_40px_rgba(0,0,0,0.8)] px-4 py-2.5 flex items-center justify-between">
           {/* Brand Logo (Matching Home Page) */}
           <div className="flex items-center gap-2 font-bold tracking-tight text-white shrink-0">
-            <span className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white text-xs font-black shadow-md shadow-blue-500/30">
-              A
-            </span>
+            <img
+              src="https://avatars.githubusercontent.com/u/172996345?v=4&size=64"
+              alt="Avatar"
+              className="w-8 h-8 rounded-full object-cover border border-cyan-400/40 shadow-md shadow-blue-500/30"
+            />
             <span className="font-mono text-sm font-bold tracking-tight">
               ADMIN<span className="text-blue-500">.</span>
             </span>
@@ -510,9 +512,11 @@ Saurav Studio Admin`,
                 {/* Drawer Header */}
                 <div className="flex items-center justify-between pb-3 border-b border-white/15">
                   <div className="flex items-center gap-2 font-bold tracking-tight text-white">
-                    <span className="w-7 h-7 rounded-full bg-blue-600 flex items-center justify-center text-white text-xs font-black">
-                      A
-                    </span>
+                    <img
+                      src="https://avatars.githubusercontent.com/u/172996345?v=4&size=64"
+                      alt="Avatar"
+                      className="w-7 h-7 rounded-full object-cover border border-cyan-400/40"
+                    />
                     <span className="font-mono text-sm font-bold tracking-tight">
                       ADMIN PANEL<span className="text-blue-500">.</span>
                     </span>

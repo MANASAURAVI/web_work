@@ -24,9 +24,11 @@ export const Footer = () => {
         {/* Left: Branding & Short Title */}
         <div className="flex flex-col sm:flex-row items-center gap-3 text-center sm:text-left">
           <Link to="/" className="inline-flex items-center gap-2 text-xl font-bold tracking-tight text-white group">
-            <span className="w-7 h-7 rounded-lg bg-gradient-to-br from-cyan-400 to-indigo-600 flex items-center justify-center text-white text-xs font-black group-hover:scale-105 transition-transform">
-              S
-            </span>
+            <img
+              src="https://avatars.githubusercontent.com/u/172996345?v=4&size=64"
+              alt="Saurav Avatar"
+              className="w-7 h-7 rounded-full object-cover border border-cyan-400/40 shadow-md shadow-blue-500/30 group-hover:scale-105 transition-transform"
+            />
             <span className="font-mono">SAURAV<span className="text-cyan-400">.</span></span>
           </Link>
           <span className="hidden sm:inline text-slate-800">|</span>
