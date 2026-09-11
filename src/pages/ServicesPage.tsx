@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { SERVICES, PROCESS_STEPS, WHO_I_WORK_WITH, Service } from '@/data/services';
-import { ArrowRight, Layout, Code2, Sparkles, Rocket, Zap, Target, BrainCircuit, ShieldCheck, Terminal } from 'lucide-react';
+import { ArrowRight, Monitor, Code2, RefreshCw, Globe, Zap, Target, Cpu, ShieldCheck, Cloud, Building2 } from 'lucide-react';
 import { CornerBorder } from '@/components/CornerBorder';
 import { ServiceDetailModal } from '@/components/ServiceDetailModal';
 
@@ -10,13 +10,11 @@ export const ServicesPage = () => {
 
   const getIndustryIcon = (iconName: string) => {
     switch (iconName) {
-      case 'Rocket': return <Rocket className="w-5 h-5 text-cyan-400" />;
-      case 'BrainCircuit': return <BrainCircuit className="w-5 h-5 text-indigo-400" />;
+      case 'Cloud': return <Cloud className="w-5 h-5 text-cyan-400" />;
+      case 'Cpu': return <Cpu className="w-5 h-5 text-indigo-400" />;
       case 'ShieldCheck': return <ShieldCheck className="w-5 h-5 text-emerald-400" />;
-      case 'Zap': return <Zap className="w-5 h-5 text-amber-400" />;
-      case 'Terminal': return <Terminal className="w-5 h-5 text-sky-400" />;
-      case 'Layout': return <Layout className="w-5 h-5 text-purple-400" />;
-      default: return <Rocket className="w-5 h-5 text-cyan-400" />;
+      case 'Building2': return <Building2 className="w-5 h-5 text-sky-400" />;
+      default: return <Cloud className="w-5 h-5 text-cyan-400" />;
     }
   };
 
@@ -44,12 +42,12 @@ export const ServicesPage = () => {
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-4.5">
           {SERVICES.map((s) => (
             <div
               key={s.id}
               onClick={() => setSelectedService(s)}
-              className="relative group overflow-hidden glass-card rounded-2xl border border-slate-800/80 hover:border-cyan-500/50 hover:-translate-y-2 hover:scale-[1.015] hover:shadow-xl hover:shadow-cyan-500/10 transform-gpu transition-all duration-300 cursor-pointer flex flex-col justify-between h-full"
+              className="relative group glass-card rounded-2xl border border-white/15 hover:border-cyan-400 hover:-translate-y-2 hover:scale-[1.015] hover:shadow-xl hover:shadow-cyan-500/10 transform-gpu transition-all duration-300 cursor-pointer flex flex-col justify-between h-full"
             >
               <CornerBorder />
               <div className="p-6 flex flex-col justify-between h-full gap-4 relative z-30">
@@ -67,20 +65,6 @@ export const ServicesPage = () => {
                     {s.tagline}
                   </p>
                 </div>
-
-                <div className="pt-3 border-t border-slate-900 flex items-center justify-between">
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setSelectedService(s);
-                    }}
-                    className="text-xs font-mono font-semibold uppercase tracking-wider text-cyan-400 group-hover:text-cyan-300 inline-flex items-center gap-1.5 transition-colors cursor-pointer bg-cyan-950/60 px-3.5 py-1.5 rounded-lg border border-cyan-800/50 hover:bg-cyan-900/60"
-                  >
-                    <span>View Full Details</span>
-                    <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-                  </button>
-                </div>
               </div>
             </div>
           ))}
@@ -97,11 +81,11 @@ export const ServicesPage = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-4.5">
           {WHO_I_WORK_WITH.map((item) => (
             <div
               key={item.title}
-              className="relative group overflow-hidden glass-card rounded-2xl p-7 border border-slate-800/80 hover:border-cyan-500/50 hover:-translate-y-1.5 hover:scale-[1.015] transform-gpu transition-all duration-300 shadow-lg"
+              className="relative group glass-card rounded-2xl p-7 border border-white/15 hover:border-cyan-400 hover:-translate-y-1.5 hover:scale-[1.015] transform-gpu transition-all duration-300 shadow-lg"
             >
               <CornerBorder />
               <div className="relative z-30 space-y-3">
@@ -130,11 +114,11 @@ export const ServicesPage = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-4.5">
           {PROCESS_STEPS.map((step, idx) => (
             <div
               key={step.step}
-              className="relative group overflow-hidden glass-card rounded-2xl border border-slate-800 hover:border-cyan-500/50 hover:-translate-y-2 hover:scale-[1.015] transform-gpu transition-all duration-300"
+              className="relative group glass-card rounded-2xl border border-white/15 hover:border-cyan-400 hover:-translate-y-2 hover:scale-[1.015] transform-gpu transition-all duration-300"
             >
               <CornerBorder />
               <div className="p-8 flex flex-col justify-between h-full gap-6 relative z-30">
@@ -165,7 +149,7 @@ export const ServicesPage = () => {
       </section>
 
       {/* 06 — CTA */}
-      <section className="relative group overflow-hidden glass-card rounded-3xl p-10 sm:p-14 border border-slate-800 hover:border-cyan-500/40 text-center max-w-4xl mx-auto hover:-translate-y-1.5 hover:scale-[1.008] transform-gpu transition-all duration-300 shadow-2xl">
+      <section className="relative group glass-card rounded-3xl p-10 sm:p-14 border border-white/15 hover:border-cyan-400 text-center max-w-4xl mx-auto hover:-translate-y-1.5 hover:scale-[1.008] transform-gpu transition-all duration-300 shadow-2xl">
         <CornerBorder />
         <div className="relative z-30 flex flex-col items-center gap-6">
           <h2 className="text-3xl sm:text-4xl font-extrabold text-white">Ready to start your project?</h2>

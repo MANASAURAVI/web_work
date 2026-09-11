@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, CheckCircle2, ArrowRight, Layout, Rocket, Target, Code2, Zap, Sparkles } from 'lucide-react';
+import { X, CheckCircle2, ArrowRight, Monitor, Globe, Target, Code2, Zap, RefreshCw } from 'lucide-react';
 import { Service } from '@/data/services';
 import { CornerBorder } from '@/components/CornerBorder';
 
@@ -32,13 +32,13 @@ export const ServiceDetailModal: React.FC<ServiceDetailModalProps> = ({ service,
 
   const getServiceIcon = (iconName: string) => {
     switch (iconName) {
-      case 'Layout': return <Layout className="w-6 h-6 text-cyan-400" />;
-      case 'Rocket': return <Rocket className="w-6 h-6 text-emerald-400" />;
+      case 'Monitor': return <Monitor className="w-6 h-6 text-cyan-400" />;
+      case 'Globe': return <Globe className="w-6 h-6 text-emerald-400" />;
       case 'Target': return <Target className="w-6 h-6 text-amber-400" />;
       case 'Code2': return <Code2 className="w-6 h-6 text-indigo-400" />;
       case 'Zap': return <Zap className="w-6 h-6 text-cyan-400" />;
-      case 'Sparkles': return <Sparkles className="w-6 h-6 text-emerald-400" />;
-      default: return <Layout className="w-6 h-6 text-cyan-400" />;
+      case 'RefreshCw': return <RefreshCw className="w-6 h-6 text-emerald-400" />;
+      default: return <Monitor className="w-6 h-6 text-cyan-400" />;
     }
   };
 

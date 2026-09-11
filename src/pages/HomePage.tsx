@@ -9,12 +9,13 @@ import {
   Target,
   MessageSquare,
   Code2,
-  Layout,
-  Sparkles,
-  Rocket,
+  Monitor,
+  Globe,
+  Cloud,
+  Building2,
+  RefreshCw,
   Mail,
   ShieldCheck,
-  BrainCircuit,
   Terminal,
   BookOpen,
   Cpu
@@ -33,25 +34,23 @@ export const HomePage = () => {
 
   const getServiceIcon = (iconName: string) => {
     switch (iconName) {
-      case 'Layout': return <Layout className="w-5 h-5 text-cyan-400" />;
-      case 'Rocket': return <Rocket className="w-5 h-5 text-emerald-400" />;
+      case 'Monitor': return <Monitor className="w-5 h-5 text-cyan-400" />;
+      case 'Globe': return <Globe className="w-5 h-5 text-emerald-400" />;
       case 'Target': return <Target className="w-5 h-5 text-amber-400" />;
       case 'Code2': return <Code2 className="w-5 h-5 text-indigo-400" />;
       case 'Zap': return <Zap className="w-5 h-5 text-cyan-400" />;
-      case 'Sparkles': return <Sparkles className="w-5 h-5 text-emerald-400" />;
-      default: return <Layout className="w-5 h-5 text-cyan-400" />;
+      case 'RefreshCw': return <RefreshCw className="w-5 h-5 text-emerald-400" />;
+      default: return <Monitor className="w-5 h-5 text-cyan-400" />;
     }
   };
 
   const getIndustryIcon = (iconName: string) => {
     switch (iconName) {
-      case 'Rocket': return <Rocket className="w-5 h-5 text-cyan-400" />;
-      case 'BrainCircuit': return <BrainCircuit className="w-5 h-5 text-indigo-400" />;
+      case 'Cloud': return <Cloud className="w-5 h-5 text-cyan-400" />;
+      case 'Cpu': return <Cpu className="w-5 h-5 text-indigo-400" />;
       case 'ShieldCheck': return <ShieldCheck className="w-5 h-5 text-emerald-400" />;
-      case 'Zap': return <Zap className="w-5 h-5 text-amber-400" />;
-      case 'Terminal': return <Terminal className="w-5 h-5 text-sky-400" />;
-      case 'Layout': return <Layout className="w-5 h-5 text-purple-400" />;
-      default: return <Rocket className="w-5 h-5 text-cyan-400" />;
+      case 'Building2': return <Building2 className="w-5 h-5 text-sky-400" />;
+      default: return <Cloud className="w-5 h-5 text-cyan-400" />;
     }
   };
 
@@ -86,7 +85,7 @@ export const HomePage = () => {
 
             {/* Clear Statement of What I Do */}
             <p className="text-base sm:text-lg text-slate-300 max-w-xl leading-relaxed font-normal">
-              High-converting website design, product UI, and frontend engineering for software startups, AI tools, and tech companies. I take your project from initial design to live production deployment.
+              High-converting website design, product UI, and frontend engineering for software startups and tech platforms.
             </p>
 
             {/* Action Buttons */}
@@ -110,113 +109,95 @@ export const HomePage = () => {
               </a>
             </div>
 
-            {/* Quick Metrics Bar with Glassmorphism */}
-            <div className="relative group overflow-hidden mt-8 p-4 sm:p-6 rounded-2xl bg-white/[0.04] border border-white/15 backdrop-blur-2xl shadow-xl shadow-black/40 grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6 text-left hover:-translate-y-1.5 hover:scale-[1.01] transform-gpu transition-all duration-300">
-              <CornerBorder />
-              <div>
-                <p className="text-xl sm:text-2xl font-bold font-mono text-white tracking-tight">100%</p>
-                <p className="text-[10px] text-slate-300 uppercase tracking-widest font-mono mt-1 font-medium">PRODUCT FOCUSED</p>
-              </div>
-              <div className="border-l border-white/15 pl-4 sm:pl-6">
-                <p className="text-xl sm:text-2xl font-bold font-mono text-white tracking-tight">Sub-1s</p>
-                <p className="text-[10px] text-slate-300 uppercase tracking-widest font-mono mt-1 font-medium">LOAD SPEEDS</p>
-              </div>
-              <div className="border-t sm:border-t-0 sm:border-l border-white/15 pt-3 sm:pt-0 sm:pl-6">
-                <p className="text-xl sm:text-2xl font-bold font-mono text-white tracking-tight">Direct</p>
-                <p className="text-[10px] text-slate-300 uppercase tracking-widest font-mono mt-1 font-medium">FOUNDER COLLABORATION</p>
-              </div>
-              <div className="border-t sm:border-t-0 border-l border-white/15 pt-3 sm:pt-0 pl-4 sm:pl-6">
-                <p className="text-xl sm:text-2xl font-bold font-mono text-white tracking-tight">0 Layers</p>
-                <p className="text-[10px] text-slate-300 uppercase tracking-widest font-mono mt-1 font-medium">NO AGENCY MIDDLEWARE</p>
-              </div>
-            </div>
-
           </div>
 
           {/* RIGHT COLUMN — Code Window & 3 Feature Cards Stack */}
-          <div className="lg:col-span-6 xl:col-span-6 relative space-y-6 pt-4 lg:pt-0">
-            <div className="grid grid-cols-1 sm:grid-cols-12 gap-4 items-stretch">
-              
-              {/* Code Editor Card (sm:col-span-7) with Glassmorphism */}
-              <div className="relative group overflow-hidden sm:col-span-7 rounded-xl bg-slate-950/60 border border-white/15 shadow-[0_16px_36px_rgba(0,0,0,0.5)] p-4 font-mono text-xs backdrop-blur-2xl flex flex-col justify-between hover:-translate-y-2 hover:scale-[1.015] transform-gpu transition-all duration-300">
-                <CornerBorder />
-                <div>
-                  {/* Title bar */}
-                  <div className="flex items-center justify-between pb-3 border-b border-white/10 mb-3 text-slate-400">
-                    <div className="flex items-center gap-1.5">
-                      <span className="w-2.5 h-2.5 rounded-full bg-[#ef4444]" />
-                      <span className="w-2.5 h-2.5 rounded-full bg-[#f59e0b]" />
-                      <span className="w-2.5 h-2.5 rounded-full bg-[#10b981]" />
-                    </div>
-                    <span className="text-[11px] text-slate-300 font-mono">web-studio.config.ts</span>
-                  </div>
-
-                  {/* Code snippet */}
-                  <div className="flex gap-3 font-mono text-[11px] leading-relaxed">
-                    <div className="flex flex-col text-slate-500 select-none text-right w-4 space-y-1 font-mono">
-                      <span>1</span>
-                      <span>2</span>
-                      <span>3</span>
-                      <span>4</span>
-                      <span>5</span>
-                      <span>6</span>
-                      <span>7</span>
-                      <span>8</span>
+          <div className="lg:col-span-6 xl:col-span-6 relative space-y-6 pt-4 lg:pt-10 xl:pt-12">
+            <div className="relative group overflow-hidden rounded-2xl p-4 sm:p-5 bg-slate-950/40 border border-white/10 backdrop-blur-xl shadow-2xl transition-all duration-300 hover:border-cyan-400/50">
+              <CornerBorder />
+              <div className="grid grid-cols-1 sm:grid-cols-12 gap-4 items-stretch relative z-30">
+                
+                {/* Code Editor Card (sm:col-span-7) with Glassmorphism */}
+                <div className="relative group overflow-hidden sm:col-span-7 rounded-xl bg-slate-950/60 border border-white/15 shadow-[0_16px_36px_rgba(0,0,0,0.5)] p-4 font-mono text-xs backdrop-blur-2xl flex flex-col justify-between hover:-translate-y-2 hover:scale-[1.015] transform-gpu transition-all duration-300">
+                  <CornerBorder />
+                  <div>
+                    {/* Title bar */}
+                    <div className="flex items-center justify-between pb-3 border-b border-white/10 mb-3 text-slate-400">
+                      <div className="flex items-center gap-1.5">
+                        <span className="w-2.5 h-2.5 rounded-full bg-[#ef4444]" />
+                        <span className="w-2.5 h-2.5 rounded-full bg-[#f59e0b]" />
+                        <span className="w-2.5 h-2.5 rounded-full bg-[#10b981]" />
+                      </div>
+                      <span className="text-[11px] text-slate-300 font-mono">web-studio.config.ts</span>
                     </div>
 
-                    <div className="space-y-1 text-slate-200 font-mono">
-                      <p><span className="text-purple-400">export const</span> <span className="text-blue-400">studio</span> = &#123;</p>
-                      <p className="pl-3"><span className="text-sky-400">role</span>: <span className="text-emerald-400">"SaaS / Product Web Developer"</span>,</p>
-                      <p className="pl-3"><span className="text-sky-400">focus</span>: <span className="text-emerald-400">"High-Converting Websites"</span>,</p>
-                      <p className="pl-3"><span className="text-sky-400">pipeline</span>: [<span className="text-emerald-400">"Design"</span>, <span className="text-emerald-400">"Build"</span>, <span className="text-emerald-400">"Launch"</span>],</p>
-                      <p className="pl-3"><span className="text-sky-400">stack</span>: [<span className="text-emerald-400">"React"</span>, <span className="text-emerald-400">"Next.js"</span>, <span className="text-emerald-400">"Tailwind"</span>],</p>
-                      <p className="pl-3"><span className="text-sky-400">status</span>: <span className="text-emerald-400">"Available for Projects"</span>,</p>
-                      <p>&#125;</p>
-                      <p className="pt-1"><span className="text-purple-400">return</span> &lt;<span className="text-cyan-400">HighImpactWebsite</span> /&gt;</p>
+                    {/* Code snippet */}
+                    <div className="flex gap-3 font-mono text-[11px] leading-relaxed">
+                      <div className="flex flex-col text-slate-500 select-none text-right w-4 space-y-1 font-mono">
+                        <span>1</span>
+                        <span>2</span>
+                        <span>3</span>
+                        <span>4</span>
+                        <span>5</span>
+                        <span>6</span>
+                        <span>7</span>
+                        <span>8</span>
+                      </div>
+
+                      <div className="space-y-1 text-slate-200 font-mono">
+                        <p><span className="text-purple-400">export const</span> <span className="text-blue-400">studio</span> = &#123;</p>
+                        <p className="pl-3"><span className="text-sky-400">role</span>: <span className="text-emerald-400">"SaaS / Product Web Developer"</span>,</p>
+                        <p className="pl-3"><span className="text-sky-400">focus</span>: <span className="text-emerald-400">"High-Converting Websites"</span>,</p>
+                        <p className="pl-3"><span className="text-sky-400">pipeline</span>: [<span className="text-emerald-400">"Design"</span>, <span className="text-emerald-400">"Build"</span>, <span className="text-emerald-400">"Launch"</span>],</p>
+                        <p className="pl-3"><span className="text-sky-400">stack</span>: [<span className="text-emerald-400">"React"</span>, <span className="text-emerald-400">"Next.js"</span>, <span className="text-emerald-400">"Tailwind"</span>],</p>
+                        <p className="pl-3"><span className="text-sky-400">status</span>: <span className="text-emerald-400">"Available for Projects"</span>,</p>
+                        <p>&#125;</p>
+                        <p className="pt-1"><span className="text-purple-400">return</span> &lt;<span className="text-cyan-400">HighImpactWebsite</span> /&gt;</p>
+                      </div>
                     </div>
                   </div>
                 </div>
+
+                {/* 3 Feature Cards Stack (sm:col-span-5) */}
+                <div className="sm:col-span-5 flex flex-col justify-start gap-2.5">
+                  {/* Card 1 */}
+                  <div className="relative group overflow-hidden p-3.5 rounded-xl bg-slate-950/60 border border-white/15 backdrop-blur-2xl shadow-lg flex items-start gap-3 hover:bg-white/[0.08] hover:border-cyan-500/50 hover:-translate-y-1.5 hover:scale-[1.02] transform-gpu transition-all duration-300 cursor-pointer">
+                    <CornerBorder />
+                    <div className="w-8 h-8 rounded-lg bg-cyan-500/20 border border-cyan-400/30 flex items-center justify-center text-cyan-400 shrink-0 group-hover:scale-110 transition-transform">
+                      <Monitor className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <h4 className="text-xs font-semibold text-white">Conversion UI Design</h4>
+                      <p className="text-[11px] text-slate-300 mt-0.5">Sitemaps & Figma prototypes</p>
+                    </div>
+                  </div>
+
+                  {/* Card 2 */}
+                  <div className="relative group overflow-hidden p-3.5 rounded-xl bg-slate-950/60 border border-white/15 backdrop-blur-2xl shadow-lg flex items-start gap-3 hover:bg-white/[0.08] hover:border-cyan-500/50 hover:-translate-y-1.5 hover:scale-[1.02] transform-gpu transition-all duration-300 cursor-pointer">
+                    <CornerBorder />
+                    <div className="w-8 h-8 rounded-lg bg-emerald-500/20 border border-emerald-400/30 flex items-center justify-center text-emerald-400 shrink-0 group-hover:scale-110 transition-transform">
+                      <Code2 className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <h4 className="text-xs font-semibold text-white">Frontend Engineering</h4>
+                      <p className="text-[11px] text-slate-300 mt-0.5">React, Next.js & Tailwind</p>
+                    </div>
+                  </div>
+
+                  {/* Card 3 */}
+                  <div className="relative group overflow-hidden p-3.5 rounded-xl bg-slate-950/60 border border-white/15 backdrop-blur-2xl shadow-lg flex items-start gap-3 hover:bg-white/[0.08] hover:border-cyan-500/50 hover:-translate-y-1.5 hover:scale-[1.02] transform-gpu transition-all duration-300 cursor-pointer">
+                    <CornerBorder />
+                    <div className="w-8 h-8 rounded-lg bg-indigo-500/20 border border-indigo-400/30 flex items-center justify-center text-indigo-400 shrink-0 group-hover:scale-110 transition-transform">
+                      <Globe className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <h4 className="text-xs font-semibold text-white">Production Launch</h4>
+                      <p className="text-[11px] text-slate-300 mt-0.5">Vercel, SSL & optimization</p>
+                    </div>
+                  </div>
+                </div>
+
               </div>
-
-              {/* 3 Feature Cards Stack (sm:col-span-5) */}
-              <div className="sm:col-span-5 flex flex-col justify-start gap-2.5">
-                {/* Card 1 */}
-                <div className="relative group overflow-hidden p-3.5 rounded-xl bg-slate-950/60 border border-white/15 backdrop-blur-2xl shadow-lg flex items-start gap-3 hover:bg-white/[0.08] hover:border-cyan-500/50 hover:-translate-y-1.5 hover:scale-[1.02] transform-gpu transition-all duration-300 cursor-pointer">
-                  <CornerBorder />
-                  <div className="w-8 h-8 rounded-lg bg-cyan-500/20 border border-cyan-400/30 flex items-center justify-center text-cyan-400 shrink-0 group-hover:scale-110 transition-transform">
-                    <Layout className="w-4 h-4" />
-                  </div>
-                  <div>
-                    <h4 className="text-xs font-semibold text-white">Conversion UI Design</h4>
-                    <p className="text-[11px] text-slate-300 mt-0.5">Sitemaps & Figma prototypes</p>
-                  </div>
-                </div>
-
-                {/* Card 2 */}
-                <div className="relative group overflow-hidden p-3.5 rounded-xl bg-slate-950/60 border border-white/15 backdrop-blur-2xl shadow-lg flex items-start gap-3 hover:bg-white/[0.08] hover:border-cyan-500/50 hover:-translate-y-1.5 hover:scale-[1.02] transform-gpu transition-all duration-300 cursor-pointer">
-                  <CornerBorder />
-                  <div className="w-8 h-8 rounded-lg bg-emerald-500/20 border border-emerald-400/30 flex items-center justify-center text-emerald-400 shrink-0 group-hover:scale-110 transition-transform">
-                    <Code2 className="w-4 h-4" />
-                  </div>
-                  <div>
-                    <h4 className="text-xs font-semibold text-white">Frontend Engineering</h4>
-                    <p className="text-[11px] text-slate-300 mt-0.5">React, Next.js & Tailwind</p>
-                  </div>
-                </div>
-
-                {/* Card 3 */}
-                <div className="relative group overflow-hidden p-3.5 rounded-xl bg-slate-950/60 border border-white/15 backdrop-blur-2xl shadow-lg flex items-start gap-3 hover:bg-white/[0.08] hover:border-cyan-500/50 hover:-translate-y-1.5 hover:scale-[1.02] transform-gpu transition-all duration-300 cursor-pointer">
-                  <CornerBorder />
-                  <div className="w-8 h-8 rounded-lg bg-indigo-500/20 border border-indigo-400/30 flex items-center justify-center text-indigo-400 shrink-0 group-hover:scale-110 transition-transform">
-                    <Rocket className="w-4 h-4" />
-                  </div>
-                  <div>
-                    <h4 className="text-xs font-semibold text-white">Production Launch</h4>
-                    <p className="text-[11px] text-slate-300 mt-0.5">Vercel, SSL & optimization</p>
-                  </div>
-                </div>
-              </div>
-
             </div>
 
             {/* Bottom Right Label */}
@@ -230,8 +211,8 @@ export const HomePage = () => {
       </section>
 
       {/* 02 — SELECTED WORK */}
-      <section id="selected-work" className="px-6 sm:px-10 lg:px-12 max-w-[1536px] mx-auto space-y-12 scroll-mt-24">
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-slate-800 pb-6">
+      <section id="selected-work" className="px-6 sm:px-10 lg:px-12 max-w-[1536px] mx-auto space-y-12 scroll-mt-24 pt-20 sm:pt-28">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-slate-800 pb-6 pt-10 sm:pt-12">
           <div>
             <span className="text-xs font-mono uppercase tracking-widest text-cyan-400 font-semibold">Featured Projects</span>
             <h2 className="text-3xl sm:text-4xl font-extrabold text-white mt-1">Selected Work</h2>
@@ -249,7 +230,7 @@ export const HomePage = () => {
         </div>
 
         {/* 4 Strongest Completed Real Projects Grid (Compact 3-Column Grid) */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-4.5">
           {selectedWork.map((project, index) => (
             <ProjectCard key={project.slug} project={project} priority={index === 0} />
           ))}
@@ -266,12 +247,12 @@ export const HomePage = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-4.5">
           {SERVICES.map((service) => (
             <div
               key={service.id}
               onClick={() => setSelectedService(service)}
-              className="relative group overflow-hidden glass-card rounded-2xl border border-slate-800/80 hover:border-cyan-500/50 transition-all duration-300 hover:-translate-y-2 hover:scale-[1.015] hover:shadow-2xl hover:shadow-cyan-500/20 transform-gpu cursor-pointer flex flex-col justify-between"
+              className="relative group glass-card rounded-2xl border border-white/15 hover:border-cyan-400 transition-all duration-300 hover:-translate-y-2 hover:scale-[1.015] hover:shadow-2xl hover:shadow-cyan-500/20 transform-gpu cursor-pointer flex flex-col justify-between"
             >
               <CornerBorder />
               <div className="p-8 flex flex-col justify-between h-full gap-6 relative z-30">
@@ -289,20 +270,6 @@ export const HomePage = () => {
                     {service.tagline}
                   </p>
                 </div>
-
-                <div className="pt-4 border-t border-slate-900 flex items-center justify-between">
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setSelectedService(service);
-                    }}
-                    className="text-xs font-mono font-semibold uppercase tracking-wider text-cyan-400 group-hover:text-cyan-300 inline-flex items-center gap-1.5 transition-colors cursor-pointer bg-cyan-950/60 px-3.5 py-1.5 rounded-lg border border-cyan-800/50 hover:bg-cyan-900/60"
-                  >
-                    <span>View Full Details</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </button>
-                </div>
               </div>
             </div>
           ))}
@@ -319,11 +286,11 @@ export const HomePage = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-4.5">
           {WHO_I_WORK_WITH.map((item) => (
             <div
               key={item.title}
-              className="relative group overflow-hidden glass-card rounded-2xl p-7 border border-slate-800/80 hover:border-cyan-500/50 hover:-translate-y-1.5 hover:scale-[1.015] transform-gpu transition-all duration-300 shadow-lg"
+              className="relative group glass-card rounded-2xl p-7 border border-white/15 hover:border-cyan-400 hover:-translate-y-1.5 hover:scale-[1.015] transform-gpu transition-all duration-300 shadow-lg"
             >
               <CornerBorder />
               <div className="relative z-30 space-y-3">
@@ -343,12 +310,14 @@ export const HomePage = () => {
       </section>
 
       {/* 05 — WHY WORK WITH ME (4 PILLARS) */}
-      <section className="px-6 sm:px-10 lg:px-12 max-w-[1536px] mx-auto">
-        <div className="relative group overflow-hidden glass-card rounded-3xl border border-slate-800 hover:border-cyan-500/40 hover:-translate-y-1.5 hover:scale-[1.008] transform-gpu transition-all duration-300 shadow-xl">
+      <section className="px-6 sm:px-10 lg:px-12 max-w-[1536px] mx-auto pt-6 sm:pt-10">
+        <div className="relative group glass-card rounded-3xl border border-white/15 hover:border-cyan-400 hover:-translate-y-1.5 hover:scale-[1.008] transform-gpu transition-all duration-300 shadow-xl">
           <CornerBorder />
-          <div className="absolute top-0 right-0 w-96 h-96 bg-cyan-500/5 blur-3xl pointer-events-none" />
+          <div className="absolute inset-0 rounded-[inherit] overflow-hidden pointer-events-none">
+            <div className="absolute top-0 right-0 w-96 h-96 bg-cyan-500/5 blur-3xl" />
+          </div>
 
-          <div className="p-8 sm:p-14 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          <div className="p-8 sm:p-14 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
             {/* Left Headline */}
             <div className="lg:col-span-5 space-y-6">
               <span className="text-xs font-mono uppercase tracking-widest text-cyan-400 font-semibold">Studio Advantage</span>
@@ -376,13 +345,13 @@ export const HomePage = () => {
               {WHY_WORK_WITH_ME.points.map((point) => (
                 <div
                   key={point.title}
-                  className="relative group overflow-hidden p-6 rounded-2xl bg-slate-950/70 border border-slate-800/80 flex flex-col gap-3 hover:border-cyan-500/50 hover:-translate-y-1.5 hover:scale-[1.015] transform-gpu transition-all duration-300"
+                  className="relative group p-6 rounded-2xl bg-slate-950/90 border border-white/15 hover:border-cyan-400 flex flex-col gap-3 hover:shadow-xl hover:-translate-y-1.5 hover:scale-[1.015] transform-gpu transition-all duration-300"
                 >
                   <CornerBorder />
-                  <div className="w-10 h-10 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-center shrink-0">
+                  <div className="w-10 h-10 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-center shrink-0 relative z-30">
                     {getWhyIcon(point.icon)}
                   </div>
-                  <div className="space-y-1">
+                  <div className="space-y-1 relative z-30">
                     <h3 className="text-base font-bold text-white">{point.title}</h3>
                     <p className="text-xs text-slate-300 leading-relaxed font-normal">
                       {point.description}
@@ -405,11 +374,11 @@ export const HomePage = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-4.5">
           {PROCESS_STEPS.map((step, idx) => (
             <div
               key={step.step}
-              className="relative group overflow-hidden glass-card rounded-2xl border border-slate-800 hover:border-cyan-500/50 hover:-translate-y-2 hover:scale-[1.015] transform-gpu transition-all duration-300"
+              className="relative group glass-card rounded-2xl border border-white/15 hover:border-cyan-400 hover:-translate-y-2 hover:scale-[1.015] transform-gpu transition-all duration-300"
             >
               <CornerBorder />
               <div className="p-8 flex flex-col justify-between h-full gap-6 relative z-30">
@@ -449,11 +418,11 @@ export const HomePage = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-4.5">
           {CREDIBILITY_HIGHLIGHTS.map((cred) => (
             <div
               key={cred.title}
-              className="relative group overflow-hidden glass-card rounded-2xl p-6 border border-slate-800 hover:border-amber-500/40 hover:-translate-y-1.5 transform-gpu transition-all duration-300 flex flex-col justify-between"
+              className="relative group glass-card rounded-2xl p-6 border border-white/15 hover:border-amber-400/80 hover:-translate-y-1.5 transform-gpu transition-all duration-300 flex flex-col justify-between"
             >
               <CornerBorder />
               <div className="relative z-30 space-y-3">
@@ -471,10 +440,12 @@ export const HomePage = () => {
       </section>
 
       {/* 08 — FINAL CTA SECTION */}
-      <section className="px-6 sm:px-10 lg:px-12 max-w-[1536px] mx-auto text-center">
-        <div className="relative group overflow-hidden glass-card rounded-3xl p-10 sm:p-14 border border-slate-800 hover:border-cyan-500/40 flex flex-col items-center gap-8 max-w-4xl mx-auto hover:-translate-y-1.5 hover:scale-[1.008] transform-gpu transition-all duration-300 shadow-2xl">
+      <section className="px-6 sm:px-10 lg:px-12 max-w-[1536px] mx-auto text-center pt-6 sm:pt-10">
+        <div className="relative group glass-card rounded-3xl p-10 sm:p-14 border border-white/15 hover:border-cyan-400 flex flex-col items-center gap-8 max-w-4xl mx-auto hover:-translate-y-1.5 hover:scale-[1.008] transform-gpu transition-all duration-300 shadow-2xl">
           <CornerBorder />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-cyan-500/10 blur-3xl pointer-events-none" />
+          <div className="absolute inset-0 rounded-[inherit] overflow-hidden pointer-events-none">
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-cyan-500/10 blur-3xl" />
+          </div>
 
           <div className="space-y-4 relative z-10">
             <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">

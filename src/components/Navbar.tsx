@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, ArrowUpRight, Lock } from 'lucide-react';
+import { Menu, X, ArrowUpRight } from 'lucide-react';
 import { GithubIcon, LinkedinIcon } from '@/components/SocialIcons';
 
 export const Navbar: React.FC = () => {
@@ -84,21 +84,8 @@ export const Navbar: React.FC = () => {
           })}
         </nav>
 
-        {/* Right: Desktop CTA, Admin Login & Mobile Toggle */}
+        {/* Right: Desktop CTA & Mobile Toggle */}
         <div className="flex items-center gap-2.5 shrink-0">
-          <Link
-            to="/login"
-            className={`hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-mono font-semibold transition-all border ${
-              pathname === '/login'
-                ? 'bg-cyan-500/20 text-cyan-300 border-cyan-500/50 shadow-[0_0_12px_rgba(6,182,212,0.4)]'
-                : 'text-slate-300 hover:text-cyan-300 hover:bg-white/10 border-white/15'
-            }`}
-            title="Admin Login Portal"
-          >
-            <Lock className="w-3.5 h-3.5 text-cyan-400" />
-            <span>Login</span>
-          </Link>
-
           <Link
             to="/contact"
             className="hidden sm:inline-flex items-center gap-2 px-4.5 py-2 rounded-full text-xs font-bold font-mono text-slate-950 bg-white hover:bg-cyan-400 transition-all shadow-md active:scale-95 group"
@@ -198,17 +185,6 @@ export const Navbar: React.FC = () => {
 
               {/* Drawer Bottom CTA & Details */}
               <div className="pt-3 space-y-2.5 border-t border-white/15">
-                <motion.div whileTap={{ scale: 0.97 }}>
-                  <Link
-                    to="/login"
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="w-full flex items-center justify-center gap-2 px-4 py-2.5 text-xs font-mono font-bold text-cyan-300 bg-slate-900/90 hover:bg-slate-800 border border-cyan-500/40 rounded-xl transition-colors"
-                  >
-                    <Lock className="w-3.5 h-3.5 text-cyan-400" />
-                    <span>Admin Login</span>
-                  </Link>
-                </motion.div>
-
                 <motion.div whileTap={{ scale: 0.97 }}>
                   <Link
                     to="/contact"

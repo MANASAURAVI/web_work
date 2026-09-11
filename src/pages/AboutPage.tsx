@@ -212,7 +212,7 @@ export const AboutPage = () => {
       </div>
 
       {/* 05 — WHY WORK WITH ME (4 PILLARS) */}
-      <div className="relative group overflow-hidden glass-card rounded-3xl border border-slate-800 hover:border-cyan-500/40 hover:-translate-y-1.5 hover:scale-[1.008] transform-gpu transition-all duration-300 shadow-xl">
+      <div className="relative group glass-card rounded-3xl border border-white/15 hover:border-cyan-400 hover:-translate-y-1.5 hover:scale-[1.008] transform-gpu transition-all duration-300 shadow-xl">
         <CornerBorder />
         <div className="p-8 sm:p-14 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           <div className="lg:col-span-5 space-y-6">
@@ -227,9 +227,13 @@ export const AboutPage = () => {
 
           <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4">
             {WHY_WORK_WITH_ME.points.map((pt) => (
-              <div key={pt.title} className="p-5 rounded-2xl bg-slate-950/70 border border-slate-800 flex flex-col gap-2">
-                <h3 className="text-base font-bold text-white">{pt.title}</h3>
-                <p className="text-xs text-slate-300 leading-relaxed">{pt.description}</p>
+              <div
+                key={pt.title}
+                className="relative group p-6 rounded-2xl bg-slate-950/90 border border-white/15 hover:border-cyan-400 hover:shadow-xl hover:-translate-y-1.5 hover:scale-[1.015] transform-gpu transition-all duration-300 flex flex-col gap-2"
+              >
+                <CornerBorder />
+                <h3 className="text-base font-bold text-white relative z-30">{pt.title}</h3>
+                <p className="text-xs text-slate-300 leading-relaxed font-normal relative z-30">{pt.description}</p>
               </div>
             ))}
           </div>

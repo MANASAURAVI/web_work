@@ -13,7 +13,7 @@ export const ContactForm = () => {
     email: '',
     website: '',
     projectType: 'Website Design & Development',
-    budget: '$5,000 - $10,000',
+    budget: 'Under $2,000',
     message: ''
   });
 
@@ -25,10 +25,10 @@ export const ContactForm = () => {
   const [error, setError] = useState<string | null>(null);
 
   const budgetOptions = [
+    'Under $2,000',
     '$2,000 - $5,000',
     '$5,000 - $10,000',
-    '$10,000 - $20,000',
-    '$20,000+'
+    '$10,000+'
   ];
 
   const projectTypes = [

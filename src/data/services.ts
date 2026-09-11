@@ -30,7 +30,7 @@ export const SERVICES: Service[] = [
     positioning: "Your website is the primary growth engine for your company. I design and engineer websites that make your product effortless to understand and your company easy to trust.",
     description: "End-to-end website creation that combines strategic UI/UX design with high-performance frontend engineering. I handle everything from sitemaps and Figma wireframes to responsive React coding and cloud deployment.",
     category: "Website",
-    iconName: "Layout",
+    iconName: "Monitor",
     deliverables: [
       "Website architecture & conversion sitemap planning",
       "UX wireframes & interactive Figma prototypes",
@@ -56,7 +56,7 @@ export const SERVICES: Service[] = [
     positioning: "Launch your SaaS product with a website that translates complex technical features into intuitive, high-converting product showcases.",
     description: "Tailored specifically for software companies launching new products or scaling existing platforms. I translate technical capabilities into scannable visual narratives that drive signups and demo requests.",
     category: "SaaS",
-    iconName: "Rocket",
+    iconName: "Globe",
     deliverables: [
       "Product showcase homepage with hero visual stack",
       "Feature breakdown & capability deep-dive pages",
@@ -167,7 +167,7 @@ export const SERVICES: Service[] = [
     positioning: "Your website shouldn't stay static after launch. I provide continuous engineering support as your product and market grow.",
     description: "Ongoing monthly support for tech companies that need continuous website updates, new landing pages, UI tweaks, and performance monitoring without hiring a full-time developer.",
     category: "Ongoing",
-    iconName: "Sparkles",
+    iconName: "RefreshCw",
     deliverables: [
       "Monthly landing page & new section creation",
       "Content updates & feature showcase refinements",
@@ -189,12 +189,12 @@ export const WHO_I_WORK_WITH = [
   {
     title: "SaaS",
     description: "Subscription software platforms needing clear product communication, feature breakdowns, and conversion-focused pricing pages.",
-    iconName: "Rocket"
+    iconName: "Cloud"
   },
   {
     title: "AI & Automation",
     description: "Artificial intelligence and automation tools turning complex machine learning capabilities into intuitive user experiences.",
-    iconName: "BrainCircuit"
+    iconName: "Cpu"
   },
   {
     title: "Cybersecurity",
@@ -202,19 +202,9 @@ export const WHO_I_WORK_WITH = [
     iconName: "ShieldCheck"
   },
   {
-    title: "Fintech",
-    description: "Financial technology services demanding high-performance interfaces, rigorous security compliance, and clear financial workflows.",
-    iconName: "Zap"
-  },
-  {
-    title: "Developer Tools",
-    description: "Infrastructure platforms, APIs, and dev tools needing technical documentation landing pages, code previews, and API showcases.",
-    iconName: "Terminal"
-  },
-  {
     title: "B2B Technology",
     description: "Enterprise software and B2B technology providers focused on high-ticket lead generation, trust building, and demo booking.",
-    iconName: "Layout"
+    iconName: "Building2"
   }
 ];
 
@@ -277,11 +267,6 @@ export const CREDIBILITY_HIGHLIGHTS = [
     title: "OWASP Leadership",
     detail: "OWASP Delhi Chapter Lead, coordinating application security initiatives and technical community projects.",
     badge: "OWASP Delhi Lead"
-  },
-  {
-    title: "Cybersecurity Background",
-    detail: "VAPT, application security auditing, CTF competition engineering, and secure SDLC practices.",
-    badge: "VAPT & AppSec"
   },
   {
     title: "Unreal Engine Contribution",

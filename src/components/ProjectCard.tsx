@@ -15,7 +15,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
   const remainingCount = project.technologies.length - visibleTech.length;
 
   return (
-    <div className="group relative glass-card rounded-xl overflow-hidden border border-white/10 hover:border-cyan-500/50 transition-all duration-300 ease-out shadow-lg hover:-translate-y-1.5 hover:scale-[1.01] hover:shadow-[0_20px_40px_-12px_rgba(0,0,0,0.8),0_0_25px_rgba(56,189,248,0.2)] transform-gpu z-10 hover:z-30 flex flex-col justify-between h-full max-w-full">
+    <div className="group relative glass-card rounded-xl border border-white/15 hover:border-cyan-400 transition-all duration-300 ease-out shadow-lg hover:-translate-y-1.5 hover:scale-[1.01] hover:shadow-[0_20px_40px_-12px_rgba(0,0,0,0.8),0_0_25px_rgba(56,189,248,0.2)] transform-gpu z-10 hover:z-30 flex flex-col justify-between h-full max-w-full">
       {/* 4-Corner Hover Lines */}
       <CornerBorder />
 
