@@ -9,7 +9,7 @@ import { MorphLineText } from '@/components/MorphLineText';
 import { CornerBorder } from '@/components/CornerBorder';
 
 export const HomePage = () => {
-  const selectedWork = PROJECTS.slice(0, 3);
+  const selectedWork = PROJECTS.slice(0, 4);
 
   const getServiceIcon = (iconName: string) => {
     switch (iconName) {
@@ -244,13 +244,13 @@ export const HomePage = () => {
             to="/work"
             className="inline-flex items-center gap-2 text-sm font-semibold text-slate-300 hover:text-cyan-400 transition-colors group"
           >
-            <span>View all 5 projects</span>
+            <span>View all {PROJECTS.length} projects</span>
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </Link>
         </div>
 
-        {/* 3 Strongest Projects Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {/* 4 Strongest Projects Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {selectedWork.map((project, index) => (
             <ProjectCard key={project.slug} project={project} priority={index === 0} />
           ))}

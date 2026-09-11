@@ -280,5 +280,65 @@ export const PROJECTS: Project[] = [
         { label: "Page Code Splitting", value: "100% Lazy Loaded" }
       ]
     }
+  },
+  {
+    slug: "event-platform",
+    name: "Spectrum 2026 — Event Platform",
+    tagline: "Modern Next.js 15 event management & promotion platform",
+    category: "Next.js 15 Event Architecture",
+    badge: "Next.js 15 & Radix UI",
+    shortDescription: "Modern event management & promotion web application built with Next.js 15 App Router, React 19, TypeScript, Radix UI primitives, React Hook Form + Zod validation, and Framer Motion animations.",
+    image: "/projects/event.jpg",
+    technologies: ["Next.js 15", "React 19", "TypeScript", "Tailwind CSS", "Radix UI", "Framer Motion", "React Hook Form", "Zod", "Lucide React", "date-fns", "Embla Carousel", "Handlebars", "Vercel"],
+    featured: true,
+    order: 5,
+    client: "Spectrum 2026 Team",
+    timeline: "3 Weeks",
+    role: "Full-Stack Next.js Architect",
+    liveUrl: "https://event-pi-beige.vercel.app/",
+    challenge: "Spectrum 2026 required a dedicated modern event management and promotion web application to host main event details, workshop tracks, schedules, sponsor portals, interactive FAQs, and structured attendee registration workflows. Key engineering requirements included building a modular Next.js 15 App Router architecture, reusable layout shells, accessible Radix UI primitives, React Hook Form + Zod validation pipelines, and audio-visual atmospheric enhancements.",
+    designDirection: {
+      typography: "Inter & Outfit for high-contrast event marketing, clear temporal hierarchy, and accessible registration inputs.",
+      colors: [
+        { name: "Electric Blue", hex: "#3B82F6" },
+        { name: "Void Dark", hex: "#07090E" },
+        { name: "Cyan Signal", hex: "#38BDF8" },
+        { name: "Slate Glass", hex: "#1E293B" }
+      ],
+      layoutDescription: "Modular App Router architecture featuring dedicated route segments for /events, /workshops, /schedule, /sponsors, /faq, and /contact wrapped inside a shared global layout shell.",
+      visualLanguage: "High-impact dark mode visual language powered by Framer Motion entrance animations, Embla interactive carousels, background audio atmosphere, and Radix UI accessible primitives."
+    },
+    keySections: [
+      {
+        title: "01. App Router Modular Architecture",
+        description: "File-system App Router structure (src/app) with dedicated pages for /events, /workshops, /schedule, /sponsors, /faq, and /contact with shared layout shell (layout.tsx) and controlled error boundaries (error.tsx, not-found.tsx).",
+        features: ["App Router file-system route separation", "Shared layout shell for global navigation & metadata", "Custom error.tsx & not-found.tsx fallback boundaries"]
+      },
+      {
+        title: "02. Registration Engine (React Hook Form + Zod)",
+        description: "Type-safe attendee application form (registration-form.tsx) utilizing React Hook Form for state management and Zod schemas (@hookform/resolvers) for input validation.",
+        features: ["React Hook Form state & error tracking", "Zod schema-driven input validation", "Validated form data pipeline"]
+      },
+      {
+        title: "03. Radix UI Accessible System & Motion",
+        description: "Extensive Radix UI dependency primitive integration (Accordion, Dialog, Tabs, Dropdown, Toast) paired with Tailwind CSS styling and Framer Motion interactive animations.",
+        features: ["Radix UI WAI-ARIA accessible primitives", "Tailwind CSS design token system", "Framer Motion viewport scroll animations"]
+      },
+      {
+        title: "04. Atmospheric Audio & Visual Layer",
+        description: "Unique audio-visual experience layer featuring background audio controls (background-audio.tsx), custom background treatment (asmr-background.tsx), and Embla carousel content sliders.",
+        features: ["Background audio atmosphere controls", "Custom ASMR visual background layer", "Embla interactive content carousels"]
+      }
+    ],
+    finalResult: {
+      summary: "Engineered a Next.js 15 event platform that separates multi-activity event schedules and workshops into clean App Router segments with zero accessibility compromises and type-safe registration.",
+      desktopVisual: "/projects/event.jpg",
+      metrics: [
+        { label: "Framework Stack", value: "Next.js 15 App Router" },
+        { label: "Validation Engine", value: "React Hook Form + Zod" },
+        { label: "UI System", value: "Radix UI + Tailwind" },
+        { label: "Deployment Host", value: "Vercel" }
+      ]
+    }
   }
 ];
