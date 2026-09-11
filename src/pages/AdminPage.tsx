@@ -41,6 +41,7 @@ import {
   Square,
   Target,
   HardDrive,
+  Menu,
 } from 'lucide-react';
 import { CornerBorder } from '@/components/CornerBorder';
 import { ColdOutreachHub } from '@/components/ColdOutreachHub';
@@ -54,6 +55,7 @@ export const AdminPage: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const [activeTab, setActiveTab] = useState<'all' | 'new' | 'in-review' | 'replied' | 'archived'>('all');
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   
   // Main Navigation & View Mode State with LocalStorage Persistence across page refresh
   const [mainTabState, setMainTabState] = useState<'inquiries' | 'outreach' | 'composer' | 'storage' | 'admin_power'>(() => {
@@ -389,9 +391,285 @@ Saurav Studio Admin`,
   };
 
   return (
-    <div className="max-w-[1536px] mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
-      {/* Header Bar */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-6 border-b border-slate-800">
+    <div className="max-w-[1536px] mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-8 space-y-6 sm:space-y-8">
+      {/* Mobile-Only Sticky Top Navbar & Slide-Out Navigation Drawer (sm:hidden) */}
+      <div className="sm:hidden sticky top-0 z-50 -mx-4 -mt-4 mb-4 bg-slate-950/95 backdrop-blur-xl border-b border-slate-800/80 shadow-2xl">
+        <div className="px-4 py-3 flex items-center justify-between">
+          <div className="flex items-center gap-2.5">
+            <div className="p-2 rounded-xl bg-cyan-500/10 border border-cyan-500/30 text-cyan-400">
+              <ShieldCheck className="w-5 h-5 text-emerald-400 animate-pulse" />
+            </div>
+            <div>
+              <div className="flex items-center gap-1.5 text-[10px] font-mono uppercase tracking-widest text-cyan-400 font-bold">
+                <span>Admin Center</span>
+              </div>
+              <h2 className="text-sm font-extrabold font-mono text-white tracking-tight leading-none">
+                Saurav Studio
+              </h2>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <span className="px-2.5 py-1 rounded-full text-[10px] font-mono font-bold uppercase tracking-wider bg-cyan-500/10 border border-cyan-500/30 text-cyan-300">
+              {mainTab === 'inquiries'
+                ? `Inquiries (${queries.length})`
+                : mainTab === 'outreach'
+                ? 'Outreach'
+                : mainTab === 'composer'
+                ? 'Mail'
+                : mainTab === 'storage'
+                ? 'Storage'
+                : 'admin_power'}
+            </span>
+
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="relative group p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-200 hover:border-cyan-500/50 hover:text-cyan-300 transition-all cursor-pointer flex items-center gap-1.5 font-mono text-xs font-bold"
+              aria-label="Toggle Navigation Menu"
+            >
+              {isMobileMenuOpen ? (
+                <X className="w-5 h-5 text-rose-400" />
+              ) : (
+                <Menu className="w-5 h-5 text-cyan-400" />
+              )}
+            </button>
+          </div>
+        </div>
+
+        {/* Quick Horizontal Tap Bar for Phone Screens */}
+        <div className="px-4 pb-2.5 pt-1 flex items-center gap-2 overflow-x-auto no-scrollbar whitespace-nowrap scroll-smooth border-t border-slate-900">
+          <button
+            onClick={() => {
+              setMainTab('inquiries');
+              setIsMobileMenuOpen(false);
+            }}
+            className={`shrink-0 px-3 py-1.5 rounded-lg font-mono text-[11px] font-bold uppercase tracking-wider transition-all flex items-center gap-1.5 cursor-pointer ${
+              mainTab === 'inquiries'
+                ? 'bg-cyan-500 text-slate-950 shadow-md shadow-cyan-500/20'
+                : 'bg-slate-900 text-slate-400 border border-slate-800'
+            }`}
+          >
+            <Inbox className="w-3.5 h-3.5" />
+            <span>Inquiries ({queries.length})</span>
+          </button>
+
+          <button
+            onClick={() => {
+              setMainTab('outreach');
+              setIsMobileMenuOpen(false);
+            }}
+            className={`shrink-0 px-3 py-1.5 rounded-lg font-mono text-[11px] font-bold uppercase tracking-wider transition-all flex items-center gap-1.5 cursor-pointer ${
+              mainTab === 'outreach'
+                ? 'bg-cyan-500 text-slate-950 shadow-md shadow-cyan-500/20'
+                : 'bg-slate-900 text-slate-400 border border-slate-800'
+            }`}
+          >
+            <Target className="w-3.5 h-3.5 text-emerald-400" />
+            <span>Outreach</span>
+          </button>
+
+          <button
+            onClick={() => {
+              setMainTab('composer');
+              setIsMobileMenuOpen(false);
+            }}
+            className={`shrink-0 px-3 py-1.5 rounded-lg font-mono text-[11px] font-bold uppercase tracking-wider transition-all flex items-center gap-1.5 cursor-pointer ${
+              mainTab === 'composer'
+                ? 'bg-cyan-500 text-slate-950 shadow-md shadow-cyan-500/20'
+                : 'bg-slate-900 text-slate-400 border border-slate-800'
+            }`}
+          >
+            <Mail className="w-3.5 h-3.5 text-cyan-400" />
+            <span>Custom Mail</span>
+          </button>
+
+          <button
+            onClick={() => {
+              setMainTab('storage');
+              setIsMobileMenuOpen(false);
+            }}
+            className={`shrink-0 px-3 py-1.5 rounded-lg font-mono text-[11px] font-bold uppercase tracking-wider transition-all flex items-center gap-1.5 cursor-pointer ${
+              mainTab === 'storage'
+                ? 'bg-cyan-500 text-slate-950 shadow-md shadow-cyan-500/20'
+                : 'bg-slate-900 text-slate-400 border border-slate-800'
+            }`}
+          >
+            <HardDrive className="w-3.5 h-3.5 text-purple-400" />
+            <span>Storage</span>
+          </button>
+
+          <button
+            onClick={() => {
+              setMainTab('admin_power');
+              setIsMobileMenuOpen(false);
+            }}
+            className={`shrink-0 px-3 py-1.5 rounded-lg font-mono text-[11px] font-bold uppercase tracking-wider transition-all flex items-center gap-1.5 cursor-pointer ${
+              mainTab === 'admin_power'
+                ? 'bg-rose-500 text-white shadow-md shadow-rose-500/20'
+                : 'bg-slate-900 text-slate-400 border border-rose-500/30'
+            }`}
+          >
+            <Zap className="w-3.5 h-3.5 text-rose-400" />
+            <span>admin_power</span>
+          </button>
+        </div>
+
+        {/* Professional Mobile Menu Drawer */}
+        {isMobileMenuOpen && (
+          <div className="animate-in slide-in-from-top-4 fade-in duration-200 border-t border-slate-800 bg-slate-950/98 backdrop-blur-2xl px-4 py-4 space-y-4 shadow-2xl">
+            <div className="flex items-center justify-between pb-2 border-b border-slate-900">
+              <span className="text-[11px] font-mono uppercase tracking-widest text-cyan-400 font-bold flex items-center gap-2">
+                <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
+                Admin Mobile Navigation
+              </span>
+              <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-semibold">
+                Shield Active
+              </span>
+            </div>
+
+            <div className="space-y-2">
+              <p className="text-[10px] font-mono uppercase tracking-wider text-slate-500 font-semibold px-1">
+                Admin Modules
+              </p>
+
+              {/* 1. Inquiries */}
+              <button
+                onClick={() => {
+                  setMainTab('inquiries');
+                  setIsMobileMenuOpen(false);
+                }}
+                className={`w-full px-4 py-3 rounded-xl font-mono text-xs font-bold uppercase tracking-wider transition-all flex items-center justify-between cursor-pointer ${
+                  mainTab === 'inquiries'
+                    ? 'bg-cyan-500 text-slate-950 shadow-lg shadow-cyan-500/20'
+                    : 'bg-slate-900 text-slate-300 border border-slate-800/80 hover:border-slate-700'
+                }`}
+              >
+                <div className="flex items-center gap-3">
+                  <Inbox className="w-4 h-4 shrink-0" />
+                  <span>Inquiries ({queries.length})</span>
+                </div>
+                {mainTab === 'inquiries' && <CheckCircle2 className="w-4 h-4 text-slate-950" />}
+              </button>
+
+              {/* 2. Cold Outreach */}
+              <button
+                onClick={() => {
+                  setMainTab('outreach');
+                  setIsMobileMenuOpen(false);
+                }}
+                className={`w-full px-4 py-3 rounded-xl font-mono text-xs font-bold uppercase tracking-wider transition-all flex items-center justify-between cursor-pointer ${
+                  mainTab === 'outreach'
+                    ? 'bg-cyan-500 text-slate-950 shadow-lg shadow-cyan-500/20'
+                    : 'bg-slate-900 text-slate-300 border border-slate-800/80 hover:border-slate-700'
+                }`}
+              >
+                <div className="flex items-center gap-3">
+                  <Target className="w-4 h-4 text-emerald-400 shrink-0" />
+                  <span>Cold Outreach</span>
+                </div>
+                {mainTab === 'outreach' && <CheckCircle2 className="w-4 h-4 text-slate-950" />}
+              </button>
+
+              {/* 3. Custom Mail */}
+              <button
+                onClick={() => {
+                  setMainTab('composer');
+                  setIsMobileMenuOpen(false);
+                }}
+                className={`w-full px-4 py-3 rounded-xl font-mono text-xs font-bold uppercase tracking-wider transition-all flex items-center justify-between cursor-pointer ${
+                  mainTab === 'composer'
+                    ? 'bg-cyan-500 text-slate-950 shadow-lg shadow-cyan-500/20'
+                    : 'bg-slate-900 text-slate-300 border border-slate-800/80 hover:border-slate-700'
+                }`}
+              >
+                <div className="flex items-center gap-3">
+                  <Mail className="w-4 h-4 text-cyan-400 shrink-0" />
+                  <span>Custom Mail</span>
+                </div>
+                {mainTab === 'composer' && <CheckCircle2 className="w-4 h-4 text-slate-950" />}
+              </button>
+
+              {/* 4. Storage */}
+              <button
+                onClick={() => {
+                  setMainTab('storage');
+                  setIsMobileMenuOpen(false);
+                }}
+                className={`w-full px-4 py-3 rounded-xl font-mono text-xs font-bold uppercase tracking-wider transition-all flex items-center justify-between cursor-pointer ${
+                  mainTab === 'storage'
+                    ? 'bg-cyan-500 text-slate-950 shadow-lg shadow-cyan-500/20'
+                    : 'bg-slate-900 text-slate-300 border border-slate-800/80 hover:border-slate-700'
+                }`}
+              >
+                <div className="flex items-center gap-3">
+                  <HardDrive className="w-4 h-4 text-purple-400 shrink-0" />
+                  <span>Storage</span>
+                </div>
+                {mainTab === 'storage' && <CheckCircle2 className="w-4 h-4 text-slate-950" />}
+              </button>
+
+              {/* 5. admin_power */}
+              <button
+                onClick={() => {
+                  setMainTab('admin_power');
+                  setIsMobileMenuOpen(false);
+                }}
+                className={`w-full px-4 py-3 rounded-xl font-mono text-xs font-bold uppercase tracking-wider transition-all flex items-center justify-between cursor-pointer ${
+                  mainTab === 'admin_power'
+                    ? 'bg-rose-500 text-white shadow-lg shadow-rose-500/20'
+                    : 'bg-slate-900 text-slate-300 border border-rose-500/30 hover:border-rose-500/60'
+                }`}
+              >
+                <div className="flex items-center gap-3">
+                  <Zap className="w-4 h-4 text-rose-400 shrink-0" />
+                  <span>admin_power</span>
+                </div>
+                {mainTab === 'admin_power' ? (
+                  <CheckCircle2 className="w-4 h-4 text-white" />
+                ) : (
+                  <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-rose-500/20 text-rose-300 border border-rose-500/30">
+                    SECURITY
+                  </span>
+                )}
+              </button>
+            </div>
+
+            {/* Quick System Actions */}
+            <div className="pt-3 border-t border-slate-900 space-y-2">
+              <p className="text-[10px] font-mono uppercase tracking-wider text-slate-500 font-semibold px-1">
+                System Actions
+              </p>
+
+              <div className="grid grid-cols-2 gap-2">
+                {/* 6. View Site */}
+                <Link
+                  to="/"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="px-4 py-3 rounded-xl font-mono text-xs font-bold text-slate-200 bg-slate-900 border border-slate-800 hover:border-cyan-500/50 hover:text-cyan-300 transition-all flex items-center justify-center gap-2 shadow-lg"
+                >
+                  <Home className="w-4 h-4 text-cyan-400" />
+                  <span>View Site</span>
+                </Link>
+
+                {/* 7. Sign Out */}
+                <button
+                  onClick={() => {
+                    setIsMobileMenuOpen(false);
+                    handleLogout();
+                  }}
+                  className="px-4 py-3 rounded-xl font-mono text-xs font-bold text-slate-300 bg-slate-900 border border-slate-800 hover:border-rose-500/40 hover:text-rose-300 transition-all flex items-center justify-center gap-2 shadow-lg cursor-pointer"
+                >
+                  <LogOut className="w-4 h-4 text-rose-400" />
+                  <span>Sign Out</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Header Bar for Desktop Only (sm:flex) */}
+      <div className="hidden sm:flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-6 border-b border-slate-800">
         <div>
           <div className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-cyan-400 font-semibold mb-1">
             <ShieldCheck className="w-4 h-4 text-emerald-400" />
@@ -422,8 +700,8 @@ Saurav Studio Admin`,
         </div>
       </div>
 
-      {/* Primary Module Switcher Tabs (Inquiries vs Cold Outreach) */}
-      <div className="flex items-center gap-2.5 sm:gap-3 border-b border-slate-800 pb-4 overflow-x-auto no-scrollbar whitespace-nowrap scroll-smooth -mx-4 px-4 sm:mx-0 sm:px-0">
+      {/* Primary Module Switcher Tabs for Desktop Only (sm:flex) */}
+      <div className="hidden sm:flex items-center gap-2.5 sm:gap-3 border-b border-slate-800 pb-4 overflow-x-auto no-scrollbar whitespace-nowrap scroll-smooth -mx-4 px-4 sm:mx-0 sm:px-0">
         <button
           onClick={() => setMainTab('inquiries')}
           className={`shrink-0 relative group overflow-hidden px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl font-mono text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-2 sm:gap-2.5 cursor-pointer whitespace-nowrap ${
