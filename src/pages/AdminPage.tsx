@@ -392,10 +392,10 @@ Saurav Studio Admin`,
   };
 
   return (
-    <div className="max-w-[1536px] mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-8 space-y-6 sm:space-y-8">
-      {/* Mobile Floating Glass Pill Navbar (Phone Only: sm:hidden - Matching Home Page Design & Animation) */}
-      <header className="sm:hidden sticky top-4 left-0 right-0 z-50 px-2 max-w-5xl mx-auto transition-all duration-300 mb-6">
-        <div className="relative rounded-full bg-[#070b15]/90 border border-white/15 backdrop-blur-2xl shadow-[0_12px_40px_rgba(0,0,0,0.6)] px-4 py-2.5 flex items-center justify-between">
+    <div className="max-w-[1536px] mx-auto px-3 sm:px-6 lg:px-8 pt-20 sm:pt-8 pb-8 space-y-6 sm:space-y-8">
+      {/* Mobile Floating Glass Pill Navbar (Fixed to top of phone screens: sm:hidden) */}
+      <header className="sm:hidden fixed top-3 left-3 right-3 z-50 transition-all duration-300">
+        <div className="relative rounded-full bg-[#070b15]/95 border border-white/20 backdrop-blur-2xl shadow-[0_12px_40px_rgba(0,0,0,0.8)] px-4 py-2.5 flex items-center justify-between">
           {/* Brand Logo (Matching Home Page) */}
           <div className="flex items-center gap-2 font-bold tracking-tight text-white shrink-0">
             <span className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white text-xs font-black shadow-md shadow-blue-500/30">

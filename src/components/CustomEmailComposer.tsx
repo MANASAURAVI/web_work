@@ -397,70 +397,70 @@ const compressImageFile = (file: File): Promise<{ base64: string; size: number }
   return (
     <div className="space-y-10 animate-in fade-in duration-300">
       {/* Header Banner */}
-      <div className="relative group overflow-hidden glass-card rounded-2xl p-6 md:p-8 border border-slate-800 shadow-xl">
+      <div className="relative group overflow-hidden glass-card rounded-2xl p-4 sm:p-6 md:p-8 border border-slate-800 shadow-xl">
         <CornerBorder />
         <div className="space-y-2">
-          <div className="flex items-center gap-3">
-            <div className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-cyan-400 font-semibold bg-cyan-950/40 px-3 py-1 rounded-full border border-cyan-800/40">
+          <div className="flex flex-wrap items-center gap-2.5">
+            <div className="inline-flex items-center gap-2 text-[10px] sm:text-xs font-mono uppercase tracking-widest text-cyan-400 font-semibold bg-cyan-950/40 px-3 py-1 rounded-full border border-cyan-800/40">
               <Mail className="w-3.5 h-3.5 text-cyan-400" />
               <span>Direct Custom Mailer</span>
             </div>
             {lastSavedTime && (
-              <div className="inline-flex items-center gap-1.5 text-xs font-mono text-emerald-400 font-medium bg-emerald-950/40 px-3 py-1 rounded-full border border-emerald-800/40">
+              <div className="inline-flex items-center gap-1.5 text-[10px] sm:text-xs font-mono text-emerald-400 font-medium bg-emerald-950/40 px-3 py-1 rounded-full border border-emerald-800/40">
                 <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
                 <span>{lastSavedTime}</span>
               </div>
             )}
           </div>
-          <h2 className="text-2xl md:text-3xl font-extrabold text-white tracking-tight">
+          <h2 className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white tracking-tight">
             Custom Email & Rich Document Composer
           </h2>
-          <p className="text-slate-400 text-sm max-w-2xl">
+          <p className="text-slate-400 text-xs sm:text-sm max-w-2xl leading-relaxed">
             Compose rich HTML emails with bolding, italics, underlines, multi-color highlights, font families, and attached documents for instant executive delivery.
           </p>
         </div>
       </div>
 
       {/* Main Composer Layout: Form (Left) & Preview (Right) */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-start">
         {/* Left Column: Email Composer Form (7 Cols) */}
         <div className="lg:col-span-7 space-y-6">
-          <form onSubmit={handleSendCustomEmail} className="relative group overflow-hidden glass-card rounded-2xl p-6 border border-slate-800 space-y-6 shadow-2xl">
+          <form onSubmit={handleSendCustomEmail} className="relative group overflow-hidden glass-card rounded-2xl p-4 sm:p-6 border border-slate-800 space-y-5 sm:space-y-6 shadow-2xl">
             <CornerBorder />
-            <div className="flex items-center justify-between pb-3 border-b border-slate-800">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2.5 pb-3 border-b border-slate-800">
               <h3 className="text-xs font-mono uppercase tracking-widest text-slate-400 font-semibold flex items-center gap-2">
                 <Send className="w-4 h-4 text-cyan-400" />
                 <span>Compose Rich Message</span>
               </h3>
 
               {/* Quick Template Presets */}
-              <div className="flex items-center gap-1.5 text-[11px] font-mono">
-                <span className="text-slate-500">Quick Presets:</span>
+              <div className="flex flex-wrap items-center gap-1.5 text-[10px] sm:text-[11px] font-mono w-full sm:w-auto">
+                <span className="text-slate-500 font-semibold shrink-0">Presets:</span>
                 <button
                   type="button"
                   onClick={() => applyPreset('proposal')}
-                  className="px-2 py-0.5 rounded bg-slate-900 border border-slate-800 text-cyan-400 hover:bg-slate-800 cursor-pointer"
+                  className="px-2 py-1 rounded bg-slate-900 border border-slate-800 text-cyan-400 hover:bg-slate-800 transition-colors cursor-pointer text-[10px] font-mono font-medium"
                 >
                   Proposal
                 </button>
                 <button
                   type="button"
                   onClick={() => applyPreset('followup')}
-                  className="px-2 py-0.5 rounded bg-slate-900 border border-slate-800 text-cyan-400 hover:bg-slate-800 cursor-pointer"
+                  className="px-2 py-1 rounded bg-slate-900 border border-slate-800 text-cyan-400 hover:bg-slate-800 transition-colors cursor-pointer text-[10px] font-mono font-medium"
                 >
                   Follow-up
                 </button>
                 <button
                   type="button"
                   onClick={() => applyPreset('invoice')}
-                  className="px-2 py-0.5 rounded bg-slate-900 border border-slate-800 text-cyan-400 hover:bg-slate-800 cursor-pointer"
+                  className="px-2 py-1 rounded bg-slate-900 border border-slate-800 text-cyan-400 hover:bg-slate-800 transition-colors cursor-pointer text-[10px] font-mono font-medium"
                 >
                   Invoice
                 </button>
                 <button
                   type="button"
                   onClick={() => applyPreset('none')}
-                  className="px-2 py-0.5 rounded bg-slate-900 border border-slate-800 text-rose-400 hover:bg-rose-950/60 hover:border-rose-800 cursor-pointer font-bold"
+                  className="px-2 py-1 rounded bg-slate-900 border border-slate-800 text-rose-400 hover:bg-rose-950/60 hover:border-rose-800 transition-colors cursor-pointer text-[10px] font-mono font-bold"
                   title="Clear Subject & Message Body"
                 >
                   None (Clear)
@@ -564,11 +564,11 @@ const compressImageFile = (file: File): Promise<{ base64: string; size: number }
               </div>
 
               {/* Rich Formatting Toolbar */}
-              <div className="flex flex-wrap items-center gap-2 p-2.5 bg-slate-950 border border-b-0 border-slate-800 rounded-t-xl text-xs font-mono">
+              <div className="flex items-center gap-1.5 p-2.5 bg-slate-950 border border-b-0 border-slate-800 rounded-t-xl text-xs font-mono overflow-x-auto no-scrollbar whitespace-nowrap">
                 <button
                   type="button"
                   onClick={() => insertFormatting('<b>', '</b>')}
-                  className="p-1.5 hover:bg-slate-800 rounded text-slate-200 hover:text-white font-bold flex items-center gap-1 transition-colors cursor-pointer"
+                  className="p-1.5 hover:bg-slate-800 rounded text-slate-200 hover:text-white font-bold flex items-center gap-1 transition-colors cursor-pointer shrink-0"
                   title="Bold"
                 >
                   <Bold className="w-3.5 h-3.5 text-cyan-400" />
@@ -578,7 +578,7 @@ const compressImageFile = (file: File): Promise<{ base64: string; size: number }
                 <button
                   type="button"
                   onClick={() => insertFormatting('<i>', '</i>')}
-                  className="p-1.5 hover:bg-slate-800 rounded text-slate-200 hover:text-white italic flex items-center gap-1 transition-colors cursor-pointer"
+                  className="p-1.5 hover:bg-slate-800 rounded text-slate-200 hover:text-white italic flex items-center gap-1 transition-colors cursor-pointer shrink-0"
                   title="Italic"
                 >
                   <Italic className="w-3.5 h-3.5 text-purple-400" />
@@ -588,17 +588,17 @@ const compressImageFile = (file: File): Promise<{ base64: string; size: number }
                 <button
                   type="button"
                   onClick={() => insertFormatting('<u>', '</u>')}
-                  className="p-1.5 hover:bg-slate-800 rounded text-slate-200 hover:text-white underline flex items-center gap-1 transition-colors cursor-pointer"
+                  className="p-1.5 hover:bg-slate-800 rounded text-slate-200 hover:text-white underline flex items-center gap-1 transition-colors cursor-pointer shrink-0"
                   title="Underline"
                 >
                   <Underline className="w-3.5 h-3.5 text-emerald-400" />
                   <span className="text-[10px]">Underline</span>
                 </button>
 
-                <div className="h-4 w-px bg-slate-800 mx-0.5"></div>
+                <div className="h-4 w-px bg-slate-800 mx-0.5 shrink-0"></div>
 
                 {/* Multi-Color Palette Swatches */}
-                <div className="flex items-center gap-1.5 bg-slate-900/90 px-2.5 py-1 rounded-lg border border-slate-800">
+                <div className="flex items-center gap-1.5 bg-slate-900/90 px-2 py-1 rounded-lg border border-slate-800 shrink-0">
                   <Palette className="w-3.5 h-3.5 text-slate-400 shrink-0" />
                   <span className="text-[10px] text-slate-400 mr-0.5">Colors:</span>
                   {PRESET_COLORS.map((c) => (
@@ -612,7 +612,7 @@ const compressImageFile = (file: File): Promise<{ base64: string; size: number }
                   ))}
 
                   {/* Native HTML Custom Color Picker Wheel */}
-                  <div className="relative flex items-center ml-1 border-l border-slate-800 pl-1.5">
+                  <div className="relative flex items-center ml-1 border-l border-slate-800 pl-1.5 shrink-0">
                     <input
                       type="color"
                       value={selectedColor}
@@ -623,12 +623,12 @@ const compressImageFile = (file: File): Promise<{ base64: string; size: number }
                   </div>
                 </div>
 
-                <div className="h-4 w-px bg-slate-800 mx-0.5"></div>
+                <div className="h-4 w-px bg-slate-800 mx-0.5 shrink-0"></div>
 
                 <button
                   type="button"
                   onClick={() => insertFormatting('<h3 style="color: #ffffff; font-size: 16px; font-weight: 700; margin-top: 16px; margin-bottom: 8px;">', '</h3>')}
-                  className="p-1.5 hover:bg-slate-800 rounded text-slate-200 font-bold flex items-center gap-1 transition-colors cursor-pointer"
+                  className="p-1.5 hover:bg-slate-800 rounded text-slate-200 font-bold flex items-center gap-1 transition-colors cursor-pointer shrink-0"
                   title="Heading"
                 >
                   <Heading2 className="w-3.5 h-3.5 text-amber-400" />
@@ -638,7 +638,7 @@ const compressImageFile = (file: File): Promise<{ base64: string; size: number }
                 <button
                   type="button"
                   onClick={() => insertFormatting('• ')}
-                  className="p-1.5 hover:bg-slate-800 rounded text-slate-200 flex items-center gap-1 transition-colors cursor-pointer"
+                  className="p-1.5 hover:bg-slate-800 rounded text-slate-200 flex items-center gap-1 transition-colors cursor-pointer shrink-0"
                   title="Bullet Point"
                 >
                   <List className="w-3.5 h-3.5 text-slate-400" />
@@ -646,16 +646,16 @@ const compressImageFile = (file: File): Promise<{ base64: string; size: number }
                 </button>
 
                 {/* Font Selector */}
-                <div className="ml-auto flex items-center gap-1">
+                <div className="ml-auto flex items-center gap-1 shrink-0">
                   <Type className="w-3.5 h-3.5 text-slate-500" />
                   <select
                     value={fontFamily}
                     onChange={(e: any) => setFontFamily(e.target.value)}
                     className="bg-slate-900 border border-slate-800 rounded px-2 py-0.5 text-[11px] text-slate-300 focus:outline-none focus:border-cyan-500 cursor-pointer"
                   >
-                    <option value="sans">Sans-Serif (Modern)</option>
-                    <option value="serif">Serif (Executive)</option>
-                    <option value="mono">Monospace (Code)</option>
+                    <option value="sans">Sans-Serif</option>
+                    <option value="serif">Serif</option>
+                    <option value="mono">Monospace</option>
                   </select>
                 </div>
               </div>
@@ -676,10 +676,10 @@ const compressImageFile = (file: File): Promise<{ base64: string; size: number }
 
             {/* File Attachment Dropzone & List */}
             <div className="space-y-3 pt-2 border-t border-slate-800">
-              <div className="flex items-center justify-between">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
                 <label className="block text-xs font-mono uppercase text-slate-400 font-medium flex items-center gap-1.5">
                   <Paperclip className="w-4 h-4 text-cyan-400" />
-                  <span>Attach Documents / Files ({attachments.length})</span>
+                  <span>Attach Documents ({attachments.length})</span>
                 </label>
 
                 <label className="relative group overflow-hidden px-3 py-1.5 rounded-lg text-xs font-mono text-cyan-400 bg-cyan-950/60 border border-cyan-800/60 hover:bg-cyan-900/60 transition-all flex items-center gap-1.5 cursor-pointer">

@@ -141,7 +141,7 @@ export const AdminPowerHub: React.FC = () => {
   return (
     <div className="space-y-8 animate-in fade-in duration-300">
       {/* Top Banner & Status Header */}
-      <div className="relative overflow-hidden glass-card rounded-3xl p-6 sm:p-8 border border-slate-800 shadow-2xl bg-gradient-to-br from-slate-900/90 via-slate-950 to-slate-900">
+      <div className="relative overflow-hidden glass-card rounded-3xl p-4 sm:p-6 md:p-8 border border-slate-800 shadow-2xl bg-gradient-to-br from-slate-900/90 via-slate-950 to-slate-900">
         <CornerBorder />
         <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 relative z-10">
           <div>
@@ -529,20 +529,20 @@ export const AdminPowerHub: React.FC = () => {
       </div>
 
       {/* Warning Message Customizer */}
-      <div className="relative glass-card rounded-2xl p-6 sm:p-8 border border-slate-800 space-y-6">
+      <div className="relative glass-card rounded-2xl p-4 sm:p-6 md:p-8 border border-slate-800 space-y-4 sm:space-y-6">
         <CornerBorder />
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
           <div>
-            <h3 className="text-lg font-bold font-mono text-white flex items-center gap-2">
-              <Sparkles className="w-5 h-5 text-cyan-400" />
+            <h3 className="text-sm sm:text-lg font-bold font-mono text-white flex items-center gap-2">
+              <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-cyan-400 shrink-0" />
               <span>Custom Security Warning Banner Text</span>
             </h3>
-            <p className="text-xs text-slate-400 font-mono mt-1">
+            <p className="text-[11px] sm:text-xs text-slate-400 font-mono mt-1">
               This message will be shown to users who try to open DevTools or perform blocked actions.
             </p>
           </div>
           {saveSuccess && (
-            <span className="inline-flex items-center gap-1.5 text-xs font-mono text-emerald-400 font-bold bg-emerald-500/10 border border-emerald-500/30 px-3 py-1.5 rounded-xl animate-in fade-in">
+            <span className="inline-flex items-center gap-1.5 text-xs font-mono text-emerald-400 font-bold bg-emerald-500/10 border border-emerald-500/30 px-3 py-1.5 rounded-xl animate-in fade-in shrink-0">
               <CheckCircle2 className="w-4 h-4" />
               Auto-Saved & Applied Instantly!
             </span>
@@ -555,19 +555,19 @@ export const AdminPowerHub: React.FC = () => {
             value={config.customWarningMessage}
             onChange={(e) => handleMessageChange(e.target.value)}
             placeholder="e.g. Developer tools and content copying have been disabled for security."
-            className="w-full px-4 py-3 rounded-xl bg-slate-900 border border-slate-800 text-white font-mono text-sm focus:outline-none focus:border-cyan-500 transition-colors"
+            className="w-full px-3 py-2.5 sm:px-4 sm:py-3 rounded-xl bg-slate-900 border border-slate-800 text-white font-mono text-xs sm:text-sm focus:outline-none focus:border-cyan-500 transition-colors"
           />
 
-          <div className="flex items-center justify-between text-xs font-mono text-slate-400 pt-2 border-t border-slate-800/80">
-            <div className="flex items-center gap-2">
-              <RefreshCw className="w-3.5 h-3.5 text-cyan-400" />
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 text-[10px] sm:text-xs font-mono text-slate-400 pt-3 border-t border-slate-800/80">
+            <div className="flex items-center gap-2 shrink-0">
+              <RefreshCw className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
               <span>
                 {config.lastUpdated
                   ? `Last updated: ${new Date(config.lastUpdated).toLocaleTimeString()}`
                   : 'Live reactive auto-save active'}
               </span>
             </div>
-            <span className="text-emerald-400 font-medium">
+            <span className="text-emerald-400 font-medium shrink-0">
               ✓ All changes auto-saved to localStorage & Firestore
             </span>
           </div>
