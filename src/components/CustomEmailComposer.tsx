@@ -16,9 +16,13 @@ import {
   List,
   Palette,
   Heading2,
+  Paperclip,
 } from 'lucide-react';
 import { CornerBorder } from '@/components/CornerBorder';
 import { sendEmailReply } from '@/lib/emailService';
+import { db, storage } from '@/lib/firebase';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
 const PRESET_COLORS = [
   { name: 'Cyan', hex: '#38bdf8', bgClass: 'bg-cyan-400' },
@@ -42,23 +46,180 @@ const loadSavedDraft = () => {
   return null;
 };
 
-const initialDraft = loadSavedDraft();
-
 export const CustomEmailComposer: React.FC = () => {
-  const [recipientName, setRecipientName] = useState<string>(initialDraft?.recipientName || '');
-  const [recipientEmail, setRecipientEmail] = useState<string>(initialDraft?.recipientEmail || '');
-  const [subject, setSubject] = useState<string>(initialDraft?.subject || '');
-  const [message, setMessage] = useState<string>(initialDraft?.message || '');
-  const [fontFamily, setFontFamily] = useState<'sans' | 'serif' | 'mono'>(initialDraft?.fontFamily || 'sans');
-  const [selectedColor, setSelectedColor] = useState<string>(initialDraft?.selectedColor || '#38bdf8');
+  const [recipientName, setRecipientName] = useState<string>(() => loadSavedDraft()?.recipientName || '');
+  const [recipientEmail, setRecipientEmail] = useState<string>(() => loadSavedDraft()?.recipientEmail || '');
+  const [subject, setSubject] = useState<string>(() => loadSavedDraft()?.subject || '');
+  const [message, setMessage] = useState<string>(() => loadSavedDraft()?.message || '');
+  const [fontFamily, setFontFamily] = useState<'sans' | 'serif' | 'mono'>(() => loadSavedDraft()?.fontFamily || 'sans');
+  const [selectedColor, setSelectedColor] = useState<string>(() => loadSavedDraft()?.selectedColor || '#38bdf8');
   const [isSending, setIsSending] = useState(false);
+  const [isUploadingAttachment, setIsUploadingAttachment] = useState(false);
   const [statusToast, setStatusToast] = useState<{ type: 'success' | 'error'; msg: string } | null>(null);
   const [webmailUrl, setWebmailUrl] = useState<string | null>(null);
-  const [lastSavedTime, setLastSavedTime] = useState<string | null>(
-    initialDraft ? 'Saved Draft Loaded' : null
+  const [lastSavedTime, setLastSavedTime] = useState<string | null>(() =>
+    loadSavedDraft() ? 'Saved Draft Loaded' : null
   );
 
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  // Auto-Upload File & Insert Direct Access Link into Message Body
+  const handleAttachmentUploadAndInsertLink = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files || files.length === 0) return;
+
+    setIsUploadingAttachment(true);
+    let insertedLinksText = '';
+
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      try {
+        const cleanFileName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
+        const storagePath = `uploads/${Date.now()}_${cleanFileName}`;
+
+        let downloadUrl = '';
+
+        // Attempt Firebase Storage Upload with 120s timeout for large files (up to 50MB)
+        if (storage) {
+          try {
+            const fileRef = ref(storage, storagePath);
+            const uploadPromise = uploadBytes(fileRef, file).then(() => getDownloadURL(fileRef));
+            const uploadTimeoutMs = Math.max(45000, Math.min(180000, Math.ceil(file.size / 1000) * 3));
+            const timeoutPromise = new Promise<string>((_, reject) =>
+              setTimeout(() => reject(new Error('Storage Timeout')), uploadTimeoutMs)
+            );
+            downloadUrl = await Promise.race([uploadPromise, timeoutPromise]);
+          } catch (stErr) {
+            console.warn('Firebase Storage upload notice, using Data URL fallback:', stErr);
+          }
+        }
+
+        // Attempt 2: Free Public Cloud Upload Fallback (tmpfiles.org) if Firebase Storage is unconfigured or blocked by CORS
+        if (!downloadUrl) {
+          try {
+            const formData = new FormData();
+            formData.append('file', file);
+            const tmpRes = await fetch('https://tmpfiles.org/api/v1/upload', {
+              method: 'POST',
+              body: formData,
+            });
+            if (tmpRes.ok) {
+              const tmpData = await tmpRes.json();
+              if (tmpData?.data?.url) {
+                downloadUrl = tmpData.data.url.replace('tmpfiles.org/', 'tmpfiles.org/dl/');
+              }
+            }
+          } catch (tmpErr) {
+            console.warn('Public cloud upload notice, using Data URL fallback:', tmpErr);
+          }
+        }
+
+        // Attempt 3: Base64 Data URL Fallback if both cloud storage attempts fail
+        if (!downloadUrl) {
+          downloadUrl = await new Promise<string>((resolve) => {
+            if (file.type.startsWith('image/')) {
+              const reader = new FileReader();
+              reader.onload = (evt) => {
+                const img = new Image();
+                img.onload = () => {
+                  const canvas = document.createElement('canvas');
+                  let width = img.width;
+                  let height = img.height;
+                  const maxDim = 1200;
+                  if (width > maxDim || height > maxDim) {
+                    if (width > height) {
+                      height = Math.round((height * maxDim) / width);
+                      width = maxDim;
+                    } else {
+                      width = Math.round((width * maxDim) / height);
+                      height = maxDim;
+                    }
+                  }
+                  canvas.width = width;
+                  canvas.height = height;
+                  const ctx = canvas.getContext('2d');
+                  if (ctx) {
+                    ctx.drawImage(img, 0, 0, width, height);
+                    resolve(canvas.toDataURL('image/jpeg', 0.85));
+                  } else {
+                    resolve((evt.target?.result as string) || '');
+                  }
+                };
+                img.onerror = () => resolve((evt.target?.result as string) || '');
+                img.src = (evt.target?.result as string) || '';
+              };
+              reader.onerror = () => resolve('');
+              reader.readAsDataURL(file);
+            } else {
+              const reader = new FileReader();
+              reader.onload = (evt) => resolve((evt.target?.result as string) || '');
+              reader.onerror = () => resolve('');
+              reader.readAsDataURL(file);
+            }
+          });
+        }
+
+        if (downloadUrl) {
+          // Record in Firestore storage_attachments collection so it appears in Storage Manager
+          if (db) {
+            try {
+              await addDoc(collection(db, 'storage_attachments'), {
+                fileName: file.name,
+                fileSize: file.size,
+                fileType: file.type || 'application/octet-stream',
+                storagePath: storagePath,
+                downloadUrl: downloadUrl,
+                sentTo: recipientEmail || 'Custom Email Attachment',
+                uploadedAt: serverTimestamp(),
+              });
+            } catch (dbErr) {
+              console.warn('Firestore attachment save notice:', dbErr);
+            }
+          }
+
+          // Format clean HTML attachment box that opens in a new tab with working URL (never '#')
+          const isHttpUrl = downloadUrl.startsWith('http');
+          if (isHttpUrl) {
+            insertedLinksText += `\n<div style="margin-top: 10px; margin-bottom: 10px; padding: 10px 14px; background: #0f172a; border: 1px solid #334155; border-radius: 8px;">📎 <b>Attached File:</b> ${file.name}<br/><a href="${downloadUrl}" target="_blank" rel="noopener noreferrer" style="color: #38bdf8; font-weight: bold; text-decoration: underline;">🔗 Open ${file.name} in New Tab: ${downloadUrl}</a></div>\n`;
+          } else {
+            insertedLinksText += `\n<div style="margin-top: 10px; margin-bottom: 10px; padding: 10px 14px; background: #0f172a; border: 1px solid #334155; border-radius: 8px;">📎 <b>Attached File:</b> ${file.name}<br/><a href="${downloadUrl}" target="_blank" rel="noopener noreferrer" style="color: #38bdf8; font-weight: bold; text-decoration: underline;">🔗 Click to Open ${file.name} in New Tab</a></div>\n`;
+          }
+        }
+      } catch (err) {
+        console.error('Attachment processing error:', err);
+      }
+    }
+
+    setIsUploadingAttachment(false);
+    e.target.value = '';
+
+    if (insertedLinksText) {
+      setMessage((prev) => {
+        const nextMsg = prev + insertedLinksText;
+        try {
+          const draftData = {
+            recipientName,
+            recipientEmail,
+            subject,
+            message: nextMsg,
+            fontFamily,
+            selectedColor,
+          };
+          localStorage.setItem(DRAFT_KEY, JSON.stringify(draftData));
+          const nowStr = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+          setLastSavedTime(`Auto-Saved at ${nowStr}`);
+        } catch (e) {
+          console.warn('Failed to save draft on attachment upload:', e);
+        }
+        return nextMsg;
+      });
+      setStatusToast({
+        type: 'success',
+        msg: 'Attachment uploaded & direct download link inserted into email body!',
+      });
+      setTimeout(() => setStatusToast(null), 4000);
+    }
+  };
 
   // Auto-Save Draft to LocalStorage whenever content changes
   useEffect(() => {
@@ -427,6 +588,28 @@ Founder & Digital Architect • Saurav Studio`);
                   <Underline className="w-3.5 h-3.5 text-emerald-400" />
                   <span className="text-[10px]">Underline</span>
                 </button>
+
+                <div className="h-4 w-px bg-slate-800 mx-0.5 shrink-0"></div>
+
+                {/* Direct File Attachment & Link Generator */}
+                <label className="p-1.5 hover:bg-cyan-900/60 rounded text-cyan-300 hover:text-cyan-200 flex items-center gap-1 transition-colors cursor-pointer shrink-0 font-bold bg-cyan-950/60 border border-cyan-500/40 shadow-sm" title="Upload Document / Image & Insert Direct Access Link into Email Body">
+                  {isUploadingAttachment ? (
+                    <RefreshCw className="w-3.5 h-3.5 text-cyan-400 animate-spin" />
+                  ) : (
+                    <Paperclip className="w-3.5 h-3.5 text-cyan-400" />
+                  )}
+                  <span className="text-[10px]">
+                    {isUploadingAttachment ? 'Uploading to Storage...' : 'Attach File (Up to 50MB)'}
+                  </span>
+                  <input
+                    type="file"
+                    multiple
+                    accept="image/*,.pdf,.doc,.docx"
+                    onChange={handleAttachmentUploadAndInsertLink}
+                    className="hidden"
+                    disabled={isUploadingAttachment}
+                  />
+                </label>
 
                 <div className="h-4 w-px bg-slate-800 mx-0.5 shrink-0"></div>
 

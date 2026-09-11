@@ -84,6 +84,57 @@ export const AdminPage: React.FC = () => {
   const [viewMode, setViewMode] = useState<'cards' | 'table'>('cards');
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
 
+  // 1-Hour Security Session Inactivity & Auto Logout State
+  const [showSecurityPrompt, setShowSecurityPrompt] = useState(false);
+  const [promptCountdown, setPromptCountdown] = useState(60); // 60 seconds stay-in window
+
+  // Session activity listener & 1-hour inactivity timeout logic
+  useEffect(() => {
+    let inactivityTimer: NodeJS.Timeout;
+    let countdownInterval: NodeJS.Timeout | undefined;
+
+    const resetInactivityTimer = () => {
+      if (showSecurityPrompt) return; // Keep modal visible if already triggered
+      clearTimeout(inactivityTimer);
+      // Trigger prompt after 55 minutes of inactivity (giving 5 mins window before 1 hr), or 1 hour
+      // 55 minutes = 3300000 ms, total 1 hr session limit = 3600000 ms
+      inactivityTimer = setTimeout(() => {
+        setPromptCountdown(60);
+        setShowSecurityPrompt(true);
+      }, 55 * 60 * 1000); 
+    };
+
+    // Global activity listeners
+    const activityEvents = ['mousemove', 'keydown', 'mousedown', 'scroll', 'touchstart'];
+    activityEvents.forEach((evt) => window.addEventListener(evt, resetInactivityTimer));
+
+    resetInactivityTimer();
+
+    return () => {
+      clearTimeout(inactivityTimer);
+      if (countdownInterval) clearInterval(countdownInterval);
+      activityEvents.forEach((evt) => window.removeEventListener(evt, resetInactivityTimer));
+    };
+  }, [showSecurityPrompt]);
+
+  // Countdown timer when security prompt modal is active
+  useEffect(() => {
+    let interval: NodeJS.Timeout;
+    if (showSecurityPrompt) {
+      interval = setInterval(() => {
+        setPromptCountdown((prev) => {
+          if (prev <= 1) {
+            clearInterval(interval);
+            handleLogout();
+            return 0;
+          }
+          return prev - 1;
+        });
+      }, 1000);
+    }
+    return () => clearInterval(interval);
+  }, [showSecurityPrompt]);
+
   // Reply state management
   const [activeReplyId, setActiveReplyId] = useState<string | null>(null);
   const [replySubjects, setReplySubjects] = useState<Record<string, string>>({});
@@ -1266,6 +1317,74 @@ Saurav Studio Admin`,
           )}
         </div>
       )}
+
+      {/* 1-Hour Security Session Inactivity Modal */}
+      <AnimatePresence>
+        {showSecurityPrompt && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md animate-in fade-in duration-200">
+            <motion.div
+              initial={{ scale: 0.95, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.95, opacity: 0 }}
+              className="relative group overflow-hidden glass-card rounded-2xl p-6 sm:p-8 max-w-md w-full border border-cyan-500/40 shadow-2xl space-y-6"
+            >
+              <CornerBorder />
+
+              <div className="flex items-center gap-3 pb-3 border-b border-slate-800">
+                <div className="p-2.5 rounded-xl bg-cyan-950/80 border border-cyan-800/60 text-cyan-400">
+                  <ShieldCheck className="w-6 h-6 animate-pulse text-cyan-400" />
+                </div>
+                <div>
+                  <h3 className="text-base sm:text-lg font-extrabold text-white tracking-tight">
+                    Admin Session Security Timeout
+                  </h3>
+                  <p className="text-xs font-mono text-cyan-400">Inactivity Protection Active</p>
+                </div>
+              </div>
+
+              <div className="space-y-3 text-xs sm:text-sm text-slate-300 leading-relaxed font-sans">
+                <p>
+                  You have been inactive for <strong className="text-white">1 hour</strong>. Would you like to stay logged in to your admin session?
+                </p>
+
+                {/* Countdown display */}
+                <div className="flex items-center justify-center py-4 bg-slate-950/90 rounded-xl border border-slate-800/80 space-x-3">
+                  <Clock className="w-5 h-5 text-cyan-400 animate-spin" />
+                  <span className="text-2xl font-extrabold font-mono text-cyan-400 tracking-wider">
+                    {promptCountdown}s
+                  </span>
+                </div>
+                <p className="text-[11px] font-mono text-slate-500 text-center">
+                  If no response is received in {promptCountdown}s, you will be automatically logged out.
+                </p>
+              </div>
+
+              <div className="flex flex-col sm:flex-row items-center gap-3 pt-2">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setShowSecurityPrompt(false);
+                    setPromptCountdown(60);
+                  }}
+                  className="w-full sm:flex-1 px-4 py-3 rounded-xl font-mono text-xs font-bold uppercase tracking-wider text-slate-950 bg-cyan-400 hover:bg-cyan-300 transition-all shadow-lg shadow-cyan-400/20 flex items-center justify-center gap-2 cursor-pointer"
+                >
+                  <ShieldCheck className="w-4 h-4 text-slate-950" />
+                  <span>Stay Logged In</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={handleLogout}
+                  className="w-full sm:w-auto px-4 py-3 rounded-xl font-mono text-xs font-bold uppercase tracking-wider text-rose-400 bg-rose-950/60 hover:bg-rose-900/60 border border-rose-800/50 transition-all flex items-center justify-center gap-2 cursor-pointer"
+                >
+                  <LogOut className="w-4 h-4 text-rose-400" />
+                  <span>Log Out Now</span>
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

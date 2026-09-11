@@ -72,7 +72,11 @@ const stripHtmlToPlainText = (html: string): string => {
     .replace(/<i>(.*?)<\/i>/gi, '$1')
     .replace(/<u>(.*?)<\/u>/gi, '$1')
     .replace(/<span[^>]*>(.*?)<\/span>/gi, '$1')
-    .replace(/<a[^>]*href="([^"]+)"[^>]*>(.*?)<\/a>/gi, '$2 ($1)')
+    .replace(/<a[^>]*href="(data:|#|javascript:)[^"]*"[^>]*>(.*?)<\/a>/gi, '$2')
+    .replace(/<a[^>]*href="(https?:\/\/[^"]+)"[^>]*>(.*?)<\/a>/gi, (_, url, text) => {
+      if (text.includes('http://') || text.includes('https://')) return text;
+      return `${text} (${url})`;
+    })
     .replace(/<[^>]+>/g, '')
     .replace(/\n{3,}/g, '\n\n')
     .trim();
@@ -108,10 +112,10 @@ export const sendEmailReply = async (params: SendReplyParams): Promise<SendReply
             const cleanFileName = att.name.replace(/[^a-zA-Z0-9._-]/g, '_');
             const fileRef = ref(storage, `attachments/${Date.now()}_${cleanFileName}`);
             
-            // Fast 2s timeout promise so CORS errors don't hang email dispatch
+            // 120s timeout promise to allow large files up to 50MB to complete Firebase Storage upload
             const uploadPromise = uploadString(fileRef, att.data, 'data_url').then(() => getDownloadURL(fileRef));
             const timeoutPromise = new Promise<string>((_, reject) =>
-              setTimeout(() => reject(new Error('Firebase Storage timeout/CORS')), 2000)
+              setTimeout(() => reject(new Error('Firebase Storage timeout/CORS')), 120000)
             );
 
             uploadedUrl = await Promise.race([uploadPromise, timeoutPromise]);
@@ -220,15 +224,20 @@ export const sendEmailReply = async (params: SendReplyParams): Promise<SendReply
     }
 
     // Protection against EmailJS 50KB Variables Size Limit (HTTP 413)
-    if (JSON.stringify(templateParams).length > 42000) {
-      console.warn('Payload exceeds EmailJS 42KB safety threshold. Trimming Base64 data to prevent 413 error...');
+    if (JSON.stringify(templateParams).length > 35000) {
+      console.warn('Payload exceeds EmailJS safety threshold. Trimming Base64 data to guarantee delivery...');
       delete templateParams.content;
       if (params.attachments) {
         params.attachments.forEach((_, idx) => {
           if (idx > 0) delete templateParams[`content_${idx + 1}`];
         });
       }
-      templateParams.message = templateParams.message.replace(/<img src="data:image\/[^"]+"/g, '<span style="color:#94a3b8; font-size:12px;">[Attached Image]</span>');
+      if (templateParams.html_message) {
+        templateParams.html_message = templateParams.html_message
+          .replace(/href="data:[^"]+"/g, 'href="#" title="Attachment data omitted for email delivery"')
+          .replace(/src="data:image\/[^"]+"/g, 'src="https://placehold.co/400x250/0f172a/38bdf8?text=Attached+Image"');
+      }
+      templateParams.message = stripHtmlToPlainText(templateParams.html_message || params.message);
     }
 
     let lastErrorMsg = '';
