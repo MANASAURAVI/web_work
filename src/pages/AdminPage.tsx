@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { signOut } from 'firebase/auth';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   collection,
   onSnapshot,
@@ -392,281 +393,272 @@ Saurav Studio Admin`,
 
   return (
     <div className="max-w-[1536px] mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-8 space-y-6 sm:space-y-8">
-      {/* Mobile-Only Sticky Top Navbar & Slide-Out Navigation Drawer (sm:hidden) */}
-      <div className="sm:hidden sticky top-0 z-50 -mx-4 -mt-4 mb-4 bg-slate-950/95 backdrop-blur-xl border-b border-slate-800/80 shadow-2xl">
-        <div className="px-4 py-3 flex items-center justify-between">
-          <div className="flex items-center gap-2.5">
-            <div className="p-2 rounded-xl bg-cyan-500/10 border border-cyan-500/30 text-cyan-400">
-              <ShieldCheck className="w-5 h-5 text-emerald-400 animate-pulse" />
-            </div>
-            <div>
-              <div className="flex items-center gap-1.5 text-[10px] font-mono uppercase tracking-widest text-cyan-400 font-bold">
-                <span>Admin Center</span>
-              </div>
-              <h2 className="text-sm font-extrabold font-mono text-white tracking-tight leading-none">
-                Saurav Studio
-              </h2>
-            </div>
+      {/* Mobile Floating Glass Pill Navbar (Phone Only: sm:hidden - Matching Home Page Design & Animation) */}
+      <header className="sm:hidden sticky top-4 left-0 right-0 z-50 px-2 max-w-5xl mx-auto transition-all duration-300 mb-6">
+        <div className="relative rounded-full bg-[#070b15]/90 border border-white/15 backdrop-blur-2xl shadow-[0_12px_40px_rgba(0,0,0,0.6)] px-4 py-2.5 flex items-center justify-between">
+          {/* Brand Logo (Matching Home Page) */}
+          <div className="flex items-center gap-2 font-bold tracking-tight text-white shrink-0">
+            <span className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white text-xs font-black shadow-md shadow-blue-500/30">
+              A
+            </span>
+            <span className="font-mono text-sm font-bold tracking-tight">
+              ADMIN<span className="text-blue-500">.</span>
+            </span>
+            <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-semibold ml-0.5">
+              Shield
+            </span>
           </div>
 
-          <div className="flex items-center gap-2">
-            <span className="px-2.5 py-1 rounded-full text-[10px] font-mono font-bold uppercase tracking-wider bg-cyan-500/10 border border-cyan-500/30 text-cyan-300">
+          {/* Active Tab Badge & Toggle Button */}
+          <div className="flex items-center gap-2 shrink-0">
+            <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-cyan-300 bg-cyan-500/10 px-2.5 py-1 rounded-full border border-cyan-500/30">
               {mainTab === 'inquiries'
                 ? `Inquiries (${queries.length})`
                 : mainTab === 'outreach'
                 ? 'Outreach'
                 : mainTab === 'composer'
-                ? 'Mail'
+                ? 'Custom Mail'
                 : mainTab === 'storage'
                 ? 'Storage'
                 : 'admin_power'}
             </span>
 
-            <button
+            <motion.button
+              whileTap={{ scale: 0.9 }}
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="relative group p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-200 hover:border-cyan-500/50 hover:text-cyan-300 transition-all cursor-pointer flex items-center gap-1.5 font-mono text-xs font-bold"
-              aria-label="Toggle Navigation Menu"
+              aria-label="Toggle mobile navigation menu"
+              className="p-2 rounded-full text-slate-200 bg-white/10 hover:bg-white/20 border border-white/10 transition-colors cursor-pointer"
             >
-              {isMobileMenuOpen ? (
-                <X className="w-5 h-5 text-rose-400" />
-              ) : (
-                <Menu className="w-5 h-5 text-cyan-400" />
-              )}
-            </button>
+              {isMobileMenuOpen ? <X className="w-5 h-5 text-rose-400" /> : <Menu className="w-5 h-5 text-cyan-400" />}
+            </motion.button>
           </div>
         </div>
 
-        {/* Quick Horizontal Tap Bar for Phone Screens */}
-        <div className="px-4 pb-2.5 pt-1 flex items-center gap-2 overflow-x-auto no-scrollbar whitespace-nowrap scroll-smooth border-t border-slate-900">
-          <button
-            onClick={() => {
-              setMainTab('inquiries');
-              setIsMobileMenuOpen(false);
-            }}
-            className={`shrink-0 px-3 py-1.5 rounded-lg font-mono text-[11px] font-bold uppercase tracking-wider transition-all flex items-center gap-1.5 cursor-pointer ${
-              mainTab === 'inquiries'
-                ? 'bg-cyan-500 text-slate-950 shadow-md shadow-cyan-500/20'
-                : 'bg-slate-900 text-slate-400 border border-slate-800'
-            }`}
-          >
-            <Inbox className="w-3.5 h-3.5" />
-            <span>Inquiries ({queries.length})</span>
-          </button>
+        {/* Mobile Menu Drawer Overlay (Exact Home Page AnimatePresence Animation) */}
+        <AnimatePresence>
+          {isMobileMenuOpen && (
+            <div className="sm:hidden">
+              {/* Backdrop */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2 }}
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40"
+              />
 
-          <button
-            onClick={() => {
-              setMainTab('outreach');
-              setIsMobileMenuOpen(false);
-            }}
-            className={`shrink-0 px-3 py-1.5 rounded-lg font-mono text-[11px] font-bold uppercase tracking-wider transition-all flex items-center gap-1.5 cursor-pointer ${
-              mainTab === 'outreach'
-                ? 'bg-cyan-500 text-slate-950 shadow-md shadow-cyan-500/20'
-                : 'bg-slate-900 text-slate-400 border border-slate-800'
-            }`}
-          >
-            <Target className="w-3.5 h-3.5 text-emerald-400" />
-            <span>Outreach</span>
-          </button>
+              {/* Floating Translucent Glass Card Drawer */}
+              <motion.div
+                initial={{ x: '100%', opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                exit={{ x: '100%', opacity: 0 }}
+                transition={{ type: 'spring', damping: 25, stiffness: 240 }}
+                className="fixed top-20 right-3 left-3 sm:right-8 sm:left-auto sm:w-[320px] h-auto rounded-3xl bg-[#070b15]/95 border border-white/20 backdrop-blur-2xl shadow-2xl p-5 flex flex-col gap-4 z-50"
+              >
+                {/* Drawer Header */}
+                <div className="flex items-center justify-between pb-3 border-b border-white/15">
+                  <div className="flex items-center gap-2 font-bold tracking-tight text-white">
+                    <span className="w-7 h-7 rounded-full bg-blue-600 flex items-center justify-center text-white text-xs font-black">
+                      A
+                    </span>
+                    <span className="font-mono text-sm font-bold tracking-tight">
+                      ADMIN PANEL<span className="text-blue-500">.</span>
+                    </span>
+                  </div>
 
-          <button
-            onClick={() => {
-              setMainTab('composer');
-              setIsMobileMenuOpen(false);
-            }}
-            className={`shrink-0 px-3 py-1.5 rounded-lg font-mono text-[11px] font-bold uppercase tracking-wider transition-all flex items-center gap-1.5 cursor-pointer ${
-              mainTab === 'composer'
-                ? 'bg-cyan-500 text-slate-950 shadow-md shadow-cyan-500/20'
-                : 'bg-slate-900 text-slate-400 border border-slate-800'
-            }`}
-          >
-            <Mail className="w-3.5 h-3.5 text-cyan-400" />
-            <span>Custom Mail</span>
-          </button>
+                  <motion.button
+                    whileTap={{ scale: 0.9 }}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    aria-label="Close mobile navigation menu"
+                    className="p-1.5 rounded-full text-slate-200 bg-white/10 hover:bg-white/20 border border-white/15 transition-colors cursor-pointer"
+                  >
+                    <X className="w-4 h-4 text-rose-400" />
+                  </motion.button>
+                </div>
 
-          <button
-            onClick={() => {
-              setMainTab('storage');
-              setIsMobileMenuOpen(false);
-            }}
-            className={`shrink-0 px-3 py-1.5 rounded-lg font-mono text-[11px] font-bold uppercase tracking-wider transition-all flex items-center gap-1.5 cursor-pointer ${
-              mainTab === 'storage'
-                ? 'bg-cyan-500 text-slate-950 shadow-md shadow-cyan-500/20'
-                : 'bg-slate-900 text-slate-400 border border-slate-800'
-            }`}
-          >
-            <HardDrive className="w-3.5 h-3.5 text-purple-400" />
-            <span>Storage</span>
-          </button>
+                {/* Staggered Navigation Buttons */}
+                <div className="flex flex-col space-y-1.5">
+                  <p className="text-[10px] font-mono uppercase tracking-wider text-slate-400 font-semibold px-2">
+                    Admin Modules
+                  </p>
 
-          <button
-            onClick={() => {
-              setMainTab('admin_power');
-              setIsMobileMenuOpen(false);
-            }}
-            className={`shrink-0 px-3 py-1.5 rounded-lg font-mono text-[11px] font-bold uppercase tracking-wider transition-all flex items-center gap-1.5 cursor-pointer ${
-              mainTab === 'admin_power'
-                ? 'bg-rose-500 text-white shadow-md shadow-rose-500/20'
-                : 'bg-slate-900 text-slate-400 border border-rose-500/30'
-            }`}
-          >
-            <Zap className="w-3.5 h-3.5 text-rose-400" />
-            <span>admin_power</span>
-          </button>
-        </div>
+                  {/* 1. Inquiries */}
+                  <motion.div
+                    initial={{ opacity: 0, x: 16 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.05 }}
+                    whileTap={{ scale: 0.97 }}
+                  >
+                    <button
+                      onClick={() => {
+                        setMainTab('inquiries');
+                        setIsMobileMenuOpen(false);
+                      }}
+                      className={`w-full flex items-center justify-between text-xs font-mono font-bold py-3 px-4 rounded-xl transition-colors cursor-pointer ${
+                        mainTab === 'inquiries'
+                          ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/30'
+                          : 'text-slate-200 hover:text-white hover:bg-white/10'
+                      }`}
+                    >
+                      <div className="flex items-center gap-2.5">
+                        <Inbox className="w-4 h-4 shrink-0" />
+                        <span>Inquiries ({queries.length})</span>
+                      </div>
+                      {mainTab === 'inquiries' && <span className="w-2 h-2 rounded-full bg-cyan-400" />}
+                    </button>
+                  </motion.div>
 
-        {/* Professional Mobile Menu Drawer */}
-        {isMobileMenuOpen && (
-          <div className="animate-in slide-in-from-top-4 fade-in duration-200 border-t border-slate-800 bg-slate-950/98 backdrop-blur-2xl px-4 py-4 space-y-4 shadow-2xl">
-            <div className="flex items-center justify-between pb-2 border-b border-slate-900">
-              <span className="text-[11px] font-mono uppercase tracking-widest text-cyan-400 font-bold flex items-center gap-2">
-                <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
-                Admin Mobile Navigation
-              </span>
-              <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-semibold">
-                Shield Active
-              </span>
+                  {/* 2. Cold Outreach */}
+                  <motion.div
+                    initial={{ opacity: 0, x: 16 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.09 }}
+                    whileTap={{ scale: 0.97 }}
+                  >
+                    <button
+                      onClick={() => {
+                        setMainTab('outreach');
+                        setIsMobileMenuOpen(false);
+                      }}
+                      className={`w-full flex items-center justify-between text-xs font-mono font-bold py-3 px-4 rounded-xl transition-colors cursor-pointer ${
+                        mainTab === 'outreach'
+                          ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/30'
+                          : 'text-slate-200 hover:text-white hover:bg-white/10'
+                      }`}
+                    >
+                      <div className="flex items-center gap-2.5">
+                        <Target className="w-4 h-4 text-emerald-400 shrink-0" />
+                        <span>Cold Outreach</span>
+                      </div>
+                      {mainTab === 'outreach' && <span className="w-2 h-2 rounded-full bg-cyan-400" />}
+                    </button>
+                  </motion.div>
+
+                  {/* 3. Custom Mail */}
+                  <motion.div
+                    initial={{ opacity: 0, x: 16 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.13 }}
+                    whileTap={{ scale: 0.97 }}
+                  >
+                    <button
+                      onClick={() => {
+                        setMainTab('composer');
+                        setIsMobileMenuOpen(false);
+                      }}
+                      className={`w-full flex items-center justify-between text-xs font-mono font-bold py-3 px-4 rounded-xl transition-colors cursor-pointer ${
+                        mainTab === 'composer'
+                          ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/30'
+                          : 'text-slate-200 hover:text-white hover:bg-white/10'
+                      }`}
+                    >
+                      <div className="flex items-center gap-2.5">
+                        <Mail className="w-4 h-4 text-cyan-400 shrink-0" />
+                        <span>Custom Mail</span>
+                      </div>
+                      {mainTab === 'composer' && <span className="w-2 h-2 rounded-full bg-cyan-400" />}
+                    </button>
+                  </motion.div>
+
+                  {/* 4. Storage */}
+                  <motion.div
+                    initial={{ opacity: 0, x: 16 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.17 }}
+                    whileTap={{ scale: 0.97 }}
+                  >
+                    <button
+                      onClick={() => {
+                        setMainTab('storage');
+                        setIsMobileMenuOpen(false);
+                      }}
+                      className={`w-full flex items-center justify-between text-xs font-mono font-bold py-3 px-4 rounded-xl transition-colors cursor-pointer ${
+                        mainTab === 'storage'
+                          ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/30'
+                          : 'text-slate-200 hover:text-white hover:bg-white/10'
+                      }`}
+                    >
+                      <div className="flex items-center gap-2.5">
+                        <HardDrive className="w-4 h-4 text-purple-400 shrink-0" />
+                        <span>Storage</span>
+                      </div>
+                      {mainTab === 'storage' && <span className="w-2 h-2 rounded-full bg-cyan-400" />}
+                    </button>
+                  </motion.div>
+
+                  {/* 5. admin_power */}
+                  <motion.div
+                    initial={{ opacity: 0, x: 16 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.21 }}
+                    whileTap={{ scale: 0.97 }}
+                  >
+                    <button
+                      onClick={() => {
+                        setMainTab('admin_power');
+                        setIsMobileMenuOpen(false);
+                      }}
+                      className={`w-full flex items-center justify-between text-xs font-mono font-bold py-3 px-4 rounded-xl transition-colors cursor-pointer ${
+                        mainTab === 'admin_power'
+                          ? 'bg-rose-600 text-white shadow-lg shadow-rose-600/30'
+                          : 'text-rose-300 hover:text-rose-200 hover:bg-rose-500/10 border border-rose-500/20'
+                      }`}
+                    >
+                      <div className="flex items-center gap-2.5">
+                        <Zap className="w-4 h-4 text-rose-400 shrink-0" />
+                        <span>admin_power</span>
+                      </div>
+                      {mainTab === 'admin_power' ? (
+                        <span className="w-2 h-2 rounded-full bg-rose-400" />
+                      ) : (
+                        <span className="text-[9px] font-mono px-2 py-0.5 rounded bg-rose-500/20 text-rose-300 border border-rose-500/30">
+                          LOCKDOWN
+                        </span>
+                      )}
+                    </button>
+                  </motion.div>
+                </div>
+
+                {/* Quick System Actions (6. View Site & 7. Sign Out) */}
+                <div className="pt-3 space-y-2 border-t border-white/15">
+                  <p className="text-[10px] font-mono uppercase tracking-wider text-slate-400 font-semibold px-2">
+                    System Actions
+                  </p>
+
+                  <div className="grid grid-cols-2 gap-2">
+                    {/* 6. View Site */}
+                    <motion.div whileTap={{ scale: 0.97 }}>
+                      <Link
+                        to="/"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        className="w-full flex items-center justify-center gap-2 px-3 py-2.5 text-xs font-mono font-bold text-slate-200 bg-slate-900/90 hover:bg-slate-800 border border-white/15 rounded-xl transition-colors"
+                      >
+                        <Home className="w-3.5 h-3.5 text-cyan-400" />
+                        <span>View Site</span>
+                      </Link>
+                    </motion.div>
+
+                    {/* 7. Sign Out */}
+                    <motion.div whileTap={{ scale: 0.97 }}>
+                      <button
+                        onClick={() => {
+                          setIsMobileMenuOpen(false);
+                          handleLogout();
+                        }}
+                        className="w-full flex items-center justify-center gap-2 px-3 py-2.5 text-xs font-mono font-bold text-rose-300 bg-rose-950/40 hover:bg-rose-900/50 border border-rose-500/30 rounded-xl transition-colors cursor-pointer"
+                      >
+                        <LogOut className="w-3.5 h-3.5 text-rose-400" />
+                        <span>Sign Out</span>
+                      </button>
+                    </motion.div>
+                  </div>
+                </div>
+              </motion.div>
             </div>
-
-            <div className="space-y-2">
-              <p className="text-[10px] font-mono uppercase tracking-wider text-slate-500 font-semibold px-1">
-                Admin Modules
-              </p>
-
-              {/* 1. Inquiries */}
-              <button
-                onClick={() => {
-                  setMainTab('inquiries');
-                  setIsMobileMenuOpen(false);
-                }}
-                className={`w-full px-4 py-3 rounded-xl font-mono text-xs font-bold uppercase tracking-wider transition-all flex items-center justify-between cursor-pointer ${
-                  mainTab === 'inquiries'
-                    ? 'bg-cyan-500 text-slate-950 shadow-lg shadow-cyan-500/20'
-                    : 'bg-slate-900 text-slate-300 border border-slate-800/80 hover:border-slate-700'
-                }`}
-              >
-                <div className="flex items-center gap-3">
-                  <Inbox className="w-4 h-4 shrink-0" />
-                  <span>Inquiries ({queries.length})</span>
-                </div>
-                {mainTab === 'inquiries' && <CheckCircle2 className="w-4 h-4 text-slate-950" />}
-              </button>
-
-              {/* 2. Cold Outreach */}
-              <button
-                onClick={() => {
-                  setMainTab('outreach');
-                  setIsMobileMenuOpen(false);
-                }}
-                className={`w-full px-4 py-3 rounded-xl font-mono text-xs font-bold uppercase tracking-wider transition-all flex items-center justify-between cursor-pointer ${
-                  mainTab === 'outreach'
-                    ? 'bg-cyan-500 text-slate-950 shadow-lg shadow-cyan-500/20'
-                    : 'bg-slate-900 text-slate-300 border border-slate-800/80 hover:border-slate-700'
-                }`}
-              >
-                <div className="flex items-center gap-3">
-                  <Target className="w-4 h-4 text-emerald-400 shrink-0" />
-                  <span>Cold Outreach</span>
-                </div>
-                {mainTab === 'outreach' && <CheckCircle2 className="w-4 h-4 text-slate-950" />}
-              </button>
-
-              {/* 3. Custom Mail */}
-              <button
-                onClick={() => {
-                  setMainTab('composer');
-                  setIsMobileMenuOpen(false);
-                }}
-                className={`w-full px-4 py-3 rounded-xl font-mono text-xs font-bold uppercase tracking-wider transition-all flex items-center justify-between cursor-pointer ${
-                  mainTab === 'composer'
-                    ? 'bg-cyan-500 text-slate-950 shadow-lg shadow-cyan-500/20'
-                    : 'bg-slate-900 text-slate-300 border border-slate-800/80 hover:border-slate-700'
-                }`}
-              >
-                <div className="flex items-center gap-3">
-                  <Mail className="w-4 h-4 text-cyan-400 shrink-0" />
-                  <span>Custom Mail</span>
-                </div>
-                {mainTab === 'composer' && <CheckCircle2 className="w-4 h-4 text-slate-950" />}
-              </button>
-
-              {/* 4. Storage */}
-              <button
-                onClick={() => {
-                  setMainTab('storage');
-                  setIsMobileMenuOpen(false);
-                }}
-                className={`w-full px-4 py-3 rounded-xl font-mono text-xs font-bold uppercase tracking-wider transition-all flex items-center justify-between cursor-pointer ${
-                  mainTab === 'storage'
-                    ? 'bg-cyan-500 text-slate-950 shadow-lg shadow-cyan-500/20'
-                    : 'bg-slate-900 text-slate-300 border border-slate-800/80 hover:border-slate-700'
-                }`}
-              >
-                <div className="flex items-center gap-3">
-                  <HardDrive className="w-4 h-4 text-purple-400 shrink-0" />
-                  <span>Storage</span>
-                </div>
-                {mainTab === 'storage' && <CheckCircle2 className="w-4 h-4 text-slate-950" />}
-              </button>
-
-              {/* 5. admin_power */}
-              <button
-                onClick={() => {
-                  setMainTab('admin_power');
-                  setIsMobileMenuOpen(false);
-                }}
-                className={`w-full px-4 py-3 rounded-xl font-mono text-xs font-bold uppercase tracking-wider transition-all flex items-center justify-between cursor-pointer ${
-                  mainTab === 'admin_power'
-                    ? 'bg-rose-500 text-white shadow-lg shadow-rose-500/20'
-                    : 'bg-slate-900 text-slate-300 border border-rose-500/30 hover:border-rose-500/60'
-                }`}
-              >
-                <div className="flex items-center gap-3">
-                  <Zap className="w-4 h-4 text-rose-400 shrink-0" />
-                  <span>admin_power</span>
-                </div>
-                {mainTab === 'admin_power' ? (
-                  <CheckCircle2 className="w-4 h-4 text-white" />
-                ) : (
-                  <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-rose-500/20 text-rose-300 border border-rose-500/30">
-                    SECURITY
-                  </span>
-                )}
-              </button>
-            </div>
-
-            {/* Quick System Actions */}
-            <div className="pt-3 border-t border-slate-900 space-y-2">
-              <p className="text-[10px] font-mono uppercase tracking-wider text-slate-500 font-semibold px-1">
-                System Actions
-              </p>
-
-              <div className="grid grid-cols-2 gap-2">
-                {/* 6. View Site */}
-                <Link
-                  to="/"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="px-4 py-3 rounded-xl font-mono text-xs font-bold text-slate-200 bg-slate-900 border border-slate-800 hover:border-cyan-500/50 hover:text-cyan-300 transition-all flex items-center justify-center gap-2 shadow-lg"
-                >
-                  <Home className="w-4 h-4 text-cyan-400" />
-                  <span>View Site</span>
-                </Link>
-
-                {/* 7. Sign Out */}
-                <button
-                  onClick={() => {
-                    setIsMobileMenuOpen(false);
-                    handleLogout();
-                  }}
-                  className="px-4 py-3 rounded-xl font-mono text-xs font-bold text-slate-300 bg-slate-900 border border-slate-800 hover:border-rose-500/40 hover:text-rose-300 transition-all flex items-center justify-center gap-2 shadow-lg cursor-pointer"
-                >
-                  <LogOut className="w-4 h-4 text-rose-400" />
-                  <span>Sign Out</span>
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
-      </div>
+          )}
+        </AnimatePresence>
+      </header>
 
       {/* Header Bar for Desktop Only (sm:flex) */}
       <div className="hidden sm:flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-6 border-b border-slate-800">
