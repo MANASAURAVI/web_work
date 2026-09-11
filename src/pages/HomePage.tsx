@@ -245,8 +245,8 @@ export const HomePage = () => {
           </Link>
         </div>
 
-        {/* 4 Strongest Completed Real Projects Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        {/* 4 Strongest Completed Real Projects Grid (Compact 3-Column Grid) */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {selectedWork.map((project, index) => (
             <ProjectCard key={project.slug} project={project} priority={index === 0} />
           ))}

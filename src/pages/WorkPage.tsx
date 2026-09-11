@@ -22,8 +22,8 @@ export const WorkPage = () => {
         </p>
       </div>
 
-      {/* Projects Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {/* Projects Grid (Compact 3-Column Layout) */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {PROJECTS.map((project, idx) => (
           <ProjectCard key={project.slug} project={project} priority={idx < 2} />
         ))}
