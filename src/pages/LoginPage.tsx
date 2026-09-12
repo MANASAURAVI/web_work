@@ -14,11 +14,36 @@ export const LoginPage: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [failedAttempts, setFailedAttempts] = useState(0);
+  const [lockoutUntil, setLockoutUntil] = useState<number | null>(null);
+  const [lockoutSeconds, setLockoutSeconds] = useState(0);
   const navigate = useNavigate();
+
+  // Countdown timer for lockout
+  React.useEffect(() => {
+    if (!lockoutUntil) return;
+    const interval = setInterval(() => {
+      const remaining = Math.ceil((lockoutUntil - Date.now()) / 1000);
+      if (remaining <= 0) {
+        setLockoutUntil(null);
+        setLockoutSeconds(0);
+        setFailedAttempts(0);
+      } else {
+        setLockoutSeconds(remaining);
+      }
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [lockoutUntil]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
+
+    // Rate limiting: lock after 5 failed attempts for 30 seconds
+    if (lockoutUntil && Date.now() < lockoutUntil) {
+      setError(`Too many failed attempts. Try again in ${lockoutSeconds}s.`);
+      return;
+    }
 
     if (!isFirebaseConfigured || !auth) {
       setError('Firebase is not yet configured. Please add your Firebase API keys to .env');
@@ -28,11 +53,19 @@ export const LoginPage: React.FC = () => {
     setLoading(true);
     try {
       await signInWithEmailAndPassword(auth, email, password);
+      setFailedAttempts(0);
       navigate('/admin');
     } catch (err: any) {
       console.error('Login error:', err);
-      if (err.code === 'auth/invalid-credential' || err.code === 'auth/user-not-found' || err.code === 'auth/wrong-password') {
-        setError('Invalid admin email or password.');
+      const newAttempts = failedAttempts + 1;
+      setFailedAttempts(newAttempts);
+      if (newAttempts >= 5) {
+        const until = Date.now() + 30000;
+        setLockoutUntil(until);
+        setLockoutSeconds(30);
+        setError('Too many failed attempts. Locked for 30 seconds.');
+      } else if (err.code === 'auth/invalid-credential' || err.code === 'auth/user-not-found' || err.code === 'auth/wrong-password') {
+        setError(`Invalid admin email or password. (${newAttempts}/5 attempts)`);
       } else {
         setError(err.message || 'Failed to sign in. Please check your credentials.');
       }
@@ -265,14 +298,19 @@ export const LoginPage: React.FC = () => {
 
           <button
             type="submit"
-            disabled={loading}
-            className="w-full relative group overflow-hidden py-3.5 px-6 rounded-xl font-mono text-xs font-bold uppercase tracking-wider text-slate-950 bg-white hover:bg-cyan-400 transition-all duration-300 active:scale-95 flex items-center justify-center gap-2 shadow-lg shadow-white/10"
+            disabled={loading || !!lockoutUntil}
+            className="w-full relative group overflow-hidden py-3.5 px-6 rounded-xl font-mono text-xs font-bold uppercase tracking-wider text-slate-950 bg-white hover:bg-cyan-400 disabled:bg-slate-600 disabled:text-slate-400 disabled:cursor-not-allowed transition-all duration-300 active:scale-95 flex items-center justify-center gap-2 shadow-lg shadow-white/10"
           >
             <CornerBorder />
             {loading ? (
               <>
                 <Loader2 className="w-4 h-4 animate-spin text-slate-950" />
                 <span>Authenticating...</span>
+              </>
+            ) : lockoutUntil ? (
+              <>
+                <Lock className="w-4 h-4" />
+                <span>Locked — wait {lockoutSeconds}s</span>
               </>
             ) : (
               <>

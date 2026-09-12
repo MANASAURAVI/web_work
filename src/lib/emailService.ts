@@ -86,7 +86,6 @@ export const sendEmailReply = async (params: SendReplyParams): Promise<SendReply
   const serviceId = (import.meta.env.VITE_EMAILJS_SERVICE_ID || '').trim();
   const templateId = (import.meta.env.VITE_EMAILJS_TEMPLATE_ID || '').trim();
   const publicKey = (import.meta.env.VITE_EMAILJS_PUBLIC_KEY || '').trim();
-  const privateKey = (import.meta.env.VITE_EMAILJS_PRIVATE_KEY || '').trim();
   const isConfigured = checkIsEmailJSConfigured();
 
   // Create webmail fallback link with attachment note if any
@@ -242,8 +241,8 @@ export const sendEmailReply = async (params: SendReplyParams): Promise<SendReply
 
     let lastErrorMsg = '';
 
-    // 1. Direct REST API Call using environment variables
-    for (const token of [privateKey, '']) {
+    // 1. Direct REST API Call using public key only (private key is server-side only)
+    for (const token of ['']) {
       try {
         const bodyPayload: any = {
           service_id: serviceId,
@@ -284,7 +283,7 @@ export const sendEmailReply = async (params: SendReplyParams): Promise<SendReply
     try {
       const emailjs = await loadEmailJSSDK();
       const sdkOptions: any = { publicKey };
-      if (privateKey) sdkOptions.privateKey = privateKey;
+      if (false) { /* privateKey removed - server-side only */ }
 
       const res = await emailjs.send(serviceId, templateId, templateParams, sdkOptions);
       if (res.status === 200 || res.text === 'OK') {
