@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, signOut } from 'firebase/auth';
+import { getFirestore, doc, getDoc } from 'firebase/firestore';
 import { auth, isFirebaseConfigured } from '@/lib/firebase';
 import { Lock, Mail, ShieldAlert, ArrowRight, Loader2, ArrowLeft, Eye, EyeOff, Sparkles } from 'lucide-react';
 import { CornerBorder } from '@/components/CornerBorder';
@@ -52,10 +53,15 @@ export const LoginPage: React.FC = () => {
       const provider = new GoogleAuthProvider();
       const result = await signInWithPopup(auth, provider);
       const userEmail = result.user.email?.toLowerCase();
-      
-      const authorizedAdminEmails = ['0501sauravkumar0501@gmail.com', 'iloveyou@gmail.com'];
-      
-      if (userEmail && authorizedAdminEmails.includes(userEmail)) {
+
+      // Fetch authorized admin emails from Firestore (not hardcoded in client JS)
+      const db = getFirestore();
+      const adminConfigDoc = await getDoc(doc(db, 'config', 'adminConfig'));
+      const authorizedAdminEmails: string[] = adminConfigDoc.exists()
+        ? (adminConfigDoc.data()?.authorizedEmails as string[]) ?? []
+        : [];
+
+      if (userEmail && authorizedAdminEmails.map((e) => e.toLowerCase()).includes(userEmail)) {
         navigate('/admin');
       } else {
         await signOut(auth);

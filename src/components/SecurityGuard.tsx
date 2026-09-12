@@ -22,8 +22,8 @@ export const SecurityGuard: React.FC = () => {
     return () => unsubscribe();
   }, []);
 
-  // Check if Admin Bypass is allowed AND user is Admin
-  const isAdmin = !!auth?.currentUser || location.pathname.startsWith('/admin');
+  // Check if Admin Bypass is allowed AND user is authenticated
+  const isAdmin = !!auth?.currentUser;
   const isBypassed = config.allowAdminBypass && isAdmin;
 
   // Trigger non-intrusive floating toast notification
